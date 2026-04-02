@@ -738,6 +738,46 @@
   @media (max-width: 540px) {
     .projects-grid, .skills-grid { grid-template-columns: 1fr; }
   }
+.yt-panel {
+  position: relative; overflow: hidden;
+  min-height: 480px; display: flex;
+  align-items: center; justify-content: center;
+  background: #000;
+}
+.yt-frame-wrap {
+  position: absolute; inset: 0;
+  z-index: 0; pointer-events: none;
+}
+.yt-frame-wrap iframe {
+  position: absolute; top: 50%; left: 50%;
+  width: 100vw; height: 56.25vw;
+  min-height: 100%; min-width: 177.77vh;
+  transform: translate(-50%, -50%);
+  border: none;
+}
+.yt-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.72); z-index: 1;
+}
+.yt-content {
+  position: relative; z-index: 2;
+  text-align: center; max-width: 700px;
+  padding: 80px 40px;
+}
+.yt-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .72rem; color: var(--red);
+  letter-spacing: .18em; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.yt-headline {
+  font-family: 'Outfit', sans-serif; font-weight: 800;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  color: #ffffff; line-height: 1.15; margin-bottom: 16px;
+}
+.yt-sub {
+  font-size: .97rem; color: var(--muted); line-height: 1.75;
+}  
 </style>
 </head>
 <body>
@@ -804,7 +844,23 @@
     </div>
   </div>
 </section>
-
+<!-- VIDEO — ABOUT INTRO -->
+<section class="yt-panel">
+  <div class="yt-overlay"></div>
+  <div class="yt-frame-wrap">
+    <iframe
+      src="https://www.youtube.com/embed/bqwNqy-JhgE?autoplay=1&mute=1&loop=1&playlist=bqwNqy-JhgE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <div class="yt-content">
+    <div class="yt-eyebrow">About AP</div>
+    <h3 class="yt-headline">Two tracks.<br>One destination.</h3>
+    <p class="yt-sub">Where five years of project management meets cybersecurity, privacy law, and a 4.0 GPA.</p>
+  </div>
+</section>
 <!-- ABOUT -->
 <section id="about">
   <div class="section-wrap">
