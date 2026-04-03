@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Threat Intelligence API Reference v1.0 — Cipher & Counsel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C41E3A;
+    --gold: #C9A84C;
+    --dark: #000000;
+    --panel: #0e0e0e;
+    --panel2: #141414;
+    --border: rgba(196,30,58,0.22);
+    --border-soft: rgba(255,255,255,0.07);
+    --text: #e8eaf0;
+    --muted: #8896b3;
+    --white: #ffffff;
+    --green: #4caf7d;
+    --yellow: #e8d44d;
+    --orange: #ff8c42;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark); color: var(--text);
+    font-family: 'Lato', sans-serif; font-size: 15px;
+    line-height: 1.75; overflow-x: hidden;
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    background: rgba(0,0,0,0.95); border-bottom: 1px solid var(--border);
+    padding: 14px 60px; display: flex; align-items: center;
+    justify-content: space-between; position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(16px);
+  }
+  .topbar-brand {
+    font-family: 'Outfit', sans-serif; font-weight: 800;
+    font-size: .95rem; color: var(--white); letter-spacing: .06em;
+    text-decoration: none;
+  }
+  .topbar-brand span { color: var(--red); }
+  .topbar-right { display: flex; align-items: center; gap: 24px; }
+  .topbar-tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: .62rem;
+    color: var(--gold); letter-spacing: .14em; text-transform: uppercase;
+    border: 1px solid rgba(201,168,76,0.35); padding: 4px 10px;
+  }
+  .topbar-back {
+    font-family: 'IBM Plex Mono', monospace; font-size: .65rem;
+    color: var(--muted); text-decoration: none; letter-spacing: .06em;
+    text-transform: uppercase; transition: color .2s;
+  }
+  .topbar-back:hover { color: var(--white); }
+
+  /* ── LAYOUT ── */
+  .page-layout {
+    display: grid; grid-template-columns: 270px 1fr;
+    min-height: 100vh; max-width: 1440px; margin: 0 auto;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    border-right: 1px solid var(--border-soft);
+    padding: 36px 0; position: sticky; top: 53px;
+    height: calc(100vh - 53px); overflow-y: auto;
+    background: #060606;
+    scrollbar-width: thin; scrollbar-color: var(--border-soft) transparent;
+  }
+  .sidebar-section { margin-bottom: 28px; }
+  .sidebar-heading {
+    font-family: 'IBM Plex Mono', monospace; font-size: .57rem;
+    color: var(--red); letter-spacing: .18em; text-transform: uppercase;
+    padding: 0 28px 10px; border-bottom: 1px solid var(--border-soft);
+    margin-bottom: 8px;
+  }
+  .sidebar-link {
+    display: block; padding: 6px 28px;
+    font-family: 'IBM Plex Mono', monospace; font-size: .68rem;
+    color: var(--muted); text-decoration: none; letter-spacing: .02em;
+    transition: color .15s, background .15s, border-left-color .15s;
+    border-left: 2px solid transparent;
+  }
+  .sidebar-link:hover, .sidebar-link.active {
+    color: var(--white); background: rgba(255,255,255,0.03);
+    border-left-color: var(--red);
+  }
+  .sidebar-method {
+    display: inline-block; font-size: .54rem; font-weight: 700;
+    padding: 2px 6px; margin-right: 7px; letter-spacing: .04em;
+    vertical-align: middle; border-radius: 2px;
+  }
+  .sm-get { background: rgba(201,168,76,0.14); color: var(--gold); }
+  .sm-post { background: rgba(196,30,58,0.14); color: var(--red); }
+
+  /* ── MAIN ── */
+  .main-content { padding: 48px 64px 100px; max-width: 980px; }
+
+  /* ── PRINT BAR ── */
+  .print-bar {
+    background: rgba(196,30,58,0.07); border: 1px solid var(--border);
+    padding: 14px 20px; display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: 36px; gap: 16px;
+  }
+  .print-bar p { font-size: .85rem; color: var(--muted); }
+  .print-bar p strong { color: var(--text); }
+  .btn-print {
+    font-family: 'IBM Plex Mono', monospace; font-size: .63rem;
+    letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+    padding: 9px 20px; background: transparent;
+    border: 1px solid var(--red); color: var(--red);
+    cursor: pointer; transition: all .2s;
+  }
+  .btn-print:hover { background: var(--red); color: var(--white); }
+
+  /* ── DOC HEADER ── */
+  .doc-header {
+    border-bottom: 1px solid var(--border); padding-bottom: 30px; margin-bottom: 40px;
+  }
+  .doc-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .doc-badge {
+    font-family: 'IBM Plex Mono', monospace; font-size: .58rem;
+    letter-spacing: .14em; text-transform: uppercase;
+    padding: 4px 10px; border: 1px solid var(--border);
+    color: var(--red); background: rgba(196,30,58,0.07);
+  }
+  .doc-version {
+    font-family: 'IBM Plex Mono', monospace; font-size: .6rem;
+    color: var(--muted); letter-spacing: .06em;
+  }
+  .doc-title {
+    font-family: 'Outfit', sans-serif; font-weight: 800;
+    font-size: clamp(1.9rem, 3.2vw, 2.8rem); color: var(--white);
+    line-height: 1.08; margin-bottom: 14px; letter-spacing: -.015em;
+  }
+  .doc-title span { color: var(--red); }
+  .doc-subtitle {
+    font-size: .97rem; color: var(--muted); line-height: 1.8;
+    max-width: 700px; margin-bottom: 24px;
+  }
+  .doc-meta { display: flex; gap: 32px; flex-wrap: wrap; }
+  .doc-meta-item {
+    font-family: 'IBM Plex Mono', monospace; font-size: .64rem;
+    color: var(--muted); letter-spacing: .04em;
+  }
+  .doc-meta-item strong { color: var(--text); font-weight: 500; }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: .6rem;
+    color: var(--red); letter-spacing: .18em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px; margin-bottom: 10px; margin-top: 40px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  h2.s-title {
+    font-family: 'Outfit', sans-serif; font-weight: 700;
+    font-size: 1.45rem; color: var(--white); margin-bottom: 14px;
+  }
+  h3.sub-title {
+    font-family: 'Outfit', sans-serif; font-weight: 600;
+    font-size: 1.02rem; color: var(--white); margin-top: 28px; margin-bottom: 10px;
+  }
+  .body-text {
+    font-size: .94rem; color: var(--muted); line-height: 1.85; margin-bottom: 16px;
+  }
+  .body-text strong { color: var(--text); }
+  .body-text code {
+    font-family: 'IBM Plex Mono', monospace; font-size: .8rem;
+    color: var(--gold); background: rgba(201,168,76,0.09);
+    padding: 2px 6px; border-radius: 2px;
+  }
+
+  /* ── CAPABILITY TAGS ── */
+  .cap-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+  .cap-tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: .62rem;
+    color: var(--gold); background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.25); padding: 4px 12px;
+    letter-spacing: .04em;
+  }
+
+  /* ── INFO / WARN BOXES ── */
+  .info-box {
+    background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.22);
+    border-left: 3px solid var(--gold); padding: 14px 18px;
+    margin: 18px 0; border-radius: 0 2px 2px 0;
+  }
+  .info-box-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: .58rem;
+    color: var(--gold); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .info-box p { font-size: .87rem; color: var(--muted); line-height: 1.72; }
+  .info-box p strong { color: var(--text); }
+  .warn-box {
+    background: rgba(196,30,58,0.05); border: 1px solid rgba(196,30,58,0.22);
+    border-left: 3px solid var(--red); padding: 14px 18px;
+    margin: 18px 0; border-radius: 0 2px 2px 0;
+  }
+  .warn-box-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: .58rem;
+    color: var(--red); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .warn-box p { font-size: .87rem; color: var(--muted); line-height: 1.72; }
+
+  /* ── TABLES ── */
+  .tbl-wrap { overflow-x: auto; margin: 10px 0 18px; }
+  table.tbl {
+    width: 100%; border-collapse: collapse;
+    font-size: .84rem; font-family: 'Lato', sans-serif;
+  }
+  table.tbl thead tr { background: #0a0a0a; border-bottom: 1px solid var(--border); }
+  table.tbl th {
+    font-family: 'IBM Plex Mono', monospace; font-size: .58rem;
+    color: var(--red); letter-spacing: .12em; text-transform: uppercase;
+    padding: 9px 14px; text-align: left; white-space: nowrap;
+  }
+  table.tbl td {
+    padding: 9px 14px; color: var(--muted);
+    border-bottom: 1px solid rgba(255,255,255,0.035);
+    vertical-align: top; line-height: 1.6;
+  }
+  table.tbl tbody tr:hover td { background: rgba(255,255,255,0.02); }
+  table.tbl td code, table.tbl td .mono {
+    font-family: 'IBM Plex Mono', monospace; font-size: .76rem;
+    color: var(--gold); background: rgba(201,168,76,0.08);
+    padding: 2px 6px; border-radius: 2px;
+  }
+  .td-req { color: var(--red); font-family: 'IBM Plex Mono', monospace; font-size: .7rem; font-weight: 600; }
+  .td-opt { color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: .7rem; }
+  .td-200 { font-family: 'IBM Plex Mono', monospace; font-weight: 700; color: var(--green); font-size: .82rem; }
+  .td-4xx { font-family: 'IBM Plex Mono', monospace; font-weight: 700; color: var(--yellow); font-size: .82rem; }
+  .td-5xx { font-family: 'IBM Plex Mono', monospace; font-weight: 700; color: var(--red); font-size: .82rem; }
+  .td-field { font-family: 'IBM Plex Mono', monospace; font-size: .76rem; color: var(--gold); }
+  .td-type { font-family: 'IBM Plex Mono', monospace; font-size: .72rem; color: var(--muted); }
+  .td-step { font-family: 'IBM Plex Mono', monospace; font-size: .88rem; color: var(--red); font-weight: 700; text-align: center; }
+
+  /* ── ENDPOINT CARDS ── */
+  .ep-card { background: var(--panel); border: 1px solid var(--border-soft); margin: 14px 0 28px; }
+  .ep-header {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 15px 20px; background: #0a0a0a; border-bottom: 1px solid var(--border-soft);
+  }
+  .method {
+    font-family: 'IBM Plex Mono', monospace; font-size: .68rem;
+    font-weight: 700; padding: 4px 12px; letter-spacing: .06em; flex-shrink: 0; border-radius: 2px;
+  }
+  .method-get { background: rgba(201,168,76,0.14); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .method-post { background: rgba(196,30,58,0.14); color: var(--red); border: 1px solid rgba(196,30,58,0.3); }
+  .ep-route {
+    font-family: 'IBM Plex Mono', monospace; font-size: .88rem;
+    color: var(--white); letter-spacing: .02em;
+  }
+  .ep-route .p { color: var(--gold); }
+  .ep-shortdesc { font-size: .8rem; color: var(--muted); margin-left: auto; font-style: italic; }
+  .ep-body { padding: 24px 22px; }
+  .ep-summary { font-size: .93rem; color: var(--muted); line-height: 1.82; margin-bottom: 18px; }
+  .ep-summary strong { color: var(--text); }
+  .ep-summary code {
+    font-family: 'IBM Plex Mono', monospace; font-size: .8rem;
+    color: var(--gold); background: rgba(201,168,76,0.09); padding: 2px 6px;
+  }
+
+  /* ── CODE BLOCKS ── */
+  .code-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: .58rem;
+    color: var(--red); letter-spacing: .14em; text-transform: uppercase;
+    margin-top: 20px; margin-bottom: 6px;
+  }
+  pre.code {
+    background: #050505; border: 1px solid rgba(255,255,255,0.06);
+    border-left: 2px solid var(--red); padding: 18px 20px;
+    overflow-x: auto; font-family: 'IBM Plex Mono', monospace;
+    font-size: .77rem; line-height: 1.74; color: var(--text);
+    white-space: pre; margin-bottom: 6px;
+  }
+  /* Syntax colors */
+  .ck { color: var(--red); }          /* keyword */
+  .cf { color: #e8d44d; }             /* function */
+  .cs { color: #7ec8a0; }             /* string */
+  .cn { color: var(--orange); }       /* number */
+  .cc { color: #4a5568; font-style:italic; } /* comment */
+  .cj { color: var(--gold); }         /* json key */
+  .cp { color: var(--muted); }        /* punctuation */
+  .cm { color: var(--orange); }       /* method */
+  .cu { color: #7ec8a0; }             /* url */
+  .cd { color: var(--text); }         /* default */
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: var(--border-soft); margin: 44px 0; }
+
+  /* ── SOURCE CITE ── */
+  .cite {
+    font-family: 'IBM Plex Mono', monospace; font-size: .6rem;
+    color: var(--muted); line-height: 1.65; margin-top: 10px;
+    padding: 8px 14px; border-left: 2px solid rgba(201,168,76,0.3);
+    opacity: .72;
+  }
+
+  /* ── CHANGELOG ── */
+  .changelog-entry {
+    padding: 14px 0; border-bottom: 1px solid var(--border-soft);
+    display: grid; grid-template-columns: 80px 120px 1fr; gap: 16px; align-items: start;
+  }
+  .cl-ver { font-family: 'IBM Plex Mono', monospace; font-size: .78rem; color: var(--red); font-weight: 600; }
+  .cl-date { font-family: 'IBM Plex Mono', monospace; font-size: .72rem; color: var(--muted); }
+  .cl-desc { font-size: .87rem; color: var(--muted); line-height: 1.65; }
+
+  /* ── DOC FOOTER ── */
+  .doc-footer {
+    margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--border-soft);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-brand { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: .88rem; color: var(--white); }
+  .footer-brand span { color: var(--red); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: .6rem; color: var(--muted); text-align: right; line-height: 1.6; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    .topbar { padding: 14px 20px; }
+    .page-layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .main-content { padding: 28px 20px 60px; }
+    .doc-meta { flex-direction: column; gap: 8px; }
+    .ep-shortdesc { display: none; }
+    .changelog-entry { grid-template-columns: 1fr; gap: 4px; }
+    .doc-title { font-size: 1.7rem; }
+  }
+  @media (max-width: 540px) {
+    pre.code { font-size: .68rem; padding: 12px 14px; }
+    table.tbl { font-size: .76rem; }
+    table.tbl th, table.tbl td { padding: 7px 10px; }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .topbar, .sidebar, .print-bar { display: none !important; }
+    .page-layout { grid-template-columns: 1fr; }
+    .main-content { padding: 0; max-width: 100%; }
+    body { background: #fff; color: #111; font-size: 10.5pt; }
+    pre.code { background: #f7f7f7; color: #111; border: 1px solid #ddd; font-size: 8.5pt; border-left: 3px solid #C41E3A; }
+    .doc-title { color: #111; font-size: 24pt; }
+    .doc-title span { color: #C41E3A; }
+    h2.s-title, h3.sub-title { color: #111; }
+    .section-label { color: #C41E3A; }
+    .section-label::after { background: #ddd; }
+    .body-text, .ep-summary { color: #333; }
+    .body-text code { background: #f0f0f0; color: #8B6914; }
+    .ep-header { background: #f0f0f0; }
+    .ep-card { border: 1px solid #ddd; }
+    .ep-route { color: #111; }
+    .method-get { background: #fff8e1; color: #8B6914; border-color: #ddd; }
+    .method-post { background: #fdecea; color: #C41E3A; border-color: #ddd; }
+    table.tbl th { color: #C41E3A; background: #f0f0f0; }
+    table.tbl td { color: #333; border-bottom-color: #eee; }
+    table.tbl td code { background: #f0f0f0; color: #8B6914; }
+    .info-box { background: #fffbf0; border-left-color: #C9A84C; }
+    .warn-box { background: #fdecea; border-left-color: #C41E3A; }
+    .cite { color: #666; border-left-color: #C9A84C; }
+    .doc-footer { border-top-color: #ddd; }
+    .footer-brand { color: #111; }
+    .footer-note { color: #666; }
+    .divider { background: #eee; }
+    .cap-tag { background: #f0f0f0; color: #8B6914; border-color: #ddd; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="index.html" class="topbar-brand">Cipher<span>&</span>Counsel</a>
+  <div class="topbar-right">
+    <span class="topbar-tag">API Reference · v1.0</span>
+    <a href="index.html" class="topbar-back">← Portfolio</a>
+  </div>
+</div>
+
+<div class="page-layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Overview</div>
+      <a href="#overview" class="sidebar-link">Introduction</a>
+      <a href="#base-url" class="sidebar-link">Base URL</a>
+      <a href="#authentication" class="sidebar-link">Authentication</a>
+      <a href="#rate-limiting" class="sidebar-link">Rate Limiting</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Endpoints</div>
+      <a href="#ep-get-indicator" class="sidebar-link">
+        <span class="sidebar-method sm-get">GET</span>/indicators
+      </a>
+      <a href="#ep-bulk" class="sidebar-link">
+        <span class="sidebar-method sm-post">POST</span>/indicators/bulk
+      </a>
+      <a href="#ep-actors" class="sidebar-link">
+        <span class="sidebar-method sm-get">GET</span>/actors
+      </a>
+      <a href="#ep-search" class="sidebar-link">
+        <span class="sidebar-method sm-get">GET</span>/search
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Reference</div>
+      <a href="#response-fields" class="sidebar-link">Response Fields</a>
+      <a href="#error-reference" class="sidebar-link">Error Reference</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Examples</div>
+      <a href="#code-examples" class="sidebar-link">Python — Single IOC</a>
+      <a href="#code-bulk" class="sidebar-link">Python — Bulk Lookup</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Integration</div>
+      <a href="#siem-workflow" class="sidebar-link">SIEM Workflow</a>
+      <a href="#confidence-table" class="sidebar-link">Confidence Thresholds</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Document</div>
+      <a href="#changelog" class="sidebar-link">Changelog</a>
+      <a href="#citations" class="sidebar-link">Citations</a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- PRINT BAR -->
+    <div class="print-bar">
+      <p><strong>Print or save as PDF.</strong> Use your browser's print function. All colors and code blocks are print-optimized.</p>
+      <button class="btn-print" onclick="window.print()">Print / Save PDF →</button>
+    </div>
+
+    <!-- HEADER -->
+    <div class="doc-header" id="overview">
+      <div class="doc-eyebrow">
+        <span class="doc-badge">Technical Writing Portfolio</span>
+        <span class="doc-version">v1.0 · March 2026 · Shadow Sample</span>
+      </div>
+      <h1 class="doc-title">Threat Intelligence<br><span>API Reference</span></h1>
+      <p class="doc-subtitle">
+        The Threat Intelligence API provides programmatic access to structured threat data,
+        adversary profiles, and indicator of compromise enrichment. Security teams use this
+        API to integrate real-time threat intelligence into SIEM platforms, automate alert
+        enrichment, and accelerate incident response investigations.
+      </p>
+      <div class="cap-tags">
+        <span class="cap-tag">IOC Enrichment</span>
+        <span class="cap-tag">Adversary Profiles</span>
+        <span class="cap-tag">MITRE ATT&CK Mapping</span>
+        <span class="cap-tag">SIEM Integration</span>
+        <span class="cap-tag">STIX 2.1 Export</span>
+        <span class="cap-tag">Bulk Lookup</span>
+      </div>
+      <div class="doc-meta" style="margin-top:20px;">
+        <div class="doc-meta-item">Document Type: <strong>API Reference</strong></div>
+        <div class="doc-meta-item">Audience: <strong>Security Analysts · SOC Engineers · TI Practitioners</strong></div>
+        <div class="doc-meta-item">Frameworks: <strong>MITRE ATT&CK v18 · NIST SP 800-61r3 · RFC 7807</strong></div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-box-label">About This Document</div>
+      <p>This API reference is original technical writing produced as a portfolio sample
+      demonstrating documentation structure, depth, and communication style consistent with
+      Unit 42 External Engagement Team publications. All content is sourced from publicly
+      available <strong>MITRE ATT&CK</strong>, <strong>NIST SP 800-61r3</strong>, and
+      <strong>Unit 42 published research</strong>. No proprietary data is reproduced.</p>
+    </div>
+
+    <!-- BASE URL -->
+    <div class="section-label" id="base-url">Base URL</div>
+    <h2 class="s-title">Endpoint Structure</h2>
+    <pre class="code">https://api.threatintel.example.com/v1/{resource}</pre>
+    <p class="body-text" style="margin-top:10px;">
+      All requests must be made over <strong>HTTPS</strong>. Plain HTTP requests return
+      <code>301 Moved Permanently</code>. All endpoints return
+      <code>application/json</code> by default. Pass
+      <code>Accept: application/stix+json</code> to receive STIX 2.1 formatted output
+      for downstream tool integration.
+    </p>
+
+    <div class="divider"></div>
+
+    <!-- AUTHENTICATION -->
+    <div class="section-label" id="authentication">Authentication</div>
+    <h2 class="s-title">API Key Authentication</h2>
+    <p class="body-text">
+      All API requests require a valid API key passed as a request header. Keys are
+      scoped to a subscription tier and carry rate limits accordingly.
+    </p>
+
+    <h3 class="sub-title">Required Header</h3>
+    <pre class="code"><span class="cm">X-API-Key</span>: <span class="cs">your_api_key_here</span></pre>
+
+    <h3 class="sub-title">Obtaining an API Key</h3>
+    <p class="body-text">
+      1. Log in to the Threat Intelligence Portal at <code>portal.threatintel.example.com</code><br>
+      2. Navigate to <strong>Settings → API Access</strong><br>
+      3. Select <strong>Generate New Key</strong><br>
+      4. Copy and securely store your key — it is displayed only once
+    </p>
+
+    <div class="warn-box">
+      <div class="warn-box-label">⚠ Security Notice</div>
+      <p>Never embed API keys in client-side code, commit them to version control, or
+      share them in plain text. Store keys in environment variables or a secrets manager
+      such as AWS Secrets Manager or HashiCorp Vault.</p>
+    </div>
+
+    <h3 class="sub-title">Authentication Error Codes</h3>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>HTTP Status</th><th>Error Code</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td class="td-4xx">401</td><td><code>AUTH_MISSING</code></td><td>No API key provided in the request header</td></tr>
+          <tr><td class="td-4xx">401</td><td><code>AUTH_INVALID</code></td><td>API key is malformed or unrecognized</td></tr>
+          <tr><td class="td-4xx">403</td><td><code>AUTH_EXPIRED</code></td><td>API key has expired — regenerate in the portal</td></tr>
+          <tr><td class="td-4xx">403</td><td><code>AUTH_INSUFFICIENT</code></td><td>Your subscription tier lacks access to this endpoint</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- RATE LIMITING -->
+    <div class="section-label" id="rate-limiting">Rate Limiting</div>
+    <h2 class="s-title">Request Limits by Tier</h2>
+    <p class="body-text">
+      Requests are rate-limited per API key on a rolling 60-second window.
+      When a limit is exceeded the API returns <code>429 Too Many Requests</code>
+      with the following response headers.
+    </p>
+
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Tier</th><th>Requests / Min</th><th>Bulk IOCs / Request</th><th>Daily Quota</th></tr></thead>
+        <tbody>
+          <tr><td>Free</td><td>10</td><td>10</td><td>500</td></tr>
+          <tr><td>Standard</td><td>60</td><td>100</td><td>10,000</td></tr>
+          <tr><td>Professional</td><td>300</td><td>500</td><td>100,000</td></tr>
+          <tr><td>Enterprise</td><td>Unlimited</td><td>1,000</td><td>Unlimited</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">Rate Limit Response Headers</h3>
+    <pre class="code">X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1711670400
+Retry-After: 47</pre>
+
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Header</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>X-RateLimit-Limit</code></td><td>Maximum requests allowed in the current window</td></tr>
+          <tr><td><code>X-RateLimit-Remaining</code></td><td>Requests remaining in the current window</td></tr>
+          <tr><td><code>X-RateLimit-Reset</code></td><td>Unix timestamp when the limit resets</td></tr>
+          <tr><td><code>Retry-After</code></td><td>Seconds to wait before retrying</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ── ENDPOINT 1 ── -->
+    <div class="section-label" id="ep-get-indicator">Endpoints</div>
+    <h2 class="s-title">GET /indicators/{type}/{value}</h2>
+
+    <div class="ep-card">
+      <div class="ep-header">
+        <span class="method method-get">GET</span>
+        <span class="ep-route">/indicators/<span class="p">{type}</span>/<span class="p">{value}</span></span>
+        <span class="ep-shortdesc">Single IOC Lookup</span>
+      </div>
+      <div class="ep-body">
+        <p class="ep-summary">
+          Retrieve threat intelligence for a single indicator of compromise. Returns threat
+          classification, severity rating, confidence score (0–100), associated malware
+          families, linked threat actor profiles, and <strong>MITRE ATT&CK technique
+          mappings</strong>. The confidence score is derived from telemetry volume, source
+          reliability, and indicator age.
+        </p>
+
+        <h3 class="sub-title" style="margin-top:16px;">Path Parameters</h3>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="td-field">type</td><td class="td-type">string</td>
+                <td class="td-req">Required</td>
+                <td>Indicator type. Accepted values: <code>ip</code> · <code>domain</code> · <code>url</code> · <code>hash</code> · <code>email</code></td>
+              </tr>
+              <tr>
+                <td class="td-field">value</td><td class="td-type">string</td>
+                <td class="td-req">Required</td>
+                <td>The indicator value to query (IP address, SHA256 hash, domain name, etc.)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="sub-title">Query Parameters</h3>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="td-field">include_context</td><td class="td-type">boolean</td>
+                <td class="td-opt">Optional</td><td><code>false</code></td>
+                <td>When <code>true</code>, includes full threat actor profile and campaign context</td>
+              </tr>
+              <tr>
+                <td class="td-field">format</td><td class="td-type">string</td>
+                <td class="td-opt">Optional</td><td><code>json</code></td>
+                <td>Response format. Accepted values: <code>json</code> · <code>stix2</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-label">Example Request</div>
+        <pre class="code"><span class="cm">curl</span> -X GET \
+  <span class="cu">"https://api.threatintel.example.com/v1/indicators/ip/198.51.100.42?include_context=true"</span> \
+  -H <span class="cs">"X-API-Key: $API_KEY"</span> \
+  -H <span class="cs">"Accept: application/json"</span></pre>
+
+        <div class="code-label">Response — 200 OK</div>
+        <pre class="code"><span class="cp">{</span>
+  <span class="cj">"status"</span>: <span class="cs">"success"</span>,
+  <span class="cj">"indicator"</span>: <span class="cp">{</span>
+    <span class="cj">"type"</span>: <span class="cs">"ip"</span>,
+    <span class="cj">"value"</span>: <span class="cs">"198.51.100.42"</span>,
+    <span class="cj">"first_seen"</span>: <span class="cs">"2025-11-03T08:14:22Z"</span>,
+    <span class="cj">"last_seen"</span>: <span class="cs">"2026-03-15T17:42:09Z"</span>,
+    <span class="cj">"confidence"</span>: <span class="cn">94</span>,
+    <span class="cj">"classification"</span>: <span class="cs">"malicious"</span>,
+    <span class="cj">"severity"</span>: <span class="cs">"critical"</span>,
+    <span class="cj">"threat_types"</span>: [<span class="cs">"command-and-control"</span>, <span class="cs">"data-exfiltration"</span>],
+    <span class="cj">"associated_malware"</span>: [<span class="cs">"POWERSTATS"</span>, <span class="cs">"AshTag"</span>],
+    <span class="cj">"attack_techniques"</span>: [
+      <span class="cp">{</span>
+        <span class="cj">"technique_id"</span>: <span class="cs">"T1071.001"</span>,
+        <span class="cj">"technique_name"</span>: <span class="cs">"Application Layer Protocol: Web Protocols"</span>,
+        <span class="cj">"tactic"</span>: <span class="cs">"Command and Control"</span>
+      <span class="cp">}</span>,
+      <span class="cp">{</span>
+        <span class="cj">"technique_id"</span>: <span class="cs">"T1041"</span>,
+        <span class="cj">"technique_name"</span>: <span class="cs">"Exfiltration Over C2 Channel"</span>,
+        <span class="cj">"tactic"</span>: <span class="cs">"Exfiltration"</span>
+      <span class="cp">}</span>
+    ],
+    <span class="cj">"context"</span>: <span class="cp">{</span>
+      <span class="cj">"threat_actor"</span>: <span class="cs">"Boggy Serpens"</span>,
+      <span class="cj">"aliases"</span>: [<span class="cs">"MuddyWater"</span>, <span class="cs">"G0069"</span>, <span class="cs">"TA450"</span>],
+      <span class="cj">"campaign"</span>: <span class="cs">"Operation Silent Harvest"</span>,
+      <span class="cj">"target_sectors"</span>: [<span class="cs">"Government"</span>, <span class="cs">"Defense"</span>, <span class="cs">"Energy"</span>],
+      <span class="cj">"target_regions"</span>: [<span class="cs">"Middle East"</span>, <span class="cs">"North Africa"</span>],
+      <span class="cj">"actor_motivation"</span>: <span class="cs">"Espionage"</span>
+    <span class="cp">}</span>,
+    <span class="cj">"tags"</span>: [<span class="cs">"apt"</span>, <span class="cs">"nation-state"</span>, <span class="cs">"c2"</span>, <span class="cs">"persistent-threat"</span>],
+    <span class="cj">"references"</span>: [
+      <span class="cs">"https://unit42.paloaltonetworks.com/boggy-serpens"</span>,
+      <span class="cs">"https://attack.mitre.org/techniques/T1071/001"</span>
+    ]
+  <span class="cp">}</span>,
+  <span class="cj">"meta"</span>: <span class="cp">{</span>
+    <span class="cj">"query_time_ms"</span>: <span class="cn">38</span>,
+    <span class="cj">"api_version"</span>: <span class="cs">"1.0"</span>,
+    <span class="cj">"timestamp"</span>: <span class="cs">"2026-03-28T10:05:33Z"</span>
+  <span class="cp">}</span>
+<span class="cp">}</span></pre>
+
+        <div class="cite">MITRE ATT&CK T1071.001 · T1041 · attack.mitre.org · Boggy Serpens / MuddyWater: MITRE ATT&CK G0069, updated October 2025 (v18) · Malpedia: malpedia.caad.fkie.fraunhofer.de/actor/muddywater</div>
+
+      </div>
+    </div>
+
+    <!-- ── ENDPOINT 2 ── -->
+    <div class="section-label" id="ep-bulk">Endpoints</div>
+    <h2 class="s-title">POST /indicators/bulk</h2>
+
+    <div class="ep-card">
+      <div class="ep-header">
+        <span class="method method-post">POST</span>
+        <span class="ep-route">/indicators/<span class="p">bulk</span></span>
+        <span class="ep-shortdesc">Batch Enrichment — up to 500 IOCs</span>
+      </div>
+      <div class="ep-body">
+        <p class="ep-summary">
+          Submit up to 500 indicators in a single request for batch enrichment. Designed for
+          high-volume SOC workflows and automated SIEM enrichment pipelines. Unknown indicators
+          return <code>classification: "unknown"</code> and <code>confidence: 0</code> rather than
+          being omitted — ensuring your pipeline always receives a result for every submitted
+          indicator and preventing <strong>silent failures</strong> in automated workflows.
+        </p>
+
+        <h3 class="sub-title" style="margin-top:16px;">Request Body</h3>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td class="td-field">indicators</td><td class="td-type">array</td><td class="td-req">Required</td><td>List of indicator objects. Maximum 500 per request.</td></tr>
+              <tr><td class="td-field">indicators[].type</td><td class="td-type">string</td><td class="td-req">Required</td><td>Indicator type: <code>ip</code> · <code>domain</code> · <code>url</code> · <code>hash</code> · <code>email</code></td></tr>
+              <tr><td class="td-field">indicators[].value</td><td class="td-type">string</td><td class="td-req">Required</td><td>The indicator value to query</td></tr>
+              <tr><td class="td-field">include_context</td><td class="td-type">boolean</td><td class="td-opt">Optional</td><td>Include full threat actor context for each matched result. Default: <code>false</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-label">Example Request</div>
+        <pre class="code"><span class="cm">curl</span> -X POST \
+  <span class="cu">"https://api.threatintel.example.com/v1/indicators/bulk"</span> \
+  -H <span class="cs">"X-API-Key: $API_KEY"</span> \
+  -H <span class="cs">"Content-Type: application/json"</span> \
+  -d <span class="cs">'{
+    "indicators": [
+      { "type": "ip",     "value": "198.51.100.42" },
+      { "type": "domain", "value": "malicious-c2.example.net" },
+      { "type": "hash",   "value": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" }
+    ],
+    "include_context": false
+  }'</span></pre>
+
+        <div class="code-label">Response — 200 OK</div>
+        <pre class="code"><span class="cp">{</span>
+  <span class="cj">"status"</span>: <span class="cs">"success"</span>,
+  <span class="cj">"total_queried"</span>: <span class="cn">3</span>,
+  <span class="cj">"total_matched"</span>: <span class="cn">2</span>,
+  <span class="cj">"results"</span>: [
+    <span class="cp">{</span> <span class="cj">"type"</span>: <span class="cs">"ip"</span>,     <span class="cj">"value"</span>: <span class="cs">"198.51.100.42"</span>,             <span class="cj">"classification"</span>: <span class="cs">"malicious"</span>, <span class="cj">"severity"</span>: <span class="cs">"critical"</span>,       <span class="cj">"confidence"</span>: <span class="cn">94</span> <span class="cp">}</span>,
+    <span class="cp">{</span> <span class="cj">"type"</span>: <span class="cs">"domain"</span>, <span class="cj">"value"</span>: <span class="cs">"malicious-c2.example.net"</span>,    <span class="cj">"classification"</span>: <span class="cs">"malicious"</span>, <span class="cj">"severity"</span>: <span class="cs">"high"</span>,           <span class="cj">"confidence"</span>: <span class="cn">87</span> <span class="cp">}</span>,
+    <span class="cp">{</span> <span class="cj">"type"</span>: <span class="cs">"hash"</span>,   <span class="cj">"value"</span>: <span class="cs">"e3b0c44298fc1c149afb..."</span>, <span class="cj">"classification"</span>: <span class="cs">"unknown"</span>,   <span class="cj">"severity"</span>: <span class="cs">"informational"</span>, <span class="cj">"confidence"</span>: <span class="cn">0</span>  <span class="cp">}</span>
+  ],
+  <span class="cj">"meta"</span>: <span class="cp">{</span> <span class="cj">"query_time_ms"</span>: <span class="cn">112</span>, <span class="cj">"api_version"</span>: <span class="cs">"1.0"</span>, <span class="cj">"timestamp"</span>: <span class="cs">"2026-03-28T10:07:15Z"</span> <span class="cp">}</span>
+<span class="cp">}</span></pre>
+      </div>
+    </div>
+
+    <!-- ── ENDPOINT 3 ── -->
+    <div class="section-label" id="ep-actors">Endpoints</div>
+    <h2 class="s-title">GET /actors/{actor_name}</h2>
+
+    <div class="ep-card">
+      <div class="ep-header">
+        <span class="method method-get">GET</span>
+        <span class="ep-route">/actors/<span class="p">{actor_name}</span></span>
+        <span class="ep-shortdesc">Threat Actor Profile</span>
+      </div>
+      <div class="ep-body">
+        <p class="ep-summary">
+          Retrieve a detailed profile for a named threat actor or adversary group.
+          Returns attributed campaigns, known tooling, targeted sectors and regions,
+          and MITRE ATT&CK technique usage. Actor data is consistent with publicly
+          documented MITRE ATT&CK Group profiles. Use underscores for multi-word
+          names (e.g., <code>boggy_serpens</code>). Case-insensitive.
+        </p>
+
+        <div class="code-label">Example Request</div>
+        <pre class="code"><span class="cm">curl</span> -X GET \
+  <span class="cu">"https://api.threatintel.example.com/v1/actors/boggy_serpens"</span> \
+  -H <span class="cs">"X-API-Key: $API_KEY"</span></pre>
+
+        <div class="code-label">Response — 200 OK</div>
+        <pre class="code"><span class="cp">{</span>
+  <span class="cj">"status"</span>: <span class="cs">"success"</span>,
+  <span class="cj">"actor"</span>: <span class="cp">{</span>
+    <span class="cj">"name"</span>: <span class="cs">"Boggy Serpens"</span>,
+    <span class="cj">"aliases"</span>: [<span class="cs">"MuddyWater"</span>, <span class="cs">"G0069"</span>, <span class="cs">"TA450"</span>, <span class="cs">"Mango Sandstorm"</span>, <span class="cs">"MERCURY"</span>],
+    <span class="cj">"origin"</span>: <span class="cs">"Iran"</span>,
+    <span class="cj">"attribution"</span>: <span class="cs">"Ministry of Intelligence and Security (MOIS)"</span>,
+    <span class="cj">"motivation"</span>: <span class="cs">"Espionage"</span>,
+    <span class="cj">"active_since"</span>: <span class="cs">"2017"</span>,
+    <span class="cj">"last_activity"</span>: <span class="cs">"2026-03"</span>,
+    <span class="cj">"target_sectors"</span>: [<span class="cs">"Government"</span>, <span class="cs">"Defense"</span>, <span class="cs">"Telecommunications"</span>, <span class="cs">"Energy"</span>],
+    <span class="cj">"target_regions"</span>: [<span class="cs">"Middle East"</span>, <span class="cs">"Europe"</span>, <span class="cs">"North America"</span>],
+    <span class="cj">"primary_tooling"</span>: [<span class="cs">"POWERSTATS"</span>, <span class="cs">"DCHSpy"</span>, <span class="cs">"MoriAgent"</span>, <span class="cs">"AshTag"</span>],
+    <span class="cj">"techniques"</span>: [
+      <span class="cp">{</span> <span class="cj">"technique_id"</span>: <span class="cs">"T1566.001"</span>, <span class="cj">"technique_name"</span>: <span class="cs">"Phishing: Spearphishing Attachment"</span>, <span class="cj">"tactic"</span>: <span class="cs">"Initial Access"</span>,  <span class="cj">"frequency"</span>: <span class="cs">"high"</span>   <span class="cp">}</span>,
+      <span class="cp">{</span> <span class="cj">"technique_id"</span>: <span class="cs">"T1053.005"</span>, <span class="cj">"technique_name"</span>: <span class="cs">"Scheduled Task/Job"</span>,                 <span class="cj">"tactic"</span>: <span class="cs">"Persistence"</span>, <span class="cj">"frequency"</span>: <span class="cs">"high"</span>   <span class="cp">}</span>,
+      <span class="cp">{</span> <span class="cj">"technique_id"</span>: <span class="cs">"T1059.001"</span>, <span class="cj">"technique_name"</span>: <span class="cs">"PowerShell"</span>,                          <span class="cj">"tactic"</span>: <span class="cs">"Execution"</span>,  <span class="cj">"frequency"</span>: <span class="cs">"medium"</span> <span class="cp">}</span>
+    ],
+    <span class="cj">"campaigns"</span>: [
+      <span class="cp">{</span>
+        <span class="cj">"name"</span>: <span class="cs">"Operation Silent Harvest"</span>,
+        <span class="cj">"period"</span>: <span class="cs">"2025-Q3 to present"</span>,
+        <span class="cj">"description"</span>: <span class="cs">"Cyberespionage campaign targeting Middle Eastern government entities using enhanced social engineering and the AshTag malware suite."</span>
+      <span class="cp">}</span>
+    ],
+    <span class="cj">"references"</span>: [
+      <span class="cs">"https://unit42.paloaltonetworks.com/boggy-serpens"</span>,
+      <span class="cs">"https://attack.mitre.org/groups/G0069"</span>
+    ]
+  <span class="cp">}</span>
+<span class="cp">}</span></pre>
+        <div class="cite">MITRE ATT&CK G0069 · attack.mitre.org/groups/G0069 · Updated October 2025 (v18) · Lookout DCHSpy Report July 2025 · FBI/CISA/CNMF Iranian Cyber Operations Advisory, February 2022</div>
+      </div>
+    </div>
+
+    <!-- ── ENDPOINT 4 ── -->
+    <div class="section-label" id="ep-search">Endpoints</div>
+    <h2 class="s-title">GET /search</h2>
+
+    <div class="ep-card">
+      <div class="ep-header">
+        <span class="method method-get">GET</span>
+        <span class="ep-route">/search</span>
+        <span class="ep-shortdesc">Full-text Intelligence Search</span>
+      </div>
+      <div class="ep-body">
+        <p class="ep-summary">
+          Full-text and filtered search across the threat intelligence database.
+          Search by keyword, indicator type, threat actor name, MITRE ATT&CK technique ID,
+          or date range. Returns paginated results sorted by relevance score descending.
+        </p>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td class="td-field">q</td><td class="td-type">string</td><td class="td-req">Required</td><td>—</td><td>Search query: actor name, malware family, campaign name, or technique ID (e.g., T1566)</td></tr>
+              <tr><td class="td-field">type</td><td class="td-type">string</td><td class="td-opt">Optional</td><td><code>all</code></td><td>Filter by: <code>indicator</code> · <code>actor</code> · <code>campaign</code> · <code>malware</code></td></tr>
+              <tr><td class="td-field">classification</td><td class="td-type">string</td><td class="td-opt">Optional</td><td><code>all</code></td><td>Filter indicators by: <code>malicious</code> · <code>suspicious</code> · <code>benign</code></td></tr>
+              <tr><td class="td-field">since</td><td class="td-type">ISO 8601</td><td class="td-opt">Optional</td><td>—</td><td>Returns results observed on or after this date</td></tr>
+              <tr><td class="td-field">until</td><td class="td-type">ISO 8601</td><td class="td-opt">Optional</td><td>—</td><td>Returns results observed on or before this date</td></tr>
+              <tr><td class="td-field">limit</td><td class="td-type">integer</td><td class="td-opt">Optional</td><td><code>25</code></td><td>Results to return. Maximum: <code>100</code></td></tr>
+              <tr><td class="td-field">offset</td><td class="td-type">integer</td><td class="td-opt">Optional</td><td><code>0</code></td><td>Pagination offset for large result sets</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-label">Example Request</div>
+        <pre class="code"><span class="cm">curl</span> -X GET \
+  <span class="cu">"https://api.threatintel.example.com/v1/search?q=ransomware&amp;type=indicator&amp;classification=malicious&amp;since=2026-01-01&amp;limit=10"</span> \
+  -H <span class="cs">"X-API-Key: $API_KEY"</span></pre>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- RESPONSE FIELDS -->
+    <div class="section-label" id="response-fields">Reference</div>
+    <h2 class="s-title">Core Response Fields</h2>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td class="td-field">classification</td><td class="td-type">string</td><td>One of: <code>malicious</code> · <code>suspicious</code> · <code>benign</code> · <code>unknown</code></td></tr>
+          <tr><td class="td-field">severity</td><td class="td-type">string</td><td>One of: <code>informational</code> · <code>low</code> · <code>medium</code> · <code>high</code> · <code>critical</code></td></tr>
+          <tr><td class="td-field">confidence</td><td class="td-type">integer</td><td>Score 0–100 derived from telemetry volume, source reliability, and indicator age</td></tr>
+          <tr><td class="td-field">first_seen</td><td class="td-type">ISO 8601</td><td>Timestamp of earliest observed activity in UTC</td></tr>
+          <tr><td class="td-field">last_seen</td><td class="td-type">ISO 8601</td><td>Timestamp of most recent observed activity in UTC</td></tr>
+          <tr><td class="td-field">threat_types</td><td class="td-type">array</td><td>Activity classifications: <code>command-and-control</code> · <code>data-exfiltration</code> · <code>phishing</code> · <code>malware-distribution</code></td></tr>
+          <tr><td class="td-field">attack_techniques</td><td class="td-type">array</td><td>MITRE ATT&CK technique objects with <code>technique_id</code>, <code>technique_name</code>, <code>tactic</code>, and optional <code>frequency</code></td></tr>
+          <tr><td class="td-field">associated_malware</td><td class="td-type">array</td><td>Known malware family names linked to this indicator as documented in open threat research</td></tr>
+          <tr><td class="td-field">context</td><td class="td-type">object</td><td>Threat actor attribution, campaign, target sectors and regions. Returned only when <code>include_context=true</code></td></tr>
+          <tr><td class="td-field">tags</td><td class="td-type">array</td><td>Analyst-assigned classification tags for filtering and correlation</td></tr>
+          <tr><td class="td-field">references</td><td class="td-type">array</td><td>Source URLs for further reading and attribution</td></tr>
+          <tr><td class="td-field">meta.query_time_ms</td><td class="td-type">integer</td><td>Server-side query duration in milliseconds</td></tr>
+          <tr><td class="td-field">meta.timestamp</td><td class="td-type">ISO 8601</td><td>Response generation time in UTC</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ERROR REFERENCE -->
+    <div class="section-label" id="error-reference">Error Reference</div>
+    <h2 class="s-title">HTTP Status Codes</h2>
+    <p class="body-text">
+      All error responses follow a consistent structure per
+      <strong>IETF RFC 7807 Problem Details</strong>, returning a JSON body with
+      <code>status</code>, <code>error.code</code>, <code>error.message</code>,
+      and optional <code>error.details</code> fields.
+    </p>
+
+    <div class="code-label">Error Response Structure</div>
+    <pre class="code"><span class="cp">{</span>
+  <span class="cj">"status"</span>: <span class="cs">"error"</span>,
+  <span class="cj">"error"</span>: <span class="cp">{</span>
+    <span class="cj">"code"</span>:    <span class="cs">"RATE_LIMIT_EXCEEDED"</span>,
+    <span class="cj">"message"</span>: <span class="cs">"Rate limit exceeded for your subscription tier."</span>,
+    <span class="cj">"details"</span>: <span class="cs">"Wait 47 seconds before retrying. Upgrade to Professional for higher limits."</span>
+  <span class="cp">}</span>,
+  <span class="cj">"meta"</span>: <span class="cp">{</span> <span class="cj">"api_version"</span>: <span class="cs">"1.0"</span>, <span class="cj">"timestamp"</span>: <span class="cs">"2026-03-28T10:00:00Z"</span> <span class="cp">}</span>
+<span class="cp">}</span></pre>
+
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Code</th><th>Meaning</th><th>Common Cause</th><th>Recommended Action</th></tr></thead>
+        <tbody>
+          <tr><td class="td-200">200</td><td>OK</td><td>Request succeeded</td><td>Process response normally</td></tr>
+          <tr><td class="td-200">207</td><td>Multi-Status</td><td>Bulk request with partial results</td><td>Check per-item status fields in results array</td></tr>
+          <tr><td class="td-4xx">400</td><td>Bad Request</td><td>Missing required parameter or invalid value</td><td>Check request format against this reference</td></tr>
+          <tr><td class="td-4xx">401</td><td>Unauthorized</td><td>Missing or invalid API key</td><td>Verify key is present and correctly formatted</td></tr>
+          <tr><td class="td-4xx">403</td><td>Forbidden</td><td>Key expired or insufficient subscription tier</td><td>Regenerate key or upgrade subscription</td></tr>
+          <tr><td class="td-4xx">404</td><td>Not Found</td><td>Indicator or actor not in database</td><td>Treat as unknown — log and continue</td></tr>
+          <tr><td class="td-4xx">422</td><td>Unprocessable</td><td>Bulk request exceeds 500 indicator limit</td><td>Split into smaller batches and retry</td></tr>
+          <tr><td class="td-4xx">429</td><td>Too Many Requests</td><td>Rate limit exceeded</td><td>Wait for <code>Retry-After</code> seconds before retrying</td></tr>
+          <tr><td class="td-5xx">500</td><td>Internal Server Error</td><td>Unexpected server-side failure</td><td>Retry with exponential backoff; report if persistent</td></tr>
+          <tr><td class="td-5xx">503</td><td>Service Unavailable</td><td>Planned maintenance or temporary overload</td><td>Check status page; retry after delay</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cite">Error structure: IETF RFC 7807 Problem Details for HTTP APIs · tools.ietf.org/html/rfc7807</div>
+
+    <div class="divider"></div>
+
+    <!-- CODE EXAMPLES -->
+    <div class="section-label" id="code-examples">Python Examples</div>
+    <h2 class="s-title">Python — Single IOC Lookup</h2>
+
+    <pre class="code"><span class="ck">import</span> requests
+<span class="ck">import</span> os
+
+API_KEY  = os.environ.get(<span class="cs">"THREAT_INTEL_API_KEY"</span>)
+BASE_URL = <span class="cs">"https://api.threatintel.example.com/v1"</span>
+
+
+<span class="ck">def</span> <span class="cf">get_indicator</span>(indicator_type: str, value: str, include_context: bool = <span class="cs">False</span>) -> dict:
+    <span class="cs">"""
+    Query threat intelligence for a single indicator of compromise.
+
+    Args:
+        indicator_type: One of 'ip', 'domain', 'url', 'hash', 'email'
+        value:          The indicator value to query
+        include_context: When True, includes full threat actor profile and campaign data
+
+    Returns:
+        dict: API response containing threat intelligence enrichment data
+
+    Raises:
+        requests.HTTPError:  For 4xx / 5xx responses
+        requests.Timeout:    If the request exceeds the timeout threshold
+    """</span>
+    url     = <span class="cs">f"</span><span class="cp">{</span>BASE_URL<span class="cp">}</span><span class="cs">/indicators/</span><span class="cp">{</span>indicator_type<span class="cp">}</span><span class="cs">/</span><span class="cp">{</span>value<span class="cp">}</span><span class="cs">"</span>
+    headers = <span class="cp">{</span><span class="cs">"X-API-Key"</span>: API_KEY<span class="cp">}</span>
+    params  = <span class="cp">{</span><span class="cs">"include_context"</span>: str(include_context).lower()<span class="cp">}</span>
+
+    response = requests.get(url, headers=headers, params=params, timeout=<span class="cn">10</span>)
+    response.raise_for_status()
+    <span class="ck">return</span> response.json()
+
+
+<span class="cc"># Example usage</span>
+result    = get_indicator(<span class="cs">"ip"</span>, <span class="cs">"198.51.100.42"</span>, include_context=<span class="cs">True</span>)
+indicator = result[<span class="cs">"indicator"</span>]
+
+print(<span class="cs">f"Classification : </span><span class="cp">{</span>indicator[<span class="cs">'classification'</span>]<span class="cp">}</span><span class="cs">"</span>)
+print(<span class="cs">f"Severity       : </span><span class="cp">{</span>indicator[<span class="cs">'severity'</span>]<span class="cp">}</span><span class="cs">"</span>)
+print(<span class="cs">f"Confidence     : </span><span class="cp">{</span>indicator[<span class="cs">'confidence'</span>]<span class="cp">}</span><span class="cs">%"</span>)
+print(<span class="cs">f"Threat Actor   : </span><span class="cp">{</span>indicator[<span class="cs">'context'</span>][<span class="cs">'threat_actor'</span>]<span class="cp">}</span><span class="cs">"</span>)</pre>
+
+    <div class="section-label" id="code-bulk" style="margin-top:32px;">Python Examples</div>
+    <h2 class="s-title">Python — Bulk Lookup with Retry Logic</h2>
+
+    <pre class="code"><span class="ck">import</span> time
+
+
+<span class="ck">def</span> <span class="cf">bulk_lookup</span>(indicators: list[dict], max_retries: int = <span class="cn">3</span>) -> dict:
+    <span class="cs">"""
+    Submit multiple indicators for batch enrichment with automatic retry.
+
+    Args:
+        indicators:  List of dicts, each with 'type' and 'value' keys.
+                     Maximum 500 indicators per request.
+        max_retries: Number of retry attempts on 429 or 5xx responses.
+
+    Returns:
+        dict: API response with enrichment results for every submitted indicator.
+              Unknown indicators return classification 'unknown' — never omitted.
+
+    Raises:
+        ValueError:          If more than 500 indicators are submitted
+        requests.HTTPError:  For unrecoverable 4xx errors
+        RuntimeError:        If all retry attempts are exhausted
+
+    Example:
+        indicators = [
+            {"type": "ip",     "value": "198.51.100.42"},
+            {"type": "domain", "value": "malicious-c2.example.net"},
+            {"type": "hash",   "value": "e3b0c44298fc1c149afb..."}
+        ]
+    """</span>
+    <span class="ck">if</span> len(indicators) > <span class="cn">500</span>:
+        <span class="ck">raise</span> ValueError(<span class="cs">"Bulk endpoint accepts a maximum of 500 indicators per request."</span>)
+
+    url     = <span class="cs">f"</span><span class="cp">{</span>BASE_URL<span class="cp">}</span><span class="cs">/indicators/bulk"</span>
+    headers = <span class="cp">{</span><span class="cs">"X-API-Key"</span>: API_KEY, <span class="cs">"Content-Type"</span>: <span class="cs">"application/json"</span><span class="cp">}</span>
+    payload = <span class="cp">{</span><span class="cs">"indicators"</span>: indicators<span class="cp">}</span>
+
+    <span class="ck">for</span> attempt <span class="ck">in</span> range(max_retries):
+        <span class="ck">try</span>:
+            response = requests.post(url, headers=headers, json=payload, timeout=<span class="cn">30</span>)
+
+            <span class="ck">if</span> response.status_code == <span class="cn">429</span>:
+                wait = int(response.headers.get(<span class="cs">"Retry-After"</span>, <span class="cn">60</span>))
+                print(<span class="cs">f"Rate limited. Retrying in </span><span class="cp">{</span>wait<span class="cp">}</span><span class="cs"> seconds..."</span>)
+                time.sleep(wait)
+                <span class="ck">continue</span>
+
+            response.raise_for_status()
+            <span class="ck">return</span> response.json()
+
+        <span class="ck">except</span> requests.exceptions.Timeout:
+            wait = <span class="cn">2</span> ** attempt  <span class="cc"># Exponential backoff: 1s, 2s, 4s</span>
+            print(<span class="cs">f"Request timed out. Retrying in </span><span class="cp">{</span>wait<span class="cp">}</span><span class="cs">s... (attempt </span><span class="cp">{</span>attempt + <span class="cn">1</span><span class="cp">}</span><span class="cs">/</span><span class="cp">{</span>max_retries<span class="cp">}</span><span class="cs">)"</span>)
+            time.sleep(wait)
+
+        <span class="ck">except</span> requests.exceptions.HTTPError <span class="ck">as</span> e:
+            <span class="ck">if</span> e.response.status_code >= <span class="cn">500</span>:
+                wait = <span class="cn">2</span> ** attempt
+                print(<span class="cs">f"Server error </span><span class="cp">{</span>e.response.status_code<span class="cp">}</span><span class="cs">. Retrying in </span><span class="cp">{</span>wait<span class="cp">}</span><span class="cs">s..."</span>)
+                time.sleep(wait)
+                <span class="ck">continue</span>
+            <span class="ck">raise</span>  <span class="cc"># Do not retry 4xx errors other than 429</span>
+
+    <span class="ck">raise</span> RuntimeError(<span class="cs">f"Request failed after </span><span class="cp">{</span>max_retries<span class="cp">}</span><span class="cs"> attempts."</span>)</pre>
+
+    <div class="divider"></div>
+
+    <!-- SIEM WORKFLOW -->
+    <div class="section-label" id="siem-workflow">Integration Guide</div>
+    <h2 class="s-title">SIEM Enrichment Workflow</h2>
+    <p class="body-text">
+      The following five-step pipeline describes how to use this API to automatically
+      enrich SIEM alerts with threat intelligence context during incident triage.
+      Structured around <strong>NIST SP 800-61r3</strong> incident response lifecycle
+      guidance and <strong>MITRE ATT&CK v18</strong> tactic-based detection conventions.
+    </p>
+    <p class="body-text">
+      The 2026 Unit 42 Global Incident Response Report documents that attackers move
+      from initial access to data exfiltration in under one hour in the fastest observed
+      incidents — a 4x speed increase over prior years. Identity-based techniques drove
+      initial access in 65% of investigated incidents. This pipeline is designed for
+      the speed and triage discipline that threat environment demands.
+    </p>
+
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Step</th><th>Action</th><th>Tool / Method</th><th>ATT&amp;CK Alignment</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-step">01</td>
+            <td><strong>Extract IOCs from Alert</strong><br><small style="color:var(--muted);">Parse incoming SIEM alerts for IPs, domains, hashes, and URLs. Normalize formats before querying — strip port numbers from IPs, lowercase domain values.</small></td>
+            <td>SIEM parsing rules<br>Cortex XSOAR automation</td>
+            <td>All tactics — pre-enrichment</td>
+            <td>Normalized IOC list</td>
+          </tr>
+          <tr>
+            <td class="td-step">02</td>
+            <td><strong>Bulk IOC Lookup</strong><br><small style="color:var(--muted);">Submit all IOCs from a single alert in one request. Batching minimizes API latency and preserves rate limit quota.</small></td>
+            <td>POST /indicators/bulk</td>
+            <td>T1071 · T1041 · T1566</td>
+            <td>Enriched IOC records</td>
+          </tr>
+          <tr>
+            <td class="td-step">03</td>
+            <td><strong>Apply Confidence Threshold</strong><br><small style="color:var(--muted);">Filter results by confidence score. A threshold of 75+ is recommended for automated escalation to reduce false positive alert fatigue.</small></td>
+            <td>Threshold table (below)<br>SOAR decision logic</td>
+            <td>All — reduces false positives</td>
+            <td>Prioritized alert queue</td>
+          </tr>
+          <tr>
+            <td class="td-step">04</td>
+            <td><strong>Map to MITRE ATT&amp;CK</strong><br><small style="color:var(--muted);">Tag the SIEM alert with ATT&CK tactic and technique IDs from the <code style="font-size:.72rem;">attack_techniques</code> array. Enables automated correlation across alerts sharing adversary behavior patterns.</small></td>
+            <td>attack_techniques array<br>ATT&CK Navigator overlay</td>
+            <td>Tactic-based detection<br>MITRE v18, Oct 2025</td>
+            <td>Tagged, correlated alert</td>
+          </tr>
+          <tr>
+            <td class="td-step">05</td>
+            <td><strong>Update Case &amp; Notify</strong><br><small style="color:var(--muted);">Write enriched context back to the SIEM case. If severity is critical or high and confidence is 85+, trigger an automated analyst notification immediately.</small></td>
+            <td>SIEM case management<br>Cortex XSIAM · Splunk</td>
+            <td>Responds to all phases</td>
+            <td>Enriched case record</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title" id="confidence-table">Confidence Threshold Reference</h3>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Confidence Range</th><th>Classification</th><th>Recommended Action</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="font-family:'IBM Plex Mono',monospace;color:var(--green);font-weight:700;">90 – 100</td>
+            <td>High confidence — malicious</td>
+            <td>Auto-escalate to analyst. Block at perimeter if policy permits.</td>
+          </tr>
+          <tr>
+            <td style="font-family:'IBM Plex Mono',monospace;color:var(--yellow);font-weight:700;">75 – 89</td>
+            <td>Likely malicious</td>
+            <td>Flag for priority analyst review within 30 minutes.</td>
+          </tr>
+          <tr>
+            <td style="font-family:'IBM Plex Mono',monospace;color:var(--orange);font-weight:700;">50 – 74</td>
+            <td>Suspicious — low confidence</td>
+            <td>Log and monitor. Include in threat hunting queue.</td>
+          </tr>
+          <tr>
+            <td style="font-family:'IBM Plex Mono',monospace;color:var(--muted);font-weight:700;">0 – 49</td>
+            <td>Unknown or benign</td>
+            <td>Log only. Do not auto-escalate. Revisit if correlated with other signals.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cite">Sources: NIST SP 800-61r3 Computer Security Incident Handling Guide · MITRE ATT&CK v18 Enterprise Matrix, October 2025 · Unit 42 2026 Global Incident Response Report (unit42.paloaltonetworks.com) · Cortex XSOAR Unit 42 Integration Pack v1.0.15, March 2026</div>
+
+    <div class="divider"></div>
+
+    <!-- CHANGELOG -->
+    <div class="section-label" id="changelog">Document History</div>
+    <h2 class="s-title">Changelog</h2>
+
+    <div class="changelog-entry">
+      <div class="cl-ver">v1.0</div>
+      <div class="cl-date">March 2026</div>
+      <div class="cl-desc">Initial release. Endpoints: single IOC lookup, bulk IOC enrichment, threat actor profiles, full-text search. Authentication, rate limiting by tier, Python examples with docstrings and retry logic, SIEM enrichment pipeline, confidence threshold reference, and full HTTP error reference.</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CITATIONS -->
+    <div class="section-label" id="citations">Sources</div>
+    <h2 class="s-title">Citations &amp; References</h2>
+    <p class="body-text">All technical content is sourced from publicly available research. No proprietary Palo Alto Networks data is reproduced.</p>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Source</th><th>Reference</th></tr></thead>
+        <tbody>
+          <tr><td>MITRE ATT&CK v18</td><td>Enterprise Matrix, October 2025 · attack.mitre.org</td></tr>
+          <tr><td>MITRE ATT&CK G0069</td><td>MuddyWater / Boggy Serpens Group Profile · attack.mitre.org/groups/G0069</td></tr>
+          <tr><td>NIST SP 800-61r3</td><td>Computer Security Incident Handling Guide · csrc.nist.gov</td></tr>
+          <tr><td>IETF RFC 7807</td><td>Problem Details for HTTP APIs · tools.ietf.org/html/rfc7807</td></tr>
+          <tr><td>Unit 42 2026 IR Report</td><td>Global Incident Response Report · unit42.paloaltonetworks.com</td></tr>
+          <tr><td>Cortex XSOAR Marketplace</td><td>Unit 42 Threat Intelligence Integration Pack v1.0.15, March 2026 · cortex.marketplace.pan.dev</td></tr>
+          <tr><td>Malpedia</td><td>MuddyWater Actor Profile · malpedia.caad.fkie.fraunhofer.de/actor/muddywater</td></tr>
+          <tr><td>Lookout Security</td><td>DCHSpy — Iranian APT MuddyWater, July 2025</td></tr>
+          <tr><td>FBI / CISA / CNMF</td><td>Iranian Government-Sponsored Cyber Operations Advisory, February 2022</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="doc-footer">
+      <div class="footer-brand">Cipher<span>&</span>Counsel</div>
+      <div class="footer-note">
+        Technical Writing Portfolio · Shadow Sample · v1.0 · March 2026<br>
+        Original work — sourced from public research — not proprietary
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // Active sidebar highlight on scroll
+  const links = document.querySelectorAll('.sidebar-link');
+  const targets = document.querySelectorAll('[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    targets.forEach(t => {
+      if (window.scrollY >= t.offsetTop - 120) current = t.id;
+    });
+    links.forEach(l => {
+      l.classList.remove('active');
+      if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>
