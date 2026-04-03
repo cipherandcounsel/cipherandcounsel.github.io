@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Threat Intelligence API Reference v1.0 — Unit 42 | Cipher & Counsel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C41E3A;
+    --gold: #C9A84C;
+    --dark: #000000;
+    --panel: #111111;
+    --panel2: #181818;
+    --border: rgba(196,30,58,0.2);
+    --border-soft: rgba(255,255,255,0.07);
+    --text: #e8eaf0;
+    --muted: #8896b3;
+    --white: #ffffff;
+    --green: #4caf7d;
+    --orange: #ff8c42;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark); color: var(--text);
+    font-family: 'Lato', sans-serif; font-size: 15px;
+    line-height: 1.75; overflow-x: hidden;
+  }
+
+/* ── TOPBAR ── */
+.topbar {
+background: #000; border-bottom: 1px solid var(–border);
+padding: 14px 60px; display: flex; align-items: center;
+justify-content: space-between; position: sticky; top: 0; z-index: 100;
+backdrop-filter: blur(12px);
+}
+.topbar-brand {
+font-family: ‘Outfit’, sans-serif; font-weight: 800;
+font-size: .95rem; color: var(–white); letter-spacing: .06em;
+text-decoration: none;
+}
+.topbar-brand span { color: var(–red); }
+.topbar-right {
+display: flex; align-items: center; gap: 24px;
+}
+.topbar-tag {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .62rem;
+color: var(–gold); letter-spacing: .14em; text-transform: uppercase;
+border: 1px solid rgba(201,168,76,0.35); padding: 4px 10px;
+}
+.topbar-back {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .65rem;
+color: var(–muted); text-decoration: none; letter-spacing: .06em;
+text-transform: uppercase; transition: color .2s;
+}
+.topbar-back:hover { color: var(–white); }
+
+/* ── LAYOUT ── */
+.page-layout {
+display: grid; grid-template-columns: 260px 1fr;
+min-height: 100vh; max-width: 1400px; margin: 0 auto;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+border-right: 1px solid var(–border-soft);
+padding: 40px 0; position: sticky; top: 57px;
+height: calc(100vh - 57px); overflow-y: auto;
+background: #080808;
+}
+.sidebar-section { margin-bottom: 32px; }
+.sidebar-heading {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–red); letter-spacing: .16em; text-transform: uppercase;
+padding: 0 28px 10px; border-bottom: 1px solid var(–border-soft);
+margin-bottom: 10px;
+}
+.sidebar-link {
+display: block; padding: 7px 28px;
+font-family: ‘IBM Plex Mono’, monospace; font-size: .7rem;
+color: var(–muted); text-decoration: none; letter-spacing: .03em;
+transition: color .15s, background .15s; border-left: 2px solid transparent;
+}
+.sidebar-link:hover, .sidebar-link.active {
+color: var(–white); background: rgba(255,255,255,0.03);
+border-left-color: var(–red);
+}
+.sidebar-method {
+display: inline-block; font-size: .55rem; font-weight: 700;
+padding: 2px 6px; border-radius: 2px; margin-right: 6px;
+vertical-align: middle; letter-spacing: .04em;
+}
+.sm-get { background: rgba(201,168,76,0.15); color: var(–gold); }
+.sm-post { background: rgba(196,30,58,0.15); color: var(–red); }
+
+/* ── MAIN CONTENT ── */
+.main-content { padding: 50px 60px 80px; max-width: 960px; }
+
+/* ── DOC HEADER ── */
+.doc-header {
+border-bottom: 1px solid var(–border); padding-bottom: 32px; margin-bottom: 40px;
+}
+.doc-eyebrow {
+display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+}
+.doc-badge {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+letter-spacing: .14em; text-transform: uppercase;
+padding: 4px 10px; border: 1px solid var(–border);
+color: var(–red); background: rgba(196,30,58,0.08);
+}
+.doc-version {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–muted); letter-spacing: .06em;
+}
+.doc-title {
+font-family: ‘Outfit’, sans-serif; font-weight: 800;
+font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(–white);
+line-height: 1.1; margin-bottom: 14px; letter-spacing: -.01em;
+}
+.doc-title span { color: var(–red); }
+.doc-subtitle {
+font-size: .97rem; color: var(–muted); line-height: 1.75;
+max-width: 680px; margin-bottom: 22px;
+}
+.doc-meta {
+display: flex; gap: 32px; flex-wrap: wrap;
+}
+.doc-meta-item {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .65rem;
+color: var(–muted); letter-spacing: .04em;
+}
+.doc-meta-item strong { color: var(–text); font-weight: 500; }
+
+/* ── SECTION HEADINGS ── */
+.section-anchor { padding-top: 20px; margin-bottom: 6px; }
+.section-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .62rem;
+color: var(–red); letter-spacing: .16em; text-transform: uppercase;
+display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+}
+.section-label::after {
+content: ‘’; flex: 1; height: 1px; background: var(–border);
+}
+h2.section-title {
+font-family: ‘Outfit’, sans-serif; font-weight: 700;
+font-size: 1.4rem; color: var(–white); margin-bottom: 14px;
+}
+h3.subsection-title {
+font-family: ‘Outfit’, sans-serif; font-weight: 600;
+font-size: 1.05rem; color: var(–white); margin-bottom: 10px;
+margin-top: 28px;
+}
+.body-text {
+font-size: .94rem; color: var(–muted); line-height: 1.82;
+margin-bottom: 18px;
+}
+.body-text strong { color: var(–text); }
+
+/* ── INFO BOX ── */
+.info-box {
+background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.25);
+border-left: 3px solid var(–gold); padding: 16px 20px;
+margin-bottom: 24px; border-radius: 0 2px 2px 0;
+}
+.info-box-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–gold); letter-spacing: .12em; text-transform: uppercase;
+margin-bottom: 6px;
+}
+.info-box p { font-size: .88rem; color: var(–muted); line-height: 1.72; }
+.info-box p strong { color: var(–text); }
+
+.warn-box {
+background: rgba(196,30,58,0.06); border: 1px solid rgba(196,30,58,0.25);
+border-left: 3px solid var(–red); padding: 16px 20px;
+margin-bottom: 24px; border-radius: 0 2px 2px 0;
+}
+.warn-box-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–red); letter-spacing: .12em; text-transform: uppercase;
+margin-bottom: 6px;
+}
+
+/* ── AUTH TABLE ── */
+.kv-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+.kv-table th {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–red); letter-spacing: .1em; text-transform: uppercase;
+padding: 8px 14px; text-align: left; background: #0a0a0a;
+border-bottom: 1px solid var(–border);
+}
+.kv-table td {
+padding: 9px 14px; font-size: .85rem; color: var(–muted);
+border-bottom: 1px solid var(–border-soft); vertical-align: top;
+line-height: 1.6;
+}
+.kv-table tr:hover td { background: rgba(255,255,255,0.02); }
+.kv-table td code {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .78rem;
+color: var(–gold); background: rgba(201,168,76,0.08);
+padding: 2px 6px; border-radius: 2px;
+}
+.td-req { color: var(–red); font-family: ‘IBM Plex Mono’, monospace; font-size: .7rem; }
+.td-opt { color: var(–muted); font-family: ‘IBM Plex Mono’, monospace; font-size: .7rem; }
+
+/* ── ENDPOINT CARDS ── */
+.endpoint-card {
+background: var(–panel); border: 1px solid var(–border-soft);
+margin-bottom: 28px; overflow: hidden;
+}
+.endpoint-header {
+display: flex; align-items: center; gap: 14px;
+padding: 16px 22px; background: #0e0e0e;
+border-bottom: 1px solid var(–border-soft); flex-wrap: wrap;
+cursor: pointer; user-select: none;
+}
+.endpoint-header:hover { background: #141414; }
+.method-badge {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .68rem;
+font-weight: 600; padding: 4px 12px; letter-spacing: .06em;
+flex-shrink: 0;
+}
+.method-get { background: rgba(201,168,76,0.15); color: var(–gold); border: 1px solid rgba(201,168,76,0.3); }
+.method-post { background: rgba(196,30,58,0.15); color: var(–red); border: 1px solid rgba(196,30,58,0.3); }
+.endpoint-route {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .88rem;
+color: var(–white); letter-spacing: .02em;
+}
+.endpoint-route .param { color: var(–gold); }
+.endpoint-desc { font-size: .82rem; color: var(–muted); margin-left: auto; font-style: italic; }
+.endpoint-body { padding: 24px 22px; }
+.endpoint-summary { font-size: .92rem; color: var(–muted); line-height: 1.78; margin-bottom: 20px; }
+
+/* ── PARAMS TABLE ── */
+.param-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–gold); letter-spacing: .12em; text-transform: uppercase;
+margin-bottom: 8px; margin-top: 20px;
+}
+.params-table { width: 100%; border-collapse: collapse; margin-bottom: 4px; }
+.params-table th {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–muted); letter-spacing: .1em; text-transform: uppercase;
+padding: 7px 12px; text-align: left; background: #0a0a0a;
+border-bottom: 1px solid var(–border-soft);
+}
+.params-table td {
+padding: 8px 12px; font-size: .82rem; color: var(–muted);
+border-bottom: 1px solid rgba(255,255,255,0.03); vertical-align: top;
+}
+.params-table td:first-child {
+font-family: ‘IBM Plex Mono’, monospace; color: var(–gold); font-size: .78rem;
+}
+.params-table td:nth-child(2) {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .7rem; color: var(–muted);
+}
+
+/* ── CODE BLOCKS ── */
+.code-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–red); letter-spacing: .12em; text-transform: uppercase;
+margin-bottom: 6px; margin-top: 20px;
+}
+pre.code-block {
+background: #060606; border: 1px solid rgba(255,255,255,0.06);
+border-left: 2px solid var(–red); padding: 18px 20px;
+overflow-x: auto; font-family: ‘IBM Plex Mono’, monospace;
+font-size: .78rem; line-height: 1.72; color: var(–text);
+white-space: pre; margin-bottom: 4px;
+}
+.c-kw { color: var(–red); }
+.c-fn { color: #e8d44d; }
+.c-str { color: #7ec8a0; }
+.c-key { color: var(–gold); }
+.c-num { color: #ff8c42; }
+.c-cmt { color: #4a5568; font-style: italic; }
+.c-method { color: #ff8c42; }
+.c-url { color: #7ec8a0; }
+.c-brk { color: #c0c0c0; }
+
+/* ── RESPONSE BLOCK ── */
+.response-tabs { display: flex; gap: 2px; margin-bottom: 0; margin-top: 20px; }
+.resp-tab {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .62rem;
+letter-spacing: .08em; padding: 6px 14px; cursor: pointer;
+background: #0a0a0a; border: 1px solid var(–border-soft);
+color: var(–muted); transition: all .15s; border-bottom: none;
+}
+.resp-tab.active { background: #060606; color: var(–white); border-color: var(–border); }
+.resp-tab.ok { border-top: 2px solid var(–green); }
+.resp-tab.err { border-top: 2px solid var(–red); }
+
+/* ── ERROR TABLE ── */
+.error-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.error-table th {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–red); letter-spacing: .1em; text-transform: uppercase;
+padding: 9px 14px; text-align: left;
+background: #0a0a0a; border-bottom: 1px solid var(–border);
+}
+.error-table td {
+padding: 9px 14px; font-size: .83rem; color: var(–muted);
+border-bottom: 1px solid var(–border-soft); vertical-align: top;
+}
+.td-200 { font-family: ‘IBM Plex Mono’, monospace; font-weight: 700; color: var(–green); }
+.td-4xx { font-family: ‘IBM Plex Mono’, monospace; font-weight: 700; color: #e8d44d; }
+.td-5xx { font-family: ‘IBM Plex Mono’, monospace; font-weight: 700; color: var(–red); }
+
+/* ── RATE LIMIT TABLE ── */
+.tier-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.tier-table th {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–red); letter-spacing: .1em; text-transform: uppercase;
+padding: 9px 14px; text-align: left; background: #0a0a0a;
+border-bottom: 1px solid var(–border);
+}
+.tier-table td {
+padding: 9px 14px; font-size: .83rem; color: var(–muted);
+border-bottom: 1px solid var(–border-soft);
+}
+.tier-table td:first-child { color: var(–text); font-weight: 500; }
+.tier-table td code {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .76rem;
+color: var(–gold); background: rgba(201,168,76,0.08); padding: 2px 6px;
+}
+
+/* ── SOURCE CITE ── */
+.source-cite {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–muted); line-height: 1.6; margin-top: 12px;
+padding: 10px 14px; border-left: 2px solid rgba(201,168,76,0.3);
+opacity: .75;
+}
+
+/* ── SECTION DIVIDER ── */
+.section-divider { height: 1px; background: var(–border-soft); margin: 44px 0; }
+
+/* ── PRINT BUTTON ── */
+.print-bar {
+background: rgba(196,30,58,0.08); border: 1px solid var(–border);
+padding: 14px 22px; display: flex; align-items: center;
+justify-content: space-between; margin-bottom: 32px;
+}
+.print-bar p { font-size: .85rem; color: var(–muted); }
+.print-bar p strong { color: var(–text); }
+.btn-print {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .65rem;
+letter-spacing: .1em; text-transform: uppercase;
+padding: 9px 20px; background: transparent;
+border: 1px solid var(–red); color: var(–red);
+cursor: pointer; transition: all .2s; text-decoration: none; display: inline-block;
+}
+.btn-print:hover { background: var(–red); color: var(–white); }
+
+/* ── FOOTER ── */
+.doc-footer {
+margin-top: 60px; padding-top: 24px; border-top: 1px solid var(–border-soft);
+display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+}
+.footer-brand { font-family: ‘Outfit’, sans-serif; font-weight: 800; font-size: .85rem; color: var(–white); }
+.footer-brand span { color: var(–red); }
+.footer-note { font-family: ‘IBM Plex Mono’, monospace; font-size: .62rem; color: var(–muted); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+.topbar { padding: 14px 20px; }
+.page-layout { grid-template-columns: 1fr; }
+.sidebar { display: none; }
+.main-content { padding: 32px 20px 60px; }
+.doc-meta { flex-direction: column; gap: 8px; }
+.endpoint-desc { display: none; }
+.doc-title { font-size: 1.6rem; }
+}
+
+@media print {
+.topbar, .sidebar, .print-bar { display: none; }
+.page-layout { grid-template-columns: 1fr; }
+.main-content { padding: 0; max-width: 100%; }
+body { background: white; color: #111; font-size: 11pt; }
+pre.code-block { background: #f5f5f5; color: #111; border: 1px solid #ddd; font-size: 9pt; }
+.doc-title { color: #111; }
+.section-label { color: #8B0000; }
+h2.section-title, h3.subsection-title { color: #111; }
+.body-text, .endpoint-summary { color: #333; }
+.endpoint-header { background: #f0f0f0; }
+.endpoint-route { color: #111; }
+.method-get { background: #fff8e1; color: #8B6914; }
+.method-post { background: #fdecea; color: #8B0000; }
+}
+</style>
+
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="topbar-brand">Cipher<span>&</span>Counsel</a>
+  <div class="topbar-right">
+    <span class="topbar-tag">API Reference</span>
+    <a href="index.html" class="topbar-back">← Back to Portfolio</a>
+  </div>
+</div>
+
+<div class="page-layout">
+
+  <!-- SIDEBAR NAV -->
+
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Overview</div>
+      <a href="#overview" class="sidebar-link">Introduction</a>
+      <a href="#authentication" class="sidebar-link">Authentication</a>
+      <a href="#rate-limiting" class="sidebar-link">Rate Limiting</a>
+      <a href="#base-url" class="sidebar-link">Base URL</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Endpoints</div>
+      <a href="#ep-indicators" class="sidebar-link">
+        <span class="sidebar-method sm-get">GET</span>/indicators
+      </a>
+      <a href="#ep-bulk" class="sidebar-link">
+        <span class="sidebar-method sm-post">POST</span>/indicators/bulk
+      </a>
+      <a href="#ep-actors" class="sidebar-link">
+        <span class="sidebar-method sm-get">GET</span>/actors
+      </a>
+      <a href="#ep-search" class="sidebar-link">
+        <span class="sidebar-method sm-get">GET</span>/search
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Reference</div>
+      <a href="#response-fields" class="sidebar-link">Response Fields</a>
+      <a href="#error-codes" class="sidebar-link">HTTP Error Codes</a>
+      <a href="#examples" class="sidebar-link">Python Examples</a>
+      <a href="#siem-workflow" class="sidebar-link">SIEM Workflow</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Sources</div>
+      <a href="#sources" class="sidebar-link">Citations</a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+
+  <main class="main-content">
+
+```
+<!-- PRINT / DOWNLOAD BAR -->
+<div class="print-bar">
+  <p><strong>Printable version available.</strong> Use your browser's print function or download the PDF reference document.</p>
+  <button class="btn-print" onclick="window.print()">Print / Save PDF →</button>
+</div>
+
+<!-- DOC HEADER -->
+<div class="doc-header" id="overview">
+  <div class="doc-eyebrow">
+    <span class="doc-badge">Unit 42 · External Engagement</span>
+    <span class="doc-version">v1.0 · March 2026</span>
+  </div>
+  <h1 class="doc-title">Threat Intelligence<br><span>API Reference</span></h1>
+  <p class="doc-subtitle">
+    The Threat Intelligence API provides programmatic access to structured threat data,
+    adversary profiles, and IOC enrichment. Security teams use this API to integrate
+    real-time threat intelligence into SIEM platforms, automate alert enrichment, and
+    accelerate incident response investigations.
+  </p>
+  <div class="doc-meta">
+    <div class="doc-meta-item">Document Type: <strong>API Reference</strong></div>
+    <div class="doc-meta-item">Audience: <strong>Security Analysts · SOC Engineers · TI Practitioners</strong></div>
+    <div class="doc-meta-item">Frameworks: <strong>MITRE ATT&CK v18 · NIST SP 800-61r3</strong></div>
+    <div class="doc-meta-item">Shadow Sample: <strong>Original work, not proprietary</strong></div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="section-anchor" id="overview-body">
+  <div class="section-label">Overview</div>
+  <h2 class="section-title">What this API does.</h2>
+  <p class="body-text">
+    The Threat Intelligence API enables security operations teams to programmatically
+    query a curated database of threat indicators, adversary profiles, and campaign
+    intelligence derived from Unit 42 telemetry and open-source threat research.
+    All indicator data is enriched with <strong>MITRE ATT&CK technique mappings</strong>,
+    confidence scores on a 0–100 scale, and first/last seen timestamps.
+  </p>
+  <p class="body-text">
+    According to the 2026 Unit 42 Global Incident Response Report, attackers move from
+    initial access to data exfiltration in under one hour in the fastest observed incidents,
+    representing a 4x speed increase over prior years. Identity-based techniques drove
+    initial access in 65% of investigated incidents. This API is designed to give SOC
+    teams the intelligence velocity to match that threat speed.
+  </p>
+  <div class="info-box">
+    <div class="info-box-label">Shadow Sample Note</div>
+    <p>This is original technical writing produced to demonstrate documentation structure,
+    depth, and communication style. All technical content is sourced from publicly
+    available MITRE ATT&CK, NIST SP 800-61r3, and Unit 42 published research.
+    No proprietary Palo Alto Networks data is reproduced.</p>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- AUTHENTICATION -->
+<div class="section-anchor" id="authentication">
+  <div class="section-label">Authentication</div>
+  <h2 class="section-title">API Key Authentication</h2>
+  <p class="body-text">
+    All requests require a valid API key passed in the request header.
+    Keys are scoped to a subscription tier and carry rate limits accordingly.
+    Never expose your API key in client-side code or public repositories.
+  </p>
+
+  <h3 class="subsection-title">Required Header</h3>
+  <table class="kv-table">
+    <thead><tr><th>Header</th><th>Value</th><th>Required</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>X-API-Key</code></td>
+        <td>Your API key string issued at account creation</td>
+        <td class="td-req">Required</td>
+      </tr>
+      <tr>
+        <td><code>Content-Type</code></td>
+        <td><code>application/json</code></td>
+        <td class="td-req">Required (POST only)</td>
+      </tr>
+      <tr>
+        <td><code>Accept</code></td>
+        <td><code>application/json</code> or <code>application/stix+json</code></td>
+        <td class="td-opt">Optional</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="code-label">Example — Authenticated Request</div>
+  <pre class="code-block"><span class="c-method">curl</span> -X GET \
+```
+
+<span class="c-url">“https://api.threatintel.example/v1/indicators/ip/198.51.100.42”</span>   
+-H <span class="c-str">“X-API-Key: ti_live_a1b2c3d4e5f6g7h8i9j0”</span>   
+-H <span class="c-str">“Accept: application/json”</span></pre>
+
+```
+  <div class="warn-box" style="margin-top:20px;">
+    <div class="warn-box-label">Security Note</div>
+    <p class="body-text" style="margin:0;">
+      Store API keys as environment variables. Never hardcode them in source code.
+      Rotate keys immediately if exposure is suspected. Contact support to revoke a compromised key.
+    </p>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- RATE LIMITING -->
+<div class="section-anchor" id="rate-limiting">
+  <div class="section-label">Rate Limiting</div>
+  <h2 class="section-title">Request Limits by Tier</h2>
+  <p class="body-text">
+    Rate limits are enforced per API key per rolling 60-second window.
+    When a limit is reached the API returns <code style="color:var(--red);font-family:'IBM Plex Mono',monospace;font-size:.82rem;">429 Too Many Requests</code>
+    with a <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.82rem;">Retry-After</code> header
+    indicating seconds to wait before retrying.
+  </p>
+  <table class="tier-table">
+    <thead><tr><th>Tier</th><th>Requests / Min</th><th>Bulk IOCs / Request</th><th>Daily Quota</th></tr></thead>
+    <tbody>
+      <tr><td>Free</td><td>10</td><td>10</td><td>500</td></tr>
+      <tr><td>Standard</td><td>60</td><td>100</td><td>10,000</td></tr>
+      <tr><td>Professional</td><td>300</td><td>500</td><td>100,000</td></tr>
+      <tr><td>Enterprise</td><td>Unlimited</td><td>1,000</td><td>Unlimited</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- BASE URL -->
+<div class="section-anchor" id="base-url">
+  <div class="section-label">Base URL</div>
+  <h2 class="section-title">Endpoint Structure</h2>
+  <pre class="code-block">https://api.threatintel.example/v1/{resource}</pre>
+  <p class="body-text" style="margin-top:12px;">
+    All endpoints return <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.82rem;">application/json</code>
+    by default. Pass <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.82rem;">Accept: application/stix+json</code>
+    to receive STIX 2.1 formatted output for downstream tool integration.
+  </p>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ENDPOINT 1: GET /indicators -->
+<div class="section-anchor" id="ep-indicators">
+  <div class="section-label">Endpoints</div>
+  <div class="endpoint-card">
+    <div class="endpoint-header">
+      <span class="method-badge method-get">GET</span>
+      <span class="endpoint-route">/indicators/<span class="param">{type}</span>/<span class="param">{value}</span></span>
+      <span class="endpoint-desc">Single IOC Lookup</span>
+    </div>
+    <div class="endpoint-body">
+      <p class="endpoint-summary">
+        Retrieve threat intelligence for a single indicator of compromise. Returns threat
+        classification, severity rating, confidence score, associated malware families, linked
+        threat actor profiles, and MITRE ATT&CK technique mappings. The confidence score uses
+        a 0–100 scale derived from telemetry volume, source reliability, and indicator age.
+      </p>
+
+      <div class="param-label">Path Parameters</div>
+      <table class="params-table">
+        <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>type</td><td>string</td><td class="td-req">Required</td>
+            <td>Indicator type. One of: <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">ip</code> · <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">domain</code> · <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">url</code> · <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">hash</code> · <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">email</code></td>
+          </tr>
+          <tr>
+            <td>value</td><td>string</td><td class="td-req">Required</td>
+            <td>The indicator value to query (e.g., IP address, SHA256 hash, domain name)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="param-label">Query Parameters</div>
+      <table class="params-table">
+        <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>include_context</td><td>boolean</td><td class="td-opt">Optional</td>
+            <td>Include full threat actor profile in response. Default: <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">false</code></td>
+          </tr>
+          <tr>
+            <td>format</td><td>string</td><td class="td-opt">Optional</td>
+            <td>Response format: <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">json</code> (default) or <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">stix</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="code-label">Example Request</div>
+      <pre class="code-block"><span class="c-method">curl</span> -X GET \
+```
+
+<span class="c-url">“https://api.threatintel.example/v1/indicators/ip/198.51.100.42?include_context=true”</span>   
+-H <span class="c-str">“X-API-Key: $API_KEY”</span></pre>
+
+```
+      <div class="code-label">Response — 200 OK</div>
+      <pre class="code-block"><span class="c-brk">{</span>
+```
+
+<span class="c-key">“indicator”</span>: <span class="c-str">“198.51.100.42”</span>,
+<span class="c-key">“type”</span>: <span class="c-str">“ip”</span>,
+<span class="c-key">“classification”</span>: <span class="c-str">“malicious”</span>,
+<span class="c-key">“severity”</span>: <span class="c-str">“critical”</span>,
+<span class="c-key">“confidence”</span>: <span class="c-num">94</span>,
+<span class="c-key">“first_seen”</span>: <span class="c-str">“2025-11-03T08:14:22Z”</span>,
+<span class="c-key">“last_seen”</span>: <span class="c-str">“2026-03-18T16:42:01Z”</span>,
+<span class="c-key">“threat_types”</span>: [<span class="c-str">“command-and-control”</span>, <span class="c-str">“data-exfiltration”</span>],
+<span class="c-key">“malware_families”</span>: [<span class="c-str">“POWERSTATS”</span>],
+<span class="c-key">“attack_techniques”</span>: [
+<span class="c-brk">{</span>
+<span class="c-key">“technique_id”</span>: <span class="c-str">“T1071.001”</span>,
+<span class="c-key">“name”</span>: <span class="c-str">“Application Layer Protocol: Web Protocols”</span>,
+<span class="c-key">“tactic”</span>: <span class="c-str">“Command and Control”</span>
+<span class="c-brk">}</span>
+],
+<span class="c-key">“context”</span>: <span class="c-brk">{</span>
+<span class="c-key">“threat_actor”</span>: <span class="c-str">“Boggy Serpens”</span>,
+<span class="c-key">“aliases”</span>: [<span class="c-str">“MuddyWater”</span>, <span class="c-str">“G0069”</span>, <span class="c-str">“TA450”</span>],
+<span class="c-key">“attribution”</span>: <span class="c-str">“Iran · MOIS assessed”</span>
+<span class="c-brk">}</span>
+<span class="c-brk">}</span></pre>
+<div class="source-cite">MITRE ATT&CK T1071.001 · attack.mitre.org · Boggy Serpens / MuddyWater: MITRE ATT&CK G0069, updated October 2025 (v18) · Malpedia: malpedia.caad.fkie.fraunhofer.de/actor/muddywater</div>
+</div>
+</div>
+</div>
+
+```
+<!-- ENDPOINT 2: POST /indicators/bulk -->
+<div class="section-anchor" id="ep-bulk">
+  <div class="endpoint-card">
+    <div class="endpoint-header">
+      <span class="method-badge method-post">POST</span>
+      <span class="endpoint-route">/indicators/<span class="param">bulk</span></span>
+      <span class="endpoint-desc">Batch Enrichment — up to 1,000 IOCs</span>
+    </div>
+    <div class="endpoint-body">
+      <p class="endpoint-summary">
+        Submit up to 1,000 indicators in a single request for batch enrichment.
+        Designed for high-volume SOC workflows and automated SIEM enrichment pipelines.
+        Unknown indicators return <code style="color:var(--red);font-family:'IBM Plex Mono',monospace;font-size:.82rem;">classification: "unknown"</code>
+        rather than being omitted — ensuring no silent failures in automation.
+        Results maintain the same order as the input array.
+      </p>
+
+      <div class="param-label">Request Body</div>
+      <table class="params-table">
+        <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>indicators</td><td>array</td><td class="td-req">Required</td>
+            <td>Array of indicator objects. Maximum 1,000 per request.</td>
+          </tr>
+          <tr>
+            <td>indicators[].type</td><td>string</td><td class="td-req">Required</td>
+            <td>Indicator type: <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">ip</code> · <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">domain</code> · <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">url</code> · <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">hash</code> · <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">email</code></td>
+          </tr>
+          <tr>
+            <td>indicators[].value</td><td>string</td><td class="td-req">Required</td>
+            <td>The indicator value to enrich</td>
+          </tr>
+          <tr>
+            <td>include_context</td><td>boolean</td><td class="td-opt">Optional</td>
+            <td>Include threat actor profiles in results. Increases response size. Default: <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">false</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="code-label">Python — Production Implementation with Retry Logic</div>
+      <pre class="code-block"><span class="c-kw">import</span> requests, time, os
+```
+
+API_KEY = os.environ[<span class="c-str">“TI_API_KEY”</span>]
+URL = <span class="c-str">“https://api.threatintel.example/v1/indicators/bulk”</span>
+
+<span class="c-kw">def</span> <span class="c-fn">bulk_enrich</span>(indicators: list, max_retries: int = <span class="c-num">3</span>) -> dict:
+<span class="c-str">”””
+Submit up to 1,000 indicators for batch enrichment.
+Implements exponential backoff on rate limit responses.
+Returns enriched results dict keyed by indicator value.
+“””</span>
+<span class="c-kw">if</span> len(indicators) > <span class="c-num">1000</span>:
+<span class="c-kw">raise</span> ValueError(<span class="c-str">f”Max 1000 indicators per request, got {len(indicators)}”</span>)
+
+```
+payload = <span class="c-brk">{</span><span class="c-str">"indicators"</span>: indicators<span class="c-brk">}</span>
+headers = <span class="c-brk">{</span>
+    <span class="c-str">"X-API-Key"</span>: API_KEY,
+    <span class="c-str">"Content-Type"</span>: <span class="c-str">"application/json"</span>
+<span class="c-brk">}</span>
+
+<span class="c-kw">for</span> attempt <span class="c-kw">in</span> range(max_retries):
+    <span class="c-kw">try</span>:
+        resp = requests.post(URL, json=payload, headers=headers, timeout=<span class="c-num">30</span>)
+
+        <span class="c-kw">if</span> resp.status_code == <span class="c-num">429</span>:
+            wait = <span class="c-kw">int</span>(resp.headers.get(<span class="c-str">"Retry-After"</span>, <span class="c-num">60</span>))
+            time.sleep(wait * (<span class="c-num">2</span> ** attempt))  <span class="c-cmt"># exponential backoff</span>
+            <span class="c-kw">continue</span>
+
+        resp.raise_for_status()
+        <span class="c-kw">return</span> resp.json()
+
+    <span class="c-kw">except</span> requests.exceptions.Timeout:
+        <span class="c-kw">if</span> attempt == max_retries - <span class="c-num">1</span>:
+            <span class="c-kw">raise</span>
+        time.sleep(<span class="c-num">2</span> ** attempt)
+
+<span class="c-kw">raise</span> RuntimeError(<span class="c-str">"Max retries exceeded"</span>)
+```
+
+<span class="c-cmt"># Usage</span>
+iocs = [
+<span class="c-brk">{</span><span class="c-str">“type”</span>: <span class="c-str">“ip”</span>, <span class="c-str">“value”</span>: <span class="c-str">“198.51.100.42”</span><span class="c-brk">}</span>,
+<span class="c-brk">{</span><span class="c-str">“type”</span>: <span class="c-str">“domain”</span>, <span class="c-str">“value”</span>: <span class="c-str">“malicious-c2.example.com”</span><span class="c-brk">}</span>,
+<span class="c-brk">{</span><span class="c-str">“type”</span>: <span class="c-str">“hash”</span>, <span class="c-str">“value”</span>: <span class="c-str">“a1b2c3d4e5f6…”</span><span class="c-brk">}</span>
+]
+results = bulk_enrich(iocs)
+print(results[<span class="c-str">“results”</span>])</pre>
+</div>
+</div>
+</div>
+
+```
+<!-- ENDPOINT 3: GET /actors -->
+<div class="section-anchor" id="ep-actors">
+  <div class="endpoint-card">
+    <div class="endpoint-header">
+      <span class="method-badge method-get">GET</span>
+      <span class="endpoint-route">/actors/<span class="param">{actor_name}</span></span>
+      <span class="endpoint-desc">Threat Actor Profile</span>
+    </div>
+    <div class="endpoint-body">
+      <p class="endpoint-summary">
+        Retrieve a detailed threat actor profile including attribution, targeted sectors,
+        active campaigns, known tooling, and MITRE ATT&CK technique usage.
+        Actor data is consistent with publicly documented MITRE ATT&CK Group profiles.
+      </p>
+
+      <div class="code-label">Example Response — Boggy Serpens (MuddyWater / G0069)</div>
+      <pre class="code-block"><span class="c-brk">{</span>
+```
+
+<span class="c-key">“name”</span>: <span class="c-str">“Boggy Serpens”</span>,
+<span class="c-key">“aliases”</span>: [<span class="c-str">“MuddyWater”</span>, <span class="c-str">“G0069”</span>, <span class="c-str">“TA450”</span>, <span class="c-str">“Mango Sandstorm”</span>, <span class="c-str">“MERCURY”</span>],
+<span class="c-key">“attribution”</span>: <span class="c-str">“Iran · Ministry of Intelligence and Security (MOIS)”</span>,
+<span class="c-key">“active_since”</span>: <span class="c-str">“2017”</span>,
+<span class="c-key">“target_sectors”</span>: [
+<span class="c-str">“Telecommunications”</span>, <span class="c-str">“Government”</span>, <span class="c-str">“Defense”</span>,
+<span class="c-str">“Oil and Gas”</span>, <span class="c-str">“Aviation”</span>
+],
+<span class="c-key">“target_regions”</span>: [<span class="c-str">“Middle East”</span>, <span class="c-str">“Asia”</span>, <span class="c-str">“North America”</span>, <span class="c-str">“Europe”</span>],
+<span class="c-key">“techniques”</span>: [
+<span class="c-brk">{</span>
+<span class="c-key">“id”</span>: <span class="c-str">“T1566.001”</span>,
+<span class="c-key">“name”</span>: <span class="c-str">“Spearphishing Attachment”</span>,
+<span class="c-key">“tactic”</span>: <span class="c-str">“Initial Access”</span>
+<span class="c-brk">}</span>,
+<span class="c-brk">{</span>
+<span class="c-key">“id”</span>: <span class="c-str">“T1053.005”</span>,
+<span class="c-key">“name”</span>: <span class="c-str">“Scheduled Task/Job”</span>,
+<span class="c-key">“tactic”</span>: <span class="c-str">“Persistence”</span>
+<span class="c-brk">}</span>,
+<span class="c-brk">{</span>
+<span class="c-key">“id”</span>: <span class="c-str">“T1059.001”</span>,
+<span class="c-key">“name”</span>: <span class="c-str">“PowerShell”</span>,
+<span class="c-key">“tactic”</span>: <span class="c-str">“Execution”</span>
+<span class="c-brk">}</span>
+],
+<span class="c-key">“primary_tooling”</span>: [<span class="c-str">“POWERSTATS”</span>, <span class="c-str">“DCHSpy”</span>, <span class="c-str">“MoriAgent”</span>],
+<span class="c-key">“last_observed”</span>: <span class="c-str">“2026-02”</span>
+<span class="c-brk">}</span></pre>
+<div class="source-cite">MITRE ATT&CK G0069 · attack.mitre.org/groups/G0069 · Updated October 2025 (v18) · Lookout Discovers Iranian APT MuddyWater Leveraging DCHSpy, July 2025 · FBI/CISA/CNMF Advisory, February 2022</div>
+</div>
+</div>
+</div>
+
+```
+<!-- ENDPOINT 4: GET /search -->
+<div class="section-anchor" id="ep-search">
+  <div class="endpoint-card">
+    <div class="endpoint-header">
+      <span class="method-badge method-get">GET</span>
+      <span class="endpoint-route">/search</span>
+      <span class="endpoint-desc">Full-text Intelligence Search</span>
+    </div>
+    <div class="endpoint-body">
+      <p class="endpoint-summary">
+        Search across the full threat intelligence database by keyword, indicator type,
+        threat actor name, MITRE ATT&CK technique ID, or date range.
+        Returns paginated results sorted by relevance score descending.
+      </p>
+
+      <div class="param-label">Query Parameters</div>
+      <table class="params-table">
+        <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>q</td><td>string</td><td class="td-req">Required</td><td>Search query string. Supports actor names, technique IDs (T1566), malware families.</td></tr>
+          <tr><td>type</td><td>string</td><td class="td-opt">Optional</td><td>Filter by type: <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">indicator</code> · <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">actor</code> · <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">malware</code> · <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.76rem;">campaign</code></td></tr>
+          <tr><td>from_date</td><td>ISO 8601</td><td class="td-opt">Optional</td><td>Filter results observed after this date</td></tr>
+          <tr><td>to_date</td><td>ISO 8601</td><td class="td-opt">Optional</td><td>Filter results observed before this date</td></tr>
+          <tr><td>page</td><td>integer</td><td class="td-opt">Optional</td><td>Pagination offset. Default: 1</td></tr>
+          <tr><td>limit</td><td>integer</td><td class="td-opt">Optional</td><td>Results per page. Default: 25. Max: 100</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- RESPONSE FIELDS -->
+<div class="section-anchor" id="response-fields">
+  <div class="section-label">Reference</div>
+  <h2 class="section-title">Core Response Fields</h2>
+  <table class="kv-table">
+    <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>classification</code></td><td>string</td><td>One of: <code>malicious</code> · <code>suspicious</code> · <code>benign</code> · <code>unknown</code></td></tr>
+      <tr><td><code>severity</code></td><td>string</td><td>One of: <code>critical</code> · <code>high</code> · <code>medium</code> · <code>low</code> · <code>informational</code></td></tr>
+      <tr><td><code>confidence</code></td><td>integer</td><td>Confidence score 0–100. Derived from telemetry volume, source reliability, and indicator age.</td></tr>
+      <tr><td><code>first_seen</code></td><td>ISO 8601</td><td>Earliest observation timestamp in UTC</td></tr>
+      <tr><td><code>last_seen</code></td><td>ISO 8601</td><td>Most recent observation timestamp in UTC</td></tr>
+      <tr><td><code>threat_types</code></td><td>array</td><td>Activity classifications: <code>command-and-control</code> · <code>data-exfiltration</code> · <code>phishing</code> · <code>malware-distribution</code></td></tr>
+      <tr><td><code>attack_techniques</code></td><td>array</td><td>MITRE ATT&CK technique objects with <code>technique_id</code>, <code>name</code>, and <code>tactic</code></td></tr>
+      <tr><td><code>malware_families</code></td><td>array</td><td>Associated malware family names as documented in open threat research</td></tr>
+      <tr><td><code>context</code></td><td>object</td><td>Threat actor attribution object. Returned when <code>include_context=true</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ERROR CODES -->
+<div class="section-anchor" id="error-codes">
+  <div class="section-label">Error Reference</div>
+  <h2 class="section-title">HTTP Status Codes</h2>
+  <p class="body-text">
+    All error responses follow the IETF RFC 7807 Problem Details standard,
+    returning a JSON body with <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.82rem;">type</code>,
+    <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.82rem;">title</code>,
+    <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.82rem;">status</code>, and
+    <code style="color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.82rem;">detail</code> fields.
+  </p>
+  <table class="error-table">
+    <thead><tr><th>Code</th><th>Meaning</th><th>Common Cause</th><th>Recommended Action</th></tr></thead>
+    <tbody>
+      <tr><td class="td-200">200</td><td>OK</td><td>Request succeeded</td><td>Process response normally</td></tr>
+      <tr><td class="td-200">207</td><td>Multi-Status</td><td>Bulk request with partial results</td><td>Check per-item status fields in response array</td></tr>
+      <tr><td class="td-4xx">400</td><td>Bad Request</td><td>Missing or invalid parameter format</td><td>Validate request against this reference before retrying</td></tr>
+      <tr><td class="td-4xx">401</td><td>Unauthorized</td><td>Missing, invalid, or revoked API key</td><td>Verify header format: <code>X-API-Key: {your_key}</code></td></tr>
+      <tr><td class="td-4xx">403</td><td>Forbidden</td><td>Action not permitted on current tier</td><td>Upgrade subscription or contact support</td></tr>
+      <tr><td class="td-4xx">404</td><td>Not Found</td><td>Indicator or actor not in database</td><td>Check spelling; indicator may not yet be indexed</td></tr>
+      <tr><td class="td-4xx">422</td><td>Unprocessable</td><td>Request syntax valid but semantically invalid</td><td>Review field constraints in parameter tables above</td></tr>
+      <tr><td class="td-4xx">429</td><td>Too Many Requests</td><td>Rate limit exceeded for your tier</td><td>Wait for <code>Retry-After</code> seconds; implement exponential backoff</td></tr>
+      <tr><td class="td-5xx">500</td><td>Server Error</td><td>Unexpected server-side failure</td><td>Retry with exponential backoff; report if persistent</td></tr>
+      <tr><td class="td-5xx">503</td><td>Service Unavailable</td><td>Planned maintenance or overload</td><td>Check status page; retry after delay</td></tr>
+    </tbody>
+  </table>
+  <div class="source-cite">Error response structure: IETF RFC 7807 Problem Details for HTTP APIs · tools.ietf.org/html/rfc7807</div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- SIEM WORKFLOW -->
+<div class="section-anchor" id="siem-workflow">
+  <div class="section-label">Integration Guide</div>
+  <h2 class="section-title">SIEM Enrichment Workflow</h2>
+  <p class="body-text">
+    The recommended pattern for SIEM integration is a five-step enrichment pipeline
+    triggered on alert creation. This pattern is consistent with NIST SP 800-61r3
+    incident response lifecycle guidance and MITRE ATT&CK tactic-based detection conventions.
+  </p>
+  <table class="kv-table">
+    <thead><tr><th>Step</th><th>Action</th><th>ATT&CK Alignment</th><th>Output</th></tr></thead>
+    <tbody>
+      <tr><td><code>01</code></td><td><strong>Extract IOCs</strong> — Parse alert fields for IPs, domains, hashes, URLs. Normalize formats before querying.</td><td>Pre-enrichment</td><td>Normalized IOC list</td></tr>
+      <tr><td><code>02</code></td><td><strong>Bulk Lookup</strong> — Submit all IOCs from a single alert in one API call. Minimizes quota usage.</td><td>T1071 · T1041 · T1566</td><td>Enriched IOC records</td></tr>
+      <tr><td><code>03</code></td><td><strong>Apply Confidence Threshold</strong> — Auto-escalate at 90+. Monitor at 50–74. Suppress below 50.</td><td>All tactics</td><td>Prioritized alert queue</td></tr>
+      <tr><td><code>04</code></td><td><strong>Map to MITRE ATT&CK</strong> — Tag alert with technique IDs from <code>attack_techniques</code> array. Enables behavioral correlation.</td><td>MITRE v18, Oct 2025</td><td>Tagged, correlated alert</td></tr>
+      <tr><td><code>05</code></td><td><strong>Update Case</strong> — Write enriched context to SIEM case. If severity critical and confidence &ge;85, notify analyst immediately.</td><td>All phases</td><td>Enriched case record</td></tr>
+    </tbody>
+  </table>
+  <div class="source-cite">Sources: NIST SP 800-61r3 Computer Security Incident Handling Guide · MITRE ATT&CK v18 Enterprise Matrix (October 2025) · Unit 42 2026 Global Incident Response Report · Cortex XSOAR Unit 42 Integration Pack v1.0.15 (March 2026)</div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- CITATIONS -->
+<div class="section-anchor" id="sources">
+  <div class="section-label">Citations</div>
+  <h2 class="section-title">Sources & References</h2>
+  <p class="body-text">All technical content in this document is sourced from publicly available research. No proprietary Palo Alto Networks data is reproduced.</p>
+  <table class="kv-table">
+    <thead><tr><th>Source</th><th>Reference</th></tr></thead>
+    <tbody>
+      <tr><td>MITRE ATT&CK v18</td><td>Enterprise Matrix, October 2025 · attack.mitre.org</td></tr>
+      <tr><td>MITRE ATT&CK G0069</td><td>MuddyWater / Boggy Serpens Group Profile · attack.mitre.org/groups/G0069</td></tr>
+      <tr><td>NIST SP 800-61r3</td><td>Computer Security Incident Handling Guide · csrc.nist.gov</td></tr>
+      <tr><td>IETF RFC 7807</td><td>Problem Details for HTTP APIs · tools.ietf.org/html/rfc7807</td></tr>
+      <tr><td>Unit 42 2026 IR Report</td><td>Global Incident Response Report · unit42.paloaltonetworks.com</td></tr>
+      <tr><td>Cortex XSOAR Marketplace</td><td>Unit 42 Threat Intelligence Pack v1.0.15, March 2026 · cortex.marketplace.pan.dev</td></tr>
+      <tr><td>Malpedia</td><td>MuddyWater Actor Profile · malpedia.caad.fkie.fraunhofer.de/actor/muddywater</td></tr>
+      <tr><td>FBI/CISA/CNMF</td><td>Iranian Government-Sponsored Cyber Operations Advisory, February 2022</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div class="footer-brand">Cipher<span>&</span>Counsel</div>
+  <div class="footer-note">Technical Writing Portfolio · Shadow Sample · v1.0 · March 2026 · Original work — not proprietary</div>
+</div>
+```
+
+  </main>
+</div>
+
+<script>
+  // Active sidebar link on scroll
+  const links = document.querySelectorAll('.sidebar-link');
+  const anchors = document.querySelectorAll('.section-anchor, .doc-header, .endpoint-card');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    anchors.forEach(a => {
+      if (window.scrollY >= a.offsetTop - 100) current = a.id;
+    });
+    links.forEach(l => {
+      l.classList.remove('active');
+      if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
