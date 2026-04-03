@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cipher&Counsel — Cybersecurity & Technical Writing</title>
+<title>AP — Cybersecurity & Technical Writing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
@@ -83,7 +83,7 @@
     text-decoration: none; transition: background .2s, color .2s;
   }
   .nav-cta:hover { background: var(--red); color: var(--white); }
-  section { position: relative; z-index: 1; }
+  section { position: relative; z-index: 1; margin: 0; padding: 0; }
 
   /* HERO */
   #hero {
@@ -225,7 +225,7 @@
   .hero-left > *:nth-child(4) { animation-delay: .4s; }
 
   /* SHARED SECTION */
-  .section-wrap { max-width: 1100px; margin: 0 auto; padding: 48px 60px; }
+  .section-wrap { max-width: 1100px; margin: 0 auto; padding: 60px 60px; }
   .section-tag {
     font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
     color: var(--red); letter-spacing: .14em; text-transform: uppercase;
@@ -246,18 +246,7 @@
     max-width: 520px; line-height: 1.82; margin-bottom: 28px;
     font-weight: 400;
   }
-<!-- VIDEO — ABOUT INTRO -->
-<section class="yt-panel">
-  <div class="yt-overlay"></div>
-  <div class="yt-frame-wrap">
-    <iframe
-      src="https://www.youtube.com/embed/bqwNqy-JhgE?autoplay=1&mute=1&loop=1&playlist=bqwNqy-JhgE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
-  </div>
-  </section>
+
   /* ABOUT */
   #about { background: var(--navy); }
   .about-grid {
@@ -517,66 +506,7 @@
     .port-table--playbook td:nth-child(3) { display: none; }
   }
 
-  /* VIDEO PANELS — PAN style */
-  .vid-panel {
-    position: relative; overflow: hidden;
-    min-height: 420px; display: flex;
-    align-items: center; justify-content: center;
-  }
-  .vid-canvas {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    display: block; z-index: 0;
-  }
-  .vid-video {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover; z-index: 0;
-    filter: saturate(1.05) contrast(1.05);
-  }
-  .vid-overlay {
-    position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(10,10,10,0.75) 100%);
-  }
-  .vid-panel--alt .vid-overlay {
-    background: linear-gradient(135deg, rgba(10,10,10,0.78) 0%, rgba(0,0,0,0.88) 100%);
-  }
-  .vid-content {
-    position: relative; z-index: 2;
-    max-width: 780px; padding: 80px 60px;
-    text-align: center;
-  }
-  .vid-content-card {
-    background: rgba(8, 8, 8, 0.58);
-    border: 1px solid rgba(255,255,255,0.14);
-    backdrop-filter: blur(3px);
-    padding: 32px 34px;
-  }
-  .vid-eyebrow {
-    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
-    color: var(--red); letter-spacing: .2em; text-transform: uppercase;
-    margin-bottom: 20px; display: flex; align-items: center;
-    justify-content: center; gap: 12px;
-  }
-  .vid-eyebrow::before, .vid-eyebrow::after {
-    content: ''; display: inline-block;
-    width: 28px; height: 1px; background: var(--red);
-  }
-  h3.vid-headline {
-    font-family: 'Outfit', sans-serif; font-weight: 800;
-    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
-    color: var(--white); line-height: 1.2;
-    margin-bottom: 20px; letter-spacing: -0.01em;
-  }
-  .vid-body {
-    font-size: 1rem; color: var(--muted);
-    line-height: 1.82; max-width: 560px; margin: 0 auto;
-  }
-
   @media (max-width: 900px) {
-    .vid-content { padding: 60px 24px; }
-    h3.vid-headline { font-size: 1.4rem; }
-  }
 
   /* PORTFOLIO SECTION */
   .port-card {
@@ -731,46 +661,6 @@
   @media (max-width: 540px) {
     .projects-grid, .skills-grid { grid-template-columns: 1fr; }
   }
-.yt-panel {
-  position: relative; overflow: hidden;
-  min-height: 480px; display: flex;
-  align-items: center; justify-content: center;
-  background: #000;
-}
-.yt-frame-wrap {
-  position: absolute; inset: 0;
-  z-index: 0; pointer-events: none;
-}
-.yt-frame-wrap iframe {
-  position: absolute; top: 50%; left: 50%;
-  width: 100vw; height: 56.25vw;
-  min-height: 100%; min-width: 177.77vh;
-  transform: translate(-50%, -50%);
-  border: none;
-}
-.yt-overlay {
-  position: absolute; inset: 0;
-  background: rgba(0,0,0,0.72); z-index: 1;
-}
-.yt-content {
-  position: relative; z-index: 2;
-  text-align: center; max-width: 700px;
-  padding: 80px 40px;
-}
-.yt-eyebrow {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: .72rem; color: var(--red);
-  letter-spacing: .18em; text-transform: uppercase;
-  margin-bottom: 16px;
-}
-.yt-headline {
-  font-family: 'Outfit', sans-serif; font-weight: 800;
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
-  color: #ffffff; line-height: 1.15; margin-bottom: 16px;
-}
-.yt-sub {
-  font-size: .97rem; color: var(--muted); line-height: 1.75;
-}  
 </style>
 </head>
 <body>
@@ -781,10 +671,11 @@
 <nav>
   <div class="nav-logo">A<span>P</span></div>
   <ul class="nav-links">
-    <li><a href="about.html">About Page</a></li>
-    <li><a href="api.html">API Page</a></li>
-    <li><a href="siem.html">SIEM Page</a></li>
-    <li><a href="siem-playbook.html">SIEM Playbook</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Credentials</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Get in touch</a>
@@ -805,7 +696,9 @@
       <div class="hero-actions">
         <a href="#experience" class="btn-primary">View Experience</a>
         <a href="#portfolio" class="btn-secondary">View Portfolio →</a>
- 
+      </div>
+    </div>
+
     <div class="hero-card">
       <div class="card-label">// profile.json</div>
       <div class="stats-grid">
@@ -831,29 +724,17 @@
         <div class="cert-pill"><span class="cert-dot"></span>Google Project Management — 2025</div>
         <div class="cert-pill"><span class="cert-dot"></span>Agile Product Owner — 2025</div>
         <div class="cert-pill"><span class="cert-dot blue"></span>CIPP/US — In Progress 2026</div>
-     </div>
+      </div>
+    </div>
+  </div>
 </section>
-<!-- VIDEO — ABOUT INTRO -->
-<section class="yt-panel">
-  <div class="yt-overlay"></div>
-  <div class="yt-frame-wrap">
-    <iframe
-      src="https://www.youtube.com/embed/bqwNqy-JhgE?autoplay=1&mute=1&loop=1&playlist=bqwNqy-JhgE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
-   </div>
-</section>
+
 <!-- ABOUT -->
 <section id="about">
   <div class="section-wrap">
     <div class="section-tag">About</div>
     <h2>Two tracks. One destination.</h2>
     <p class="section-sub">Where technical fluency meets the ability to communicate what it means to the people who need to act on it.</p>
-    <div class="hero-actions" style="margin-bottom: 24px;">
-      <a href="about.html" class="btn-secondary">Open About Page</a>
-    </div>
     <div class="about-grid reveal">
       <div class="about-text">
         <p>Pursuing a <strong>BBA in Cybersecurity</strong> with a Minor in Public Policy and Law at the University of Texas at San Antonio, maintaining a 4.0 GPA and President's List recognition. Before returning to school, five years were spent as a Project Manager at a digital marketing agency — producing external-facing technical content, managing cross-functional teams, and translating complex findings into clear deliverables for demanding clients.</p>
@@ -872,19 +753,9 @@
         <div class="pillar">
           <div class="pillar-title">Organization &amp; Problem Solving</div>
           <div class="pillar-desc">Looking at an ambiguous set of facts, imposing structure, identifying what matters, and delivering a clear defensible recommendation — every time.</div>
-   </div>
-</section>
-<!-- VIDEO PANEL 1 — MISSION (like PAN's Our Mission) -->
-<section class="vid-panel" id="mission">
-  <video class="vid-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1" disablepictureinpicture>
-    <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-city-1964-large.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-  <div class="vid-overlay"></div>
-  <div class="vid-content vid-content-card">
-    <div class="vid-eyebrow">My Mission</div>
-    <h3 class="vid-headline">To translate what threat researchers discover into language that moves the people who need to act on it.</h3>
-    <p class="vid-body">Cybersecurity research only protects organizations when the findings reach the right audience in the right format. That gap between technical discovery and human action is where this work lives.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -908,6 +779,9 @@
             <span class="tag">Threat Intelligence</span><span class="tag">Technical Writing</span>
             <span class="tag">Unit 42</span><span class="tag">AI Tools</span><span class="tag">External Engagement</span>
           </div>
+        </div>
+      </div>
+
       <div class="exp-item">
         <div>
           <div class="exp-date">2025 — Ongoing</div>
@@ -919,7 +793,10 @@
           <div class="exp-tags">
             <span class="tag">MITRE ATT&CK</span><span class="tag">NIST CSF</span>
             <span class="tag">Incident Response</span><span class="tag">Business Continuity</span><span class="tag">ISO 22301</span>
- 
+          </div>
+        </div>
+      </div>
+
       <div class="exp-item">
         <div>
           <div class="exp-date">Aug 2020 — Aug 2025</div>
@@ -932,13 +809,12 @@
             <span class="tag">Agile / Scrum</span><span class="tag">Technical Writing</span>
             <span class="tag">Client Management</span><span class="tag">Documentation</span><span class="tag">Team Leadership</span>
           </div>
-     </section>
-
-    <div class="vid-eyebrow">What I Do</div>
-    <h3 class="vid-headline">I communicate complex security findings to every audience that needs to understand them.</h3>
-    <p class="vid-body">From MITRE ATT&amp;CK-mapped threat reports to executive briefings to REST API references — the deliverable changes. The discipline of translating technical truth into clear, actionable writing stays constant.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
+
 <!-- CREDENTIALS -->
 <section id="projects">
   <div class="section-wrap">
@@ -969,20 +845,6 @@
       </div>
 
     </div>
-  </div>
-</section>
-
-<!-- VIDEO PANEL 3 — MY VALUE (like PAN's Our Value) -->
-<section class="vid-panel" id="myvalue">
-  <video class="vid-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1" disablepictureinpicture>
-    <source src="https://assets.mixkit.co/videos/preview/mixkit-system-hacking-and-coding-on-a-screen-41576-large.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-  <div class="vid-overlay"></div>
-  <div class="vid-content vid-content-card">
-    <div class="vid-eyebrow">My Value</div>
-    <h3 class="vid-headline">Most candidates bring technical depth or communication skill. This profile brings both — backed by five years of professional evidence.</h3>
-    <p class="vid-body">A 4.0 GPA in Cybersecurity. A Minor in Public Policy and Law. Three industry certifications. A published API reference. And a career's worth of practice turning complexity into clarity.</p>
   </div>
 </section>
 
@@ -1017,8 +879,7 @@
           <li>Google Gemini</li><li>NotebookLM</li>
           <li>AI Workflow Optimization</li><li>Microsoft 365</li>
           <li>Google Workspace</li><li>Python (scripting)</li>
-          <li>Bash / CLI</li><li>Git</li>
-          <li>GitHub</li><li>Codex</li><li>OpenAI</li>
+          <li>Bash / CLI</li><li>Git / GitHub</li>
         </ul>
       </div>
       <div class="skill-group">
@@ -1050,7 +911,7 @@
         </div>
         <div style="display:flex;gap:10px;align-items:center;">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--muted);">Sources: MITRE ATT&amp;CK · IETF RFC 7807 · Cortex XSOAR Docs</span>
-          <a href="api.html" class="port-link">Open API Page →</a>
+          <a href="#" class="port-link">View on GitHub →</a>
         </div>
       </div>
       <div class="port-card-body">
@@ -1169,8 +1030,7 @@
         </div>
         <div style="display:flex;gap:10px;align-items:center;">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--muted);">Sources: NIST SP 800-61r3 · MITRE ATT&amp;CK · Unit 42 IR Report 2026</span>
-          <a href="siem.html" class="port-link">Open SIEM Page →</a>
-          <a href="siem-playbook.html" class="port-link">Open Playbook →</a>
+          <a href="#" class="port-link">View Document →</a>
         </div>
       </div>
       <div class="port-card-body">
@@ -1254,12 +1114,11 @@
         <div class="section-tag">Contact</div>
         <div class="contact-tagline">Let's secure the<br>future <span class="red">together.</span></div>
         <p class="contact-sub">Open to internship opportunities in cybersecurity, technical writing, GRC, and privacy law. U.S. Citizen. Available Summer 2026.</p>
-        <a href="#" class="btn-primary">Get in Touch</a>
       </div>
       <div class="contact-links">
         <div class="contact-link">
           <div class="contact-icon">◈</div>
-          <div><div class="contact-link-label">Institution</div><div class="contact-link-value">UTSA — BBA Cybersecurity · Minor: Public Policy &amp; Law </div></div>
+          <div><div class="contact-link-label">Institution</div><div class="contact-link-value">UTSA — BBA Cybersecurity · Minor: Public Policy &amp; Law · Class of 2028</div></div>
         </div>
         <div class="contact-link">
           <div class="contact-icon">✦</div>
@@ -1294,102 +1153,12 @@
     el.addEventListener('mouseleave',()=>{ cur.style.transform='translate(-50%,-50%) scale(1)'; cur.style.opacity='1'; });
   });
 
-  // ── CANVAS ANIMATED BACKGROUNDS (PAN video-behind-text effect) ──
-  function initCanvas(id, palette) {
-    const canvas = document.getElementById(id);
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let W, H, particles = [], t = 0;
-
-    function resize() {
-      W = canvas.width = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    // Particle field
-    for (let i = 0; i < 90; i++) {
-      particles.push({
-        x: Math.random() * 2000,
-        y: Math.random() * 1200,
-        r: Math.random() * 1.4 + 0.2,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.2,
-        a: Math.random() * 0.6 + 0.1,
-        color: palette[Math.floor(Math.random() * palette.length)]
-      });
-    }
-
-    function draw() {
-      t += 0.006;
-      ctx.clearRect(0, 0, W, H);
-
-      // Flowing gradient base — warmer, more visible
-      const g = ctx.createLinearGradient(0, 0, W, H);
-      g.addColorStop(0, palette[0] + '33');
-      g.addColorStop(0.5, palette[1] + '22');
-      g.addColorStop(1, palette[2] + '1a');
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, W, H);
-
-      // Slow wave shapes — more energetic
-      for (let k = 0; k < 4; k++) {
-        ctx.beginPath();
-        ctx.moveTo(0, H * 0.25 + k * 70);
-        for (let x = 0; x <= W; x += 6) {
-          const y = H * (0.25 + k * 0.15) +
-            Math.sin(x / 150 + t + k) * 55 +
-            Math.sin(x / 80 + t * 1.4 + k * 0.9) * 28;
-          ctx.lineTo(x, y);
-        }
-        ctx.lineTo(W, H); ctx.lineTo(0, H);
-        ctx.closePath();
-        ctx.fillStyle = palette[k % palette.length] + '11';
-        ctx.fill();
-      }
-
-      // Particles — brighter
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-        ctx.beginPath();
-        ctx.arc(p.x % W, p.y % H, p.r, 0, Math.PI * 2);
-        const alpha = Math.floor(p.a * 255).toString(16).padStart(2, '0');
-        ctx.fillStyle = p.color + alpha;
-        ctx.fill();
-      });
-
-      // Connection lines — more visible
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 130) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            const a = Math.floor((1 - dist / 130) * 55).toString(16).padStart(2, '0');
-            ctx.strokeStyle = palette[0] + a;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-
-      requestAnimationFrame(draw);
-    }
-    draw();
-  }
-
-  // Panel 1 — warm red-orange threat network (less dooming, more energetic)
-  initCanvas('canvas1', ['#e8291e', '#ff6b35', '#c0392b']);
-  // Panel 2 — bright blue-cyan data stream
-  initCanvas('canvas2', ['#4fc3f7', '#00bcd4', '#29b6f6']);
-  // Panel 3 — warm amber-red convergence
-  initCanvas('canvas3', ['#e8291e', '#ff8c00', '#4fc3f7']);
-
   const io = new IntersectionObserver(entries=>{
-    entries
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
