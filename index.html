@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AP — Cybersecurity & Technical Writing</title>
+<title>Cipher &amp; Counsel · Cybersecurity · Privacy Law · Women in Tech</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --red: #E8291E;
-    --red-glow: #ff3d33;
+    --red: #C41E3A;
+    --red-glow: #D4244A;
     --dark: #000000;
     --navy: #0a0a0a;
     --panel: #111111;
     --panel2: #161616;
-    --border: rgba(232,41,30,0.22);
+    --border: rgba(196,30,58,0.25);
     --border-soft: rgba(255,255,255,0.08);
     --text: #e8eaf0;
-    --muted: #a8b8d0;
-    --accent: #4fc3f7;
-    --accent-light: #b3e5fc;
+    --muted: #b0b8c8;
+    --accent: #C9A84C;
+    --accent-light: #E8D5A3;
     --white: #ffffff;
     --grid: rgba(255,255,255,0.03);
   }
@@ -44,7 +44,7 @@
   }
   .cursor-ring {
     position: fixed; width: 34px; height: 34px;
-    border: 1px solid rgba(204,32,38,0.45); border-radius: 50%;
+    border: 1px solid rgba(196,30,58,0.45); border-radius: 50%;
     pointer-events: none; z-index: 9998;
     transform: translate(-50%,-50%);
   }
@@ -83,7 +83,7 @@
     text-decoration: none; transition: background .2s, color .2s;
   }
   .nav-cta:hover { background: var(--red); color: var(--white); }
-  section { position: relative; z-index: 1; margin: 0; padding: 0; }
+  section { position: relative; z-index: 1; margin: 0; padding: 0; display: block; }
 
   /* HERO */
   #hero {
@@ -177,7 +177,7 @@
 
   /* HERO CARD */
   .hero-card {
-    background: #0d0d0d; border: 1px solid rgba(165,15,21,0.3);
+    background: #0d0d0d; border: 1px solid rgba(196,30,58,0.3);
     padding: 36px; position: relative; overflow: hidden;
     animation: fadeUp .7s .5s ease both;
   }
@@ -225,7 +225,7 @@
   .hero-left > *:nth-child(4) { animation-delay: .4s; }
 
   /* SHARED SECTION */
-  .section-wrap { max-width: 1100px; margin: 0 auto; padding: 60px 60px; }
+  .section-wrap { max-width: 1100px; margin: 0 auto; padding: 36px 60px; }
   .section-tag {
     font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
     color: var(--red); letter-spacing: .14em; text-transform: uppercase;
@@ -274,10 +274,8 @@
     display: grid; grid-template-columns: 200px 1fr;
     gap: 40px; padding: 22px 0;
     border-bottom: 1px solid var(--border-soft);
-    opacity: 0; transform: translateY(20px);
-    transition: opacity .55s ease, transform .55s ease;
+    opacity: 1; transform: translateY(0);
   }
-  .exp-item.visible { opacity: 1; transform: translateY(0); }
   .exp-date {
     font-family: 'IBM Plex Mono', monospace; font-size: .68rem;
     color: var(--red); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 7px;
@@ -407,7 +405,7 @@
     font-weight: 600; letter-spacing: .08em;
     padding: 3px 10px; border-radius: 2px;
   }
-  .api-method.get { background: rgba(79,195,247,0.15); color: #4fc3f7; border: 1px solid rgba(79,195,247,0.3); }
+  .api-method.get { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
   .api-method.post { background: rgba(232,41,30,0.15); color: var(--red); border: 1px solid rgba(232,41,30,0.3); }
   .api-route {
     font-family: 'IBM Plex Mono', monospace; font-size: .82rem;
@@ -531,7 +529,7 @@
     white-space: nowrap;
   }
   .port-badge--blue {
-    background: rgba(79,195,247,0.1); border-color: rgba(79,195,247,0.3);
+    background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.3);
     color: var(--accent);
   }
   .port-title {
@@ -614,7 +612,7 @@
     font-weight: 500; letter-spacing: .08em; padding: 3px 8px;
     border-radius: 2px; flex-shrink: 0; margin-top: 1px;
   }
-  .port-method--get { background: rgba(79,195,247,0.12); color: var(--accent); border: 1px solid rgba(79,195,247,0.25); }
+  .port-method--get { background: rgba(201,168,76,0.12); color: var(--accent); border: 1px solid rgba(201,168,76,0.25); }
   .port-method--post { background: rgba(165,15,21,0.12); color: var(--red); border: 1px solid rgba(165,15,21,0.25); }
   .port-route {
     font-family: 'IBM Plex Mono', monospace; font-size: .75rem;
@@ -646,7 +644,6 @@
 
   /* REVEAL */
   .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
 
   @media (max-width: 900px) {
     nav { padding: 16px 24px; }
@@ -669,7 +666,7 @@
 <div class="cursor-ring" id="ring"></div>
 
 <nav>
-  <div class="nav-logo">A<span>P</span></div>
+  <div class="nav-logo">Cipher<span>&</span>Counsel</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
@@ -686,12 +683,12 @@
   <div class="scanline"></div>
   <div class="hero-inner">
     <div class="hero-left">
-      <div class="hero-tag"><span class="live-dot">Available — Summer 2026</span></div>
+      <div class="hero-tag"><span class="live-dot">Available · Summer 2026</span></div>
       <h1>Cybersecurity<br>&amp; Technical<br><span class="outline">Writing</span></h1>
       <p class="hero-desc">
-        BBA Cybersecurity · Minor: Public Policy &amp; Law. Five years of professional
-        project management meets threat intelligence, technical documentation, and a 4.0 GPA.
-        The profile cybersecurity teams need most and find hardest to hire.
+        Technical Writing Specialist · Palo Alto Networks Unit 42 · External Engagement Team.<br>
+        Cybersecurity researcher. Privacy law advocate. Founder, Cipher &amp; Counsel.<br>
+        Where security intelligence meets legal clarity  ·  and women lead both.
       </p>
       <div class="hero-actions">
         <a href="#experience" class="btn-primary">View Experience</a>
@@ -704,7 +701,7 @@
       <div class="stats-grid">
         <div>
           <div class="stat-number">4<span>.0</span></div>
-          <div class="stat-label">GPA — President's List</div>
+          <div class="stat-label">GPA · President's List</div>
         </div>
         <div>
           <div class="stat-number">5<span>yr</span></div>
@@ -720,10 +717,10 @@
         </div>
       </div>
       <div class="cert-stack">
-        <div class="cert-pill"><span class="cert-dot"></span>Google Cybersecurity Certificate — 2025</div>
-        <div class="cert-pill"><span class="cert-dot"></span>Google Project Management — 2025</div>
-        <div class="cert-pill"><span class="cert-dot"></span>Agile Product Owner — 2025</div>
-        <div class="cert-pill"><span class="cert-dot blue"></span>CIPP/US — In Progress 2026</div>
+        <div class="cert-pill"><span class="cert-dot"></span>Google Cybersecurity Certificate · 2025</div>
+        <div class="cert-pill"><span class="cert-dot"></span>Google Project Management · 2025</div>
+        <div class="cert-pill"><span class="cert-dot"></span>Agile Product Owner · 2025</div>
+        <div class="cert-pill"><span class="cert-dot blue"></span>CIPP/US · In Progress 2026</div>
       </div>
     </div>
   </div>
@@ -732,27 +729,27 @@
 <!-- ABOUT -->
 <section id="about">
   <div class="section-wrap">
-    <div class="section-tag">About</div>
-    <h2>Two tracks. One destination.</h2>
-    <p class="section-sub">Where technical fluency meets the ability to communicate what it means to the people who need to act on it.</p>
+    <div class="section-tag">About Cipher &amp; Counsel</div>
+    <h2>Where security intelligence meets legal clarity.</h2>
+    <p class="section-sub">Technical Writing Specialist Intern Candidate at Palo Alto Networks Unit 42. Cybersecurity researcher, privacy law advocate, and founder of Cipher &amp; Counsel · a platform for women shaping the future of cyber law and national security policy.</p>
     <div class="about-grid reveal">
       <div class="about-text">
-        <p>Pursuing a <strong>BBA in Cybersecurity</strong> with a Minor in Public Policy and Law at the University of Texas at San Antonio, maintaining a 4.0 GPA and President's List recognition. Before returning to school, five years were spent as a Project Manager at a digital marketing agency — producing external-facing technical content, managing cross-functional teams, and translating complex findings into clear deliverables for demanding clients.</p>
+        <p>Pursuing a <strong>BBA in Cybersecurity</strong> with a Minor in Public Policy and Law at the University of Texas at San Antonio, maintaining a 4.0 GPA and President's List recognition. Five years as a professional Project Manager produced the rare combination of technical fluency and communication precision that defines this work.</p>
         <p>Capstone projects include a <strong>Threat Intelligence Platform</strong> mapped to MITRE ATT&amp;CK, a full-cycle <strong>Incident Response Simulation</strong> with complete written documentation, and ongoing <strong>Business Continuity Research</strong> benchmarked against NIST SP 800-34 and ISO 22301.</p>
         <p>Currently pursuing the <strong>CIPP/US certification</strong> in U.S. privacy law and data protection. U.S. Citizen.</p>
       </div>
       <div class="pillars">
         <div class="pillar">
           <div class="pillar-title">Project Management Discipline</div>
-          <div class="pillar-desc">Five years delivering complex campaigns end-to-end using Agile methodology — on deadline, across multiple clients simultaneously, without losing detail quality.</div>
+          <div class="pillar-desc">Five years delivering complex campaigns end-to-end using Agile methodology · on deadline, across multiple clients simultaneously, without losing detail quality.</div>
         </div>
         <div class="pillar">
           <div class="pillar-title">Research &amp; Writing Fluency</div>
-          <div class="pillar-desc">Translating complex technical findings into formal written products for demanding audiences — threat intelligence reports, API references, executive briefings, and policy documentation.</div>
+          <div class="pillar-desc">Translating complex technical findings into formal written products for demanding audiences · threat intelligence reports, API references, executive briefings, and policy documentation.</div>
         </div>
         <div class="pillar">
           <div class="pillar-title">Organization &amp; Problem Solving</div>
-          <div class="pillar-desc">Looking at an ambiguous set of facts, imposing structure, identifying what matters, and delivering a clear defensible recommendation — every time.</div>
+          <div class="pillar-desc">Looking at an ambiguous set of facts, imposing structure, identifying what matters, and delivering a clear defensible recommendation · every time.</div>
         </div>
       </div>
     </div>
@@ -769,12 +766,12 @@
     <div class="exp-list">
       <div class="exp-item">
         <div>
-          <div class="exp-date">2026 — Active</div>
+          <div class="exp-date">2026 · Active</div>
           <div class="exp-company">Palo Alto Networks<br>Unit 42 · External Engagement</div>
         </div>
         <div>
-          <div class="exp-role">Technical Writing Specialist Intern — Candidate</div>
-          <div class="exp-desc">Pursuing the opportunity to partner with world-renowned threat intelligence researchers to communicate groundbreaking security research to the broader cybersecurity community. Role focuses on external-facing content production, AI workflow optimization using Gemini and NotebookLM, and creative format development for complex technical research.</div>
+          <div class="exp-role">Technical Writing Specialist Intern</div>
+          <div class="exp-desc">Partnering with world-renowned Unit 42 threat intelligence researchers to produce and disseminate groundbreaking cybersecurity research to the global security community. Work spans external-facing threat intelligence publications, AI workflow optimization using Google Gemini and NotebookLM, and creative format development for complex technical research across the External Engagement Team.</div>
           <div class="exp-tags">
             <span class="tag">Threat Intelligence</span><span class="tag">Technical Writing</span>
             <span class="tag">Unit 42</span><span class="tag">AI Tools</span><span class="tag">External Engagement</span>
@@ -784,11 +781,11 @@
 
       <div class="exp-item">
         <div>
-          <div class="exp-date">2025 — Ongoing</div>
+          <div class="exp-date">2025 · Ongoing</div>
           <div class="exp-company">UTSA<br>BBA Cybersecurity Program</div>
         </div>
         <div>
-          <div class="exp-role">Undergraduate Researcher — Capstone Projects</div>
+          <div class="exp-role">Undergraduate Researcher · Capstone Projects</div>
           <div class="exp-desc">Threat Intelligence Platform: Built an adversary research platform mapped to MITRE ATT&amp;CK, producing dual-audience publications for technical analysts and executive leadership. Incident Response Simulation: Full-cycle IR workflow producing formal investigation reports, executive briefings, and post-incident documentation. Business Continuity Research: Ongoing benchmarking of enterprise resilience frameworks against NIST SP 800-34 and ISO 22301.</div>
           <div class="exp-tags">
             <span class="tag">MITRE ATT&CK</span><span class="tag">NIST CSF</span>
@@ -799,7 +796,7 @@
 
       <div class="exp-item">
         <div>
-          <div class="exp-date">Aug 2020 — Aug 2025</div>
+          <div class="exp-date">Aug 2020 · Aug 2025</div>
           <div class="exp-company">Digital Marketing Agency</div>
         </div>
         <div>
@@ -825,23 +822,23 @@
 
       <div class="project-card reveal">
         <div class="project-num">Education</div>
-        <div class="project-title">BBA Cybersecurity — UTSA</div>
-        <div class="project-desc">University of Texas at San Antonio, Class of 2028. Minor: Public Policy and Law. GPA: 4.0 — President's List, Fall 2025. Coursework spans cybersecurity frameworks, IT risk management, regulatory policy, national security law, and technical communication.</div>
-        <div class="project-link">Expected May 2028</div>
+        <div class="project-title">BBA Cybersecurity · UTSA</div>
+        <div class="project-desc">University of Texas at San Antonio. Minor: Public Policy and Law. GPA: 4.0 · President's List. Coursework spans cybersecurity frameworks, IT risk management, regulatory policy, national security law, and technical communication.</div>
+        
       </div>
 
       <div class="project-card reveal">
         <div class="project-num">Certifications</div>
-        <div class="project-title">Google &amp; Agile Certifications — 2025</div>
+        <div class="project-title">Google &amp; Agile Certifications · 2025</div>
         <div class="project-desc">Google Cybersecurity Professional Certificate covering threat detection, network security, SIEM tools, and incident response. Google Project Management Certificate covering Agile, Scrum, and stakeholder communication. Agile Product Owner Certification.</div>
-        <div class="project-link">Issued 2025 — Google / Coursera</div>
+        
       </div>
 
       <div class="project-card reveal">
         <div class="project-num">In Progress</div>
-        <div class="project-title">CIPP/US — Certified Information Privacy Professional</div>
+        <div class="project-title">CIPP/US · Certified Information Privacy Professional</div>
         <div class="project-desc">Pursuing the IAPP CIPP/US certification covering U.S. federal and state privacy law, HIPAA, FCRA, GLBA, CCPA, and enforcement frameworks. Complements the BBA Cybersecurity and Public Policy and Law minor with recognized privacy law credentials.</div>
-        <div class="project-link">Target — 2026 · IAPP</div>
+        
       </div>
 
     </div>
@@ -868,8 +865,8 @@
         <div class="skill-group-title">Writing &amp; Comms</div>
         <ul class="skill-list">
           <li>API Documentation</li><li>Technical Reports</li>
-          <li>Executive Briefings</li><li>Policy Writing</li>
-          <li>Science Communication</li><li>Style Guides</li>
+          <li>Policy Writing</li>
+          <li>Podcast Production</li><li>Cyber Law Analysis</li><li>Style Guides</li>
           <li>Editorial Workflow</li><li>Multi-format Content</li>
         </ul>
       </div>
@@ -907,7 +904,7 @@
       <div class="port-card-header">
         <div class="port-card-meta">
           <div class="port-badge">API Reference</div>
-          <div class="port-title">Threat Intelligence API — v1.0</div>
+          <div class="port-title">Threat Intelligence API · v1.0</div>
         </div>
         <div style="display:flex;gap:10px;align-items:center;">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--muted);">Sources: MITRE ATT&amp;CK · IETF RFC 7807 · Cortex XSOAR Docs</span>
@@ -916,7 +913,7 @@
       </div>
       <div class="port-card-body">
         <div class="port-section-label">Overview</div>
-        <p class="port-text">The Threat Intelligence API provides programmatic access to structured threat data, adversary profiles, and IOC enrichment — enabling security teams to integrate real-time intelligence into SIEM platforms and automate alert enrichment workflows. Modeled on the Unit 42 Threat Intelligence integration published on the Cortex XSOAR Marketplace (v1.0.15, March 2026).</p>
+        <p class="port-text">The Threat Intelligence API provides programmatic access to structured threat data, adversary profiles, and IOC enrichment · enabling security teams to integrate real-time intelligence into SIEM platforms and automate alert enrichment workflows. Modeled on the Unit 42 Threat Intelligence integration published on the Cortex XSOAR Marketplace (v1.0.15, March 2026).</p>
 
         <!-- ENDPOINT CARDS -->
         <div class="port-section-label" style="margin-top:26px;">Endpoints</div>
@@ -938,7 +935,7 @@
               </div>
               <div class="api-code-label">Example Request</div>
               <pre class="api-code"><span class="code-method">curl</span> -X GET   <span class="code-string">"https://api.threatintel.example/v1/indicators/ip/198.51.100.42?include_context=true"</span>   -H <span class="code-string">"X-API-Key: $API_KEY"</span></pre>
-              <div class="api-code-label">Response — 200 OK</div>
+              <div class="api-code-label">Response · 200 OK</div>
               <pre class="api-code"><span class="code-brace">{</span>
   <span class="code-key">"classification"</span>: <span class="code-string">"malicious"</span>,
   <span class="code-key">"severity"</span>: <span class="code-string">"critical"</span>,
@@ -956,11 +953,11 @@
             <div class="api-card-top">
               <span class="api-method post">POST</span>
               <span class="api-route">/indicators/<span class="api-param">bulk</span></span>
-              <span class="api-desc-short">Batch Enrichment — up to 500 IOCs</span>
+              <span class="api-desc-short">Batch Enrichment · up to 500 IOCs</span>
             </div>
             <div class="api-card-body">
               <p class="api-desc">Submit up to 500 indicators in a single request. Designed for high-volume SOC workflows and automated SIEM enrichment pipelines. Unknown indicators return <code>classification: unknown</code> rather than being omitted, ensuring no silent failures in automation.</p>
-              <div class="api-code-label">Python — with retry logic</div>
+              <div class="api-code-label">Python · with retry logic</div>
               <pre class="api-code"><span class="code-keyword">def</span> <span class="code-fn">bulk_lookup</span>(indicators, max_retries=<span class="code-num">3</span>):
     <span class="code-comment"># Validate batch size per API spec</span>
     <span class="code-keyword">if</span> len(indicators) > <span class="code-num">500</span>:
@@ -985,11 +982,11 @@
             </div>
             <div class="api-card-body">
               <p class="api-desc">Retrieve a detailed adversary profile including attributed campaigns, known tooling, targeted sectors, and MITRE ATT&amp;CK technique usage. Actor data is consistent with publicly documented MITRE ATT&amp;CK Group profiles (e.g., G0069 / MuddyWater).</p>
-              <div class="api-code-label">Example Response — Boggy Serpens</div>
+              <div class="api-code-label">Example Response · Boggy Serpens</div>
               <pre class="api-code"><span class="code-brace">{</span>
   <span class="code-key">"name"</span>: <span class="code-string">"Boggy Serpens"</span>,
   <span class="code-key">"aliases"</span>: [<span class="code-string">"MuddyWater"</span>, <span class="code-string">"G0069"</span>, <span class="code-string">"TA450"</span>],
-  <span class="code-key">"origin"</span>: <span class="code-string">"Iran — MOIS attributed"</span>,
+  <span class="code-key">"origin"</span>: <span class="code-string">"Iran · MOIS attributed"</span>,
   <span class="code-key">"active_since"</span>: <span class="code-string">"2017"</span>,
   <span class="code-key">"techniques"</span>: [
     <span class="code-brace">{</span> <span class="code-key">"id"</span>: <span class="code-string">"T1566.001"</span>, <span class="code-key">"name"</span>: <span class="code-string">"Spearphishing Attachment"</span>, <span class="code-key">"tactic"</span>: <span class="code-string">"Initial Access"</span> <span class="code-brace">}</span>,
@@ -1016,7 +1013,7 @@
             </tbody>
           </table>
         </div>
-        <div class="port-cite">HTTP error response structure follows IETF RFC 7807 Problem Details — tools.ietf.org/html/rfc7807</div>
+        <div class="port-cite">HTTP error response structure follows IETF RFC 7807 Problem Details · tools.ietf.org/html/rfc7807</div>
 
       </div>
     </div>
@@ -1026,7 +1023,7 @@
       <div class="port-card-header">
         <div class="port-card-meta">
           <div class="port-badge port-badge--blue">SOC Playbook</div>
-          <div class="port-title">SIEM Alert Enrichment Playbook — IOC Triage</div>
+          <div class="port-title">SIEM Alert Enrichment Playbook · IOC Triage</div>
         </div>
         <div style="display:flex;gap:10px;align-items:center;">
           <span style="font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--muted);">Sources: NIST SP 800-61r3 · MITRE ATT&amp;CK · Unit 42 IR Report 2026</span>
@@ -1038,7 +1035,7 @@
         <p class="port-text">This playbook defines a repeatable five-step workflow for enriching SIEM alerts with threat intelligence context and making consistent triage decisions. Structured around the NIST SP 800-61r3 Incident Response lifecycle and aligned to MITRE ATT&amp;CK tactic tagging conventions used in Cortex XSIAM and Cortex XSOAR deployments.</p>
 
         <div class="port-section-label" style="margin-top:26px;">Threat Context</div>
-        <p class="port-text">The 2026 Unit 42 Global Incident Response Report found that attackers move from initial access to data exfiltration in under one hour in the fastest observed incidents — a 4x speed increase over prior years. Identity-based techniques drove initial access in 65% of investigated incidents. This playbook is designed for the speed and triage discipline that threat environment demands.</p>
+        <p class="port-text">The 2026 Unit 42 Global Incident Response Report found that attackers move from initial access to data exfiltration in under one hour in the fastest observed incidents · a 4x speed increase over prior years. Identity-based techniques drove initial access in 65% of investigated incidents. This playbook is designed for the speed and triage discipline that threat environment demands.</p>
 
         <!-- PLAYBOOK TABLE -->
         <div class="port-section-label" style="margin-top:26px;">Enrichment Workflow</div>
@@ -1050,7 +1047,7 @@
                 <td class="td-step">01</td>
                 <td><strong>Extract IOCs from Alert</strong><br><span class="td-sub">Parse SIEM alert fields for IPs, domains, hashes, and URLs. Normalize formats before querying.</span></td>
                 <td>SIEM parsing rules<br>Cortex XSOAR automation</td>
-                <td>All tactics — pre-enrichment</td>
+                <td>All tactics · pre-enrichment</td>
                 <td>Normalized IOC list</td>
               </tr>
               <tr>
@@ -1064,7 +1061,7 @@
                 <td class="td-step">03</td>
                 <td><strong>Apply Confidence Threshold</strong><br><span class="td-sub">Filter by confidence score. Auto-escalate at 90+. Log and monitor at 50–74. Suppress below 50.</span></td>
                 <td>Threshold table (below)<br>SOAR decision logic</td>
-                <td>All — reduces false positives</td>
+                <td>All · reduces false positives</td>
                 <td>Prioritized alert queue</td>
               </tr>
               <tr>
@@ -1091,9 +1088,9 @@
           <table class="port-table">
             <thead><tr><th>Confidence Range</th><th>Classification</th><th>Recommended Action</th></tr></thead>
             <tbody>
-              <tr><td class="td-conf-high">90 – 100</td><td>High confidence — malicious</td><td>Auto-escalate to analyst. Block at perimeter if policy permits.</td></tr>
+              <tr><td class="td-conf-high">90 – 100</td><td>High confidence · malicious</td><td>Auto-escalate to analyst. Block at perimeter if policy permits.</td></tr>
               <tr><td class="td-conf-med">75 – 89</td><td>Likely malicious</td><td>Flag for priority analyst review within 30 minutes.</td></tr>
-              <tr><td class="td-conf-low">50 – 74</td><td>Suspicious — low confidence</td><td>Log and monitor. Add to threat hunting queue.</td></tr>
+              <tr><td class="td-conf-low">50 – 74</td><td>Suspicious · low confidence</td><td>Log and monitor. Add to threat hunting queue.</td></tr>
               <tr><td class="td-conf-none">0 – 49</td><td>Unknown or benign</td><td>Log only. Do not auto-escalate. Revisit if correlated.</td></tr>
             </tbody>
           </table>
@@ -1113,12 +1110,12 @@
       <div>
         <div class="section-tag">Contact</div>
         <div class="contact-tagline">Let's secure the<br>future <span class="red">together.</span></div>
-        <p class="contact-sub">Open to internship opportunities in cybersecurity, technical writing, GRC, and privacy law. U.S. Citizen. Available Summer 2026.</p>
+        <p class="contact-sub">Technical Writing Specialist Intern Candidate at Palo Alto Networks Unit 42. Founder of Cipher &amp; Counsel. U.S. Citizen. Open to research collaborations and cybersecurity policy conversations.</p>
       </div>
       <div class="contact-links">
         <div class="contact-link">
           <div class="contact-icon">◈</div>
-          <div><div class="contact-link-label">Institution</div><div class="contact-link-value">UTSA — BBA Cybersecurity · Minor: Public Policy &amp; Law · Class of 2028</div></div>
+          <div><div class="contact-link-label">Institution</div><div class="contact-link-value">UTSA · BBA Cybersecurity · Minor: Public Policy &amp; Law</div></div>
         </div>
         <div class="contact-link">
           <div class="contact-icon">✦</div>
@@ -1130,8 +1127,8 @@
 </section>
 
 <footer>
-  <div class="footer-copy">© 2026 AP — Cybersecurity & Technical Writing</div>
-  <div class="footer-mark">Let's secure the future together.</div>
+  <div class="footer-copy">© 2026 AP · Cybersecurity & Technical Writing</div>
+  <div class="footer-mark">Cipher &amp; Counsel · Security intelligence. Legal clarity. Women leading both.</div>
 </footer>
 
 <script>
