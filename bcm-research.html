@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enterprise Resilience Frameworks — UTSA Research Initiative | Cipher & Counsel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:        #C41E3A;
+    --gold:       #C9A84C;
+    --gold-light: #E8D5A3;
+    --dark:       #000000;
+    --ink:        #0f0f0f;
+    --panel:      #111111;
+    --border:     rgba(196,30,58,0.18);
+    --border-soft:rgba(255,255,255,0.07);
+    --rule:       rgba(255,255,255,0.1);
+    --text:       #dde0e8;
+    --muted:      #8896b3;
+    --white:      #ffffff;
+    --cream:      #f5f2ec;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+/* ── TOPBAR ── */
+.topbar {
+background: rgba(0,0,0,0.96);
+border-bottom: 1px solid var(–border);
+padding: 14px 60px;
+display: flex; align-items: center; justify-content: space-between;
+position: sticky; top: 0; z-index: 100;
+backdrop-filter: blur(16px);
+}
+.topbar-brand {
+font-family: ‘IBM Plex Mono’, monospace; font-weight: 600;
+font-size: .88rem; color: var(–white); letter-spacing: .06em;
+text-decoration: none;
+}
+.topbar-brand span { color: var(–red); }
+.topbar-right { display: flex; align-items: center; gap: 20px; }
+.topbar-tag {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–gold); letter-spacing: .14em; text-transform: uppercase;
+border: 1px solid rgba(201,168,76,0.35); padding: 4px 10px;
+}
+.topbar-back {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .63rem;
+color: var(–muted); text-decoration: none; letter-spacing: .06em;
+text-transform: uppercase; transition: color .2s;
+}
+.topbar-back:hover { color: var(–white); }
+
+/* ── HERO / MASTHEAD ── */
+.masthead {
+max-width: 860px; margin: 0 auto;
+padding: 70px 60px 50px;
+border-bottom: 1px solid var(–rule);
+}
+.pub-eyebrow {
+display: flex; align-items: center; gap: 14px;
+margin-bottom: 28px; flex-wrap: wrap;
+}
+.pub-badge {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+letter-spacing: .16em; text-transform: uppercase;
+padding: 4px 10px; border: 1px solid var(–border);
+color: var(–red); background: rgba(196,30,58,0.07);
+}
+.pub-badge-gold {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+letter-spacing: .16em; text-transform: uppercase;
+padding: 4px 10px; border: 1px solid rgba(201,168,76,0.3);
+color: var(–gold); background: rgba(201,168,76,0.06);
+}
+.pub-vol {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–muted); letter-spacing: .06em;
+}
+.pub-title {
+font-family: ‘Playfair Display’, Georgia, serif;
+font-weight: 800; font-size: clamp(2rem, 4vw, 3.2rem);
+color: var(–white); line-height: 1.08; letter-spacing: -.02em;
+margin-bottom: 10px;
+}
+.pub-subtitle {
+font-family: ‘Playfair Display’, Georgia, serif;
+font-weight: 400; font-style: italic;
+font-size: clamp(1.1rem, 2vw, 1.35rem);
+color: var(–gold); line-height: 1.4; margin-bottom: 28px;
+}
+.pub-rule {
+width: 60px; height: 3px;
+background: linear-gradient(90deg, var(–red), var(–gold));
+margin-bottom: 28px;
+}
+.pub-abstract {
+font-size: .98rem; color: var(–muted); line-height: 1.9;
+max-width: 720px; margin-bottom: 28px;
+font-style: italic; border-left: 2px solid var(–gold);
+padding-left: 20px;
+}
+.pub-meta-grid {
+display: grid; grid-template-columns: repeat(4, 1fr);
+gap: 0; border: 1px solid var(–border-soft);
+margin-bottom: 28px;
+}
+.pub-meta-cell {
+padding: 14px 18px; border-right: 1px solid var(–border-soft);
+}
+.pub-meta-cell:last-child { border-right: none; }
+.pub-meta-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .56rem;
+color: var(–red); letter-spacing: .14em; text-transform: uppercase;
+margin-bottom: 5px;
+}
+.pub-meta-value {
+font-size: .85rem; color: var(–text); line-height: 1.4;
+}
+.shadow-note {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .62rem;
+color: var(–muted); line-height: 1.6;
+padding: 10px 16px; border-left: 2px solid rgba(201,168,76,0.3);
+opacity: .8;
+}
+
+/* ── PAGE LAYOUT ── */
+.page-wrap {
+max-width: 860px; margin: 0 auto;
+padding: 0 60px 80px;
+display: grid; grid-template-columns: 1fr 240px;
+gap: 60px; align-items: start;
+}
+
+/* ── SIDEBAR TOC ── */
+.toc {
+position: sticky; top: 80px;
+padding-top: 48px;
+}
+.toc-heading {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–red); letter-spacing: .16em; text-transform: uppercase;
+margin-bottom: 14px; padding-bottom: 8px;
+border-bottom: 1px solid var(–border-soft);
+}
+.toc-link {
+display: block; font-family: ‘IBM Plex Mono’, monospace;
+font-size: .67rem; color: var(–muted); text-decoration: none;
+padding: 5px 0; letter-spacing: .02em;
+border-left: 2px solid transparent; padding-left: 10px;
+transition: color .15s, border-color .15s;
+line-height: 1.4;
+}
+.toc-link:hover { color: var(–white); border-left-color: var(–red); }
+.toc-sub {
+display: block; font-family: ‘IBM Plex Mono’, monospace;
+font-size: .6rem; color: var(–muted); text-decoration: none;
+padding: 3px 0 3px 20px; letter-spacing: .02em;
+transition: color .15s;
+line-height: 1.4; opacity: .7;
+}
+.toc-sub:hover { color: var(–white); opacity: 1; }
+.toc-divider { height: 1px; background: var(–border-soft); margin: 12px 0; }
+.print-btn {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+letter-spacing: .1em; text-transform: uppercase;
+padding: 9px 16px; background: transparent;
+border: 1px solid var(–red); color: var(–red);
+cursor: pointer; transition: all .2s; width: 100%; margin-top: 18px;
+display: block; text-align: center;
+}
+.print-btn:hover { background: var(–red); color: var(–white); }
+
+/* ── ARTICLE BODY ── */
+.article-body { padding-top: 48px; }
+
+/* SECTION */
+.sec-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–red); letter-spacing: .18em; text-transform: uppercase;
+display: flex; align-items: center; gap: 12px;
+margin-bottom: 10px; margin-top: 44px;
+}
+.sec-label::after { content: ‘’; flex: 1; height: 1px; background: var(–border); }
+.sec-label:first-child { margin-top: 0; }
+
+h2.sec-title {
+font-family: ‘Playfair Display’, Georgia, serif;
+font-weight: 700; font-size: 1.45rem; color: var(–white);
+margin-bottom: 16px; letter-spacing: -.01em; line-height: 1.25;
+}
+h3.sub-title {
+font-family: ‘Playfair Display’, Georgia, serif;
+font-weight: 600; font-size: 1.05rem; color: var(–gold);
+margin-top: 28px; margin-bottom: 10px; letter-spacing: -.005em;
+}
+
+/* BODY TEXT */
+.body-p {
+font-size: .96rem; color: var(–muted); line-height: 1.92;
+margin-bottom: 16px;
+}
+.body-p strong { color: var(–text); font-weight: 600; }
+.body-p em { color: var(–gold-light); font-style: italic; }
+
+/* EXEC SUMMARY BOX */
+.exec-summary {
+background: rgba(201,168,76,0.05);
+border: 1px solid rgba(201,168,76,0.2);
+border-top: 3px solid var(–gold);
+padding: 28px 28px 24px;
+margin: 24px 0 32px;
+}
+.exec-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–gold); letter-spacing: .16em; text-transform: uppercase;
+margin-bottom: 14px;
+}
+.exec-lead {
+font-family: ‘Playfair Display’, Georgia, serif;
+font-size: 1.05rem; color: var(–text); line-height: 1.75;
+margin-bottom: 16px; font-weight: 400;
+}
+.exec-bullets { list-style: none; }
+.exec-bullets li {
+font-size: .9rem; color: var(–muted); line-height: 1.75;
+padding: 6px 0; padding-left: 20px; position: relative;
+border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.exec-bullets li:last-child { border-bottom: none; }
+.exec-bullets li::before {
+content: ‘◆’; color: var(–red); position: absolute;
+left: 0; font-size: .5rem; top: 12px;
+}
+.exec-bullets li strong { color: var(–text); }
+
+/* FRAMEWORK COMPARISON TABLE */
+.fw-table-wrap { overflow-x: auto; margin: 16px 0 8px; }
+table.fw-table {
+width: 100%; border-collapse: collapse; font-size: .86rem;
+}
+table.fw-table thead tr {
+background: #0a0a0a; border-bottom: 1px solid var(–border);
+}
+table.fw-table th {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–gold); letter-spacing: .1em; text-transform: uppercase;
+padding: 10px 14px; text-align: left;
+}
+table.fw-table th:first-child { color: var(–red); }
+table.fw-table td {
+padding: 10px 14px; color: var(–muted);
+border-bottom: 1px solid rgba(255,255,255,0.04);
+vertical-align: top; line-height: 1.65;
+font-family: ‘Source Serif 4’, serif; font-size: .88rem;
+}
+table.fw-table tr:hover td { background: rgba(255,255,255,0.02); }
+table.fw-table td:first-child {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .78rem;
+color: var(–text); font-weight: 500;
+}
+.td-nist { color: #4fc3f7; font-weight: 500; }
+.td-iso { color: var(–gold); font-weight: 500; }
+.td-both { color: #4caf7d; font-weight: 500; }
+
+/* FINDING CARDS */
+.findings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0; }
+.finding-card {
+background: var(–panel); border: 1px solid var(–border-soft);
+padding: 20px; position: relative;
+border-top: 2px solid var(–red);
+}
+.finding-num {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–red); letter-spacing: .12em; text-transform: uppercase;
+margin-bottom: 8px;
+}
+.finding-title {
+font-family: ‘Playfair Display’, serif; font-size: .98rem;
+color: var(–white); margin-bottom: 8px; font-weight: 600;
+line-height: 1.3;
+}
+.finding-desc {
+font-size: .83rem; color: var(–muted); line-height: 1.72;
+}
+
+/* RECOMMENDATION CARDS */
+.rec-list { display: flex; flex-direction: column; gap: 14px; margin: 20px 0; }
+.rec-card {
+display: grid; grid-template-columns: 48px 1fr;
+gap: 16px; align-items: start;
+background: var(–panel); border: 1px solid var(–border-soft);
+padding: 18px 20px;
+}
+.rec-num {
+font-family: ‘Playfair Display’, serif; font-weight: 800;
+font-size: 2rem; color: var(–red); line-height: 1;
+opacity: .6;
+}
+.rec-content {}
+.rec-title {
+font-family: ‘Playfair Display’, serif; font-weight: 600;
+font-size: .98rem; color: var(–white); margin-bottom: 6px;
+}
+.rec-desc { font-size: .85rem; color: var(–muted); line-height: 1.72; }
+.rec-desc strong { color: var(–text); }
+
+/* AUDIENCE TABLE */
+.aud-table-wrap { overflow-x: auto; margin: 14px 0; }
+table.aud-table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+table.aud-table thead tr { background: #0a0a0a; border-bottom: 1px solid var(–border); }
+table.aud-table th {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–red); letter-spacing: .1em; text-transform: uppercase;
+padding: 9px 14px; text-align: left;
+}
+table.aud-table td {
+padding: 9px 14px; color: var(–muted);
+border-bottom: 1px solid rgba(255,255,255,0.04);
+vertical-align: top; line-height: 1.6; font-size: .86rem;
+}
+table.aud-table td:first-child { color: var(–text); font-weight: 500; }
+table.aud-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* PULL QUOTE */
+.pull-quote {
+border-left: 3px solid var(–red); padding: 14px 24px;
+margin: 28px 0; background: rgba(196,30,58,0.04);
+}
+.pull-quote p {
+font-family: ‘Playfair Display’, serif; font-style: italic;
+font-size: 1.08rem; color: var(–text); line-height: 1.7;
+margin-bottom: 8px;
+}
+.pull-quote cite {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–muted); letter-spacing: .06em;
+}
+
+/* METHODOLOGY BOX */
+.method-box {
+background: rgba(196,30,58,0.04); border: 1px solid rgba(196,30,58,0.18);
+border-left: 3px solid var(–red); padding: 18px 20px; margin: 20px 0;
+}
+.method-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–red); letter-spacing: .14em; text-transform: uppercase;
+margin-bottom: 8px;
+}
+.method-box p { font-size: .88rem; color: var(–muted); line-height: 1.8; }
+.method-box p strong { color: var(–text); }
+
+/* DIVIDER */
+.divider { height: 1px; background: var(–rule); margin: 40px 0; }
+
+/* SOURCE CITE */
+.source-cite {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–muted); line-height: 1.65; margin-top: 10px;
+padding: 8px 14px; border-left: 2px solid rgba(201,168,76,0.3);
+opacity: .72;
+}
+
+/* CITATIONS LIST */
+.citation-list { list-style: none; }
+.citation-list li {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .7rem;
+color: var(–muted); padding: 8px 0; line-height: 1.65;
+border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.citation-list li:last-child { border-bottom: none; }
+.citation-list li span { color: var(–gold); margin-right: 8px; }
+
+/* DOC FOOTER */
+.doc-footer {
+max-width: 860px; margin: 0 auto; padding: 24px 60px 40px;
+border-top: 1px solid var(–border-soft);
+display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+}
+.footer-brand { font-family: ‘IBM Plex Mono’, monospace; font-weight: 600; font-size: .82rem; color: var(–white); }
+.footer-brand span { color: var(–red); }
+.footer-note { font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem; color: var(–muted); text-align: right; line-height: 1.6; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+.topbar { padding: 14px 20px; }
+.masthead { padding: 40px 24px 36px; }
+.pub-meta-grid { grid-template-columns: 1fr 1fr; }
+.page-wrap { grid-template-columns: 1fr; padding: 0 24px 60px; gap: 0; }
+.toc { display: none; }
+.findings-grid { grid-template-columns: 1fr; }
+.doc-footer { padding: 20px 24px; }
+}
+@media (max-width: 540px) {
+.pub-meta-grid { grid-template-columns: 1fr; }
+.rec-card { grid-template-columns: 1fr; }
+.rec-num { font-size: 1.4rem; }
+}
+
+/* PRINT */
+@media print {
+.topbar, .toc, .print-btn { display: none !important; }
+.page-wrap { grid-template-columns: 1fr; padding: 0; gap: 0; }
+.masthead { padding: 20px 0; }
+body { background: #fff; color: #111; font-size: 10.5pt; }
+.pub-title, h2.sec-title { color: #111; }
+.pub-subtitle { color: #8B6914; }
+.body-p, .exec-lead { color: #333; }
+.finding-card { background: #f7f7f7; border-color: #ddd; }
+.rec-card { background: #f7f7f7; border-color: #ddd; }
+.exec-summary { background: #fffbf0; border-color: #ddd; }
+table.fw-table th, table.aud-table th { color: #C41E3A; background: #f0f0f0; }
+table.fw-table td, table.aud-table td { color: #333; }
+.pull-quote { background: #fdecea; border-left-color: #C41E3A; }
+.pull-quote p { color: #111; }
+.doc-footer { border-top-color: #ddd; }
+.footer-brand, .footer-note { color: #666; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+  <a href="index.html" class="topbar-brand">Cipher<span>&</span>Counsel</a>
+  <div class="topbar-right">
+    <span class="topbar-tag">Research · Policy Brief</span>
+    <a href="index.html" class="topbar-back">← Portfolio</a>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+
+<div class="masthead">
+  <div class="pub-eyebrow">
+    <span class="pub-badge">UTSA Research Initiative</span>
+    <span class="pub-badge-gold">Policy Brief</span>
+    <span class="pub-vol">Vol. 1 · March 2026 · Shadow Sample</span>
+  </div>
+  <h1 class="pub-title">Enterprise Resilience<br>Frameworks Benchmarked</h1>
+  <p class="pub-subtitle">Comparing NIST SP 800-34 and ISO 22301 for Organizational Decision-Makers</p>
+  <div class="pub-rule"></div>
+  <p class="pub-abstract">
+    Organizations facing increasing pressure from ransomware, supply chain attacks, and
+    regulatory scrutiny must select business continuity frameworks that match their
+    operational context, risk profile, and compliance obligations. This research benchmarks
+    two dominant standards — NIST SP 800-34 Rev.1 and ISO 22301:2019 — across six
+    dimensions of organizational resilience, translating dense regulatory language into
+    actionable recommendations for decision-makers at every level of technical fluency.
+  </p>
+  <div class="pub-meta-grid">
+    <div class="pub-meta-cell">
+      <div class="pub-meta-label">Author</div>
+      <div class="pub-meta-value">Undergraduate Researcher<br>BBA Cybersecurity · UTSA</div>
+    </div>
+    <div class="pub-meta-cell">
+      <div class="pub-meta-label">Program</div>
+      <div class="pub-meta-value">Minor: Public Policy &amp; Law<br>Cybersecurity Capstone</div>
+    </div>
+    <div class="pub-meta-cell">
+      <div class="pub-meta-label">Frameworks</div>
+      <div class="pub-meta-value">NIST SP 800-34 Rev.1<br>ISO 22301:2019</div>
+    </div>
+    <div class="pub-meta-cell">
+      <div class="pub-meta-label">Date</div>
+      <div class="pub-meta-value">March 2026<br>UTSA · San Antonio, TX</div>
+    </div>
+  </div>
+  <div class="shadow-note">Shadow Sample — This is original research and science communication work produced to demonstrate policy writing, analytical depth, and multi-audience communication. All content is sourced from publicly available standards documentation and peer-reviewed research. No proprietary data is reproduced.</div>
+</div>
+
+<!-- PAGE BODY -->
+
+<div class="page-wrap">
+
+  <!-- ARTICLE -->
+
+  <article class="article-body">
+
+```
+<!-- EXECUTIVE SUMMARY -->
+<div class="sec-label" id="exec-summary">Executive Summary</div>
+<h2 class="sec-title">For the Decision-Maker Who Needs the Answer in 90 Seconds</h2>
+
+<div class="exec-summary">
+  <div class="exec-label">Key Findings at a Glance</div>
+  <p class="exec-lead">
+    No single framework dominates across all organizational contexts. The right choice
+    depends on sector, regulatory environment, and whether the organization's primary
+    concern is IT system recovery or enterprise-wide operational continuity.
+  </p>
+  <ul class="exec-bullets">
+    <li><strong>Federal agencies and federal contractors</strong> should lead with NIST SP 800-34, which is mandatory under FISMA and integrates directly with NIST RMF, FIPS 199, and NIST SP 800-53 security controls.</li>
+    <li><strong>Multinational organizations and regulated private-sector enterprises</strong> benefit most from ISO 22301:2019, which is internationally certifiable, sector-neutral, and recognized by regulators across the EU, UK, and APAC.</li>
+    <li><strong>Most organizations benefit from both</strong> — NIST SP 800-34 for IT system contingency planning and ISO 22301 for enterprise-wide business continuity management, integrated through a shared Business Impact Analysis process.</li>
+    <li><strong>The most significant gap across both frameworks</strong> is insufficient guidance on AI-accelerated threat scenarios, where attackers now move from access to exfiltration in under 72 minutes — faster than most recovery time objectives assume.</li>
+    <li><strong>The primary barrier to implementation is not technical</strong> — it is communication. Organizations that fail at business continuity planning most often fail at translating framework requirements into language that operational leaders, legal teams, and boards can act on.</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- INTRODUCTION -->
+<div class="sec-label" id="introduction">Introduction</div>
+<h2 class="sec-title">Why Resilience Frameworks Matter More Than Ever</h2>
+
+<p class="body-p">
+  Business continuity is no longer a back-office planning exercise. The 2026 Unit 42
+  Global Incident Response Report documents that <strong>87% of major cyber incidents
+  unfolded across multiple attack surfaces simultaneously</strong>, forcing defenders
+  to monitor endpoints, networks, cloud infrastructure, SaaS applications, and identity
+  systems at once. In the fastest observed cases, attackers moved from initial access
+  to data exfiltration in <strong>72 minutes</strong> — a 4x acceleration over the
+  prior year. Organizations whose recovery time objectives assume hours or days of
+  analyst response time are already operating with a structural deficit.
+</p>
+
+<p class="body-p">
+  Against this backdrop, two frameworks dominate enterprise business continuity planning
+  in the United States: <em>NIST Special Publication 800-34 Revision 1</em>, the
+  federal government's Contingency Planning Guide for Information Technology Systems,
+  and <em>ISO 22301:2019</em>, the international standard for Business Continuity
+  Management Systems. Both frameworks provide structured approaches to identifying
+  risks, conducting business impact analyses, developing recovery strategies, and
+  maintaining operational continuity during disruption. Yet they differ substantially
+  in scope, audience, certification pathway, and regulatory applicability.
+</p>
+
+<p class="body-p">
+  This research benchmarks both frameworks across six dimensions and translates
+  findings into recommendations accessible to decision-makers at every level of
+  technical fluency — from CISOs and risk officers to legal counsel, operations
+  leaders, and boards of directors.
+</p>
+
+<div class="method-box">
+  <div class="method-label">Methodology</div>
+  <p>This analysis applies a structured comparative framework across six dimensions:
+  <strong>scope and applicability</strong>, <strong>regulatory alignment</strong>,
+  <strong>certification pathway</strong>, <strong>Business Impact Analysis approach</strong>,
+  <strong>integration with cybersecurity standards</strong>, and <strong>implementation
+  complexity</strong>. Sources include primary standards documentation from NIST and ISO,
+  peer-reviewed comparative research from the Journal of System and Management Sciences
+  (Religia &amp; Utama, 2024), and analysis from the Pacific Northwest National Laboratory
+  (PNNL-32686). All findings are benchmarked against publicly available empirical research.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- FRAMEWORK OVERVIEW -->
+<div class="sec-label" id="framework-overview">Framework Overview</div>
+<h2 class="sec-title">Two Standards, Two Philosophies</h2>
+
+<h3 class="sub-title">NIST SP 800-34 Rev.1 — Contingency Planning for IT Systems</h3>
+<p class="body-p">
+  Published by the National Institute of Standards and Technology, SP 800-34 provides
+  guidance on developing and maintaining contingency plans for <strong>information
+  technology systems</strong>. It is mandatory for U.S. federal agencies under FISMA
+  and is widely adopted by federal contractors and defense industrial base organizations.
+  The framework defines three critical planning metrics — Maximum Tolerable Downtime
+  (MTD), Recovery Time Objective (RTO), and Recovery Point Objective (RPO) — that have
+  become industry standard terms across sectors well beyond the federal government.
+</p>
+<p class="body-p">
+  NIST SP 800-34 organizes contingency planning into a suite of seven plan types:
+  the Business Continuity Plan, Crisis Communications Plan, Cyber Incident Response
+  Plan, Disaster Recovery Plan, Information System Contingency Plan, Occupant Emergency
+  Plan, and Continuity of Operations Plan. Each plan addresses a distinct dimension
+  of organizational resilience, and the framework explicitly acknowledges that
+  <em>"there is an inherent relationship between an information system and the
+  mission/business process it supports"</em> requiring coordination across all
+  plan types during development and updates.
+</p>
+
+<h3 class="sub-title">ISO 22301:2019 — Business Continuity Management Systems</h3>
+<p class="body-p">
+  ISO 22301:2019, published by the International Organization for Standardization,
+  specifies requirements for a <strong>Business Continuity Management System (BCMS)</strong>
+  — a holistic management framework covering the full lifecycle of business continuity
+  risk. Unlike NIST SP 800-34, which focuses primarily on IT system recovery, ISO 22301
+  addresses enterprise-wide operational continuity including people, facilities, supply
+  chains, and stakeholder communications.
+</p>
+<p class="body-p">
+  ISO 22301 is structured around the <strong>Plan-Do-Check-Act (PDCA) cycle</strong>,
+  promoting continuous improvement and strategic alignment. Its 2019 revision aligned
+  the standard with ISO's Harmonized Structure, enabling seamless integration with
+  ISO/IEC 27001 (information security), ISO 9001 (quality management), and other
+  management system standards. This integration capability is a significant advantage
+  for organizations managing multiple compliance obligations simultaneously.
+</p>
+
+<div class="pull-quote">
+  <p>"ISO 22301 is a great starting point if you are starting a Business Continuity Management Program or your organization wants to self-audit to ensure alignment with global best practices. It does not tell you how to do BCM but gives you the fundamentals for what the program could look like."</p>
+  <cite>Business Continuity Institute — Practitioner Guidance</cite>
+</div>
+
+<div class="divider"></div>
+
+<!-- COMPARATIVE ANALYSIS -->
+<div class="sec-label" id="comparison">Comparative Analysis</div>
+<h2 class="sec-title">Six Dimensions Benchmarked</h2>
+
+<div class="fw-table-wrap">
+  <table class="fw-table">
+    <thead>
+      <tr>
+        <th>Dimension</th>
+        <th>NIST SP 800-34</th>
+        <th>ISO 22301:2019</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Primary Scope</td>
+        <td class="td-nist">IT system contingency planning; information system recovery</td>
+        <td class="td-iso">Enterprise-wide business continuity; operations, people, and supply chain</td>
+      </tr>
+      <tr>
+        <td>Target Organization</td>
+        <td class="td-nist">U.S. federal agencies and federal contractors; FISMA-covered entities</td>
+        <td class="td-iso">Any organization globally; sector-neutral and internationally applicable</td>
+      </tr>
+      <tr>
+        <td>Regulatory Status</td>
+        <td class="td-nist">Mandatory for U.S. federal agencies; widely adopted by DoD and DHS contractors</td>
+        <td class="td-iso">Voluntary but internationally recognized; required by regulators in EU, UK, APAC</td>
+      </tr>
+      <tr>
+        <td>Certification</td>
+        <td class="td-nist">No third-party certification pathway; self-assessment and audit-based compliance</td>
+        <td class="td-iso">ANAB-accredited third-party certification; demonstrates readiness to external stakeholders</td>
+      </tr>
+      <tr>
+        <td>BIA Approach</td>
+        <td class="td-nist">System-level BIA; prioritizes by FIPS 199 impact level; defines MTD, RTO, RPO per system</td>
+        <td class="td-iso">Enterprise-level BIA; prioritizes critical business functions; integrates operational dependencies</td>
+      </tr>
+      <tr>
+        <td>Cybersecurity Integration</td>
+        <td class="td-nist">Deep integration with NIST RMF, SP 800-53, FIPS 199; cybersecurity-native</td>
+        <td class="td-iso">Integrates with ISO/IEC 27001; requires supplementation for technical cybersecurity controls</td>
+      </tr>
+      <tr>
+        <td>Implementation Structure</td>
+        <td class="td-nist">Seven-plan suite; prescriptive process guidance; step-by-step methodology</td>
+        <td class="td-iso">10-clause PDCA framework; outcome-based requirements; organization determines "how"</td>
+      </tr>
+      <tr>
+        <td>Documentation Burden</td>
+        <td class="td-nist">Moderate; specific templates and plan types defined by the standard</td>
+        <td class="td-iso">High; extensive documentation and evidence required to support BCMS certification</td>
+      </tr>
+      <tr>
+        <td>Cost / Resource Intensity</td>
+        <td class="td-nist">Lower; standard is freely available; no certification costs</td>
+        <td class="td-iso">Higher; certification audit costs, documentation requirements, and annual surveillance audits</td>
+      </tr>
+      <tr>
+        <td>Best Fit</td>
+        <td class="td-nist">Federal agencies, defense contractors, healthcare IT (HIPAA), state/local government</td>
+        <td class="td-iso">Multinationals, financial services, critical infrastructure, organizations seeking third-party validation</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="source-cite">Sources: NIST SP 800-34 Rev.1 (nvlpubs.nist.gov) · ISO 22301:2019 (iso.org) · Religia &amp; Utama, Journal of System and Management Sciences Vol.14 No.1 (2024) · PNNL-32686 Business Continuity, Cybersecurity, and Backup Control Center</div>
+
+<div class="divider"></div>
+
+<!-- KEY FINDINGS -->
+<div class="sec-label" id="findings">Key Findings</div>
+<h2 class="sec-title">What the Research Reveals</h2>
+
+<div class="findings-grid">
+  <div class="finding-card">
+    <div class="finding-num">Finding 01</div>
+    <div class="finding-title">The Frameworks Are Complementary, Not Competing</div>
+    <div class="finding-desc">The most effective resilience programs integrate both standards — NIST SP 800-34 for IT system contingency planning and ISO 22301 for enterprise-wide BCM. Shared Business Impact Analysis processes and aligned recovery metrics allow simultaneous compliance with both frameworks.</div>
+  </div>
+  <div class="finding-card">
+    <div class="finding-num">Finding 02</div>
+    <div class="finding-title">Certification Creates External Credibility That Internal Programs Cannot</div>
+    <div class="finding-desc">ISO 22301 certification through an ANAB-accredited body provides externally verified proof of resilience readiness to customers, regulators, and insurers. NIST SP 800-34 compliance is audited internally or by federal inspectors — meaningful but not visible to commercial stakeholders.</div>
+  </div>
+  <div class="finding-card">
+    <div class="finding-num">Finding 03</div>
+    <div class="finding-title">Both Frameworks Underaddress AI-Accelerated Threat Timelines</div>
+    <div class="finding-desc">Neither standard has been updated to address the 72-minute attack timeline documented in the 2026 Unit 42 IR Report. Organizations relying on standard RTO assumptions may be systematically underestimating the speed at which disruption can become catastrophic.</div>
+  </div>
+  <div class="finding-card">
+    <div class="finding-num">Finding 04</div>
+    <div class="finding-title">Communication Is the Primary Implementation Failure Point</div>
+    <div class="finding-desc">Both frameworks produce plans that operational leaders and boards rarely read. The most common failure mode is not a technical gap — it is the absence of plain-language executive summaries and role-specific communication assets that translate regulatory requirements into decisions.</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- MULTI-AUDIENCE COMMUNICATION -->
+<div class="sec-label" id="communication">Science Communication</div>
+<h2 class="sec-title">Translating Policy Across Audiences</h2>
+<p class="body-p">
+  A research finding that cannot be understood by its intended audience has not yet
+  accomplished its purpose. Business continuity policy operates across at least four
+  distinct audiences — each with different vocabulary, concerns, and decision-making
+  authority. Effective communication of framework findings requires deliberate
+  adaptation for each.
+</p>
+
+<div class="aud-table-wrap">
+  <table class="aud-table">
+    <thead>
+      <tr>
+        <th>Audience</th>
+        <th>Primary Concern</th>
+        <th>Format</th>
+        <th>Language Register</th>
+        <th>Key Metric</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Board of Directors</td>
+        <td>Reputational and financial risk; regulatory liability</td>
+        <td>Executive one-pager; 2-minute briefing</td>
+        <td>Business risk, not technical</td>
+        <td>Financial impact of downtime per hour</td>
+      </tr>
+      <tr>
+        <td>General Counsel / Legal</td>
+        <td>Regulatory compliance; contractual obligations; liability exposure</td>
+        <td>Annotated framework comparison; gap analysis</td>
+        <td>Regulatory and compliance language</td>
+        <td>Which standards are mandatory vs. voluntary</td>
+      </tr>
+      <tr>
+        <td>Operations Leadership</td>
+        <td>Practical implementation; resource requirements; timeline</td>
+        <td>Phased implementation roadmap; checklist</td>
+        <td>Process-oriented; action-focused</td>
+        <td>Estimated staff hours and cost to implement</td>
+      </tr>
+      <tr>
+        <td>IT / Security Teams</td>
+        <td>Technical controls; system recovery procedures; integration with existing tools</td>
+        <td>Technical appendix; control mapping tables</td>
+        <td>Standards-fluent; framework-specific</td>
+        <td>RTO / RPO / MTD per system tier</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p class="body-p" style="margin-top:16px;">
+  The research produced distinct communication assets for each audience from the
+  same underlying analysis — demonstrating that technical depth and accessible
+  communication are not in tension. The same finding about ISO 22301's documentation
+  burden, for example, becomes a cost-benefit analysis for the board, a compliance
+  gap narrative for legal, an implementation timeline for operations, and a
+  requirements checklist for the IT team.
+</p>
+
+<div class="divider"></div>
+
+<!-- RECOMMENDATIONS -->
+<div class="sec-label" id="recommendations">Recommendations</div>
+<h2 class="sec-title">Five Evidence-Based Recommendations</h2>
+
+<div class="rec-list">
+  <div class="rec-card">
+    <div class="rec-num">01</div>
+    <div class="rec-content">
+      <div class="rec-title">Start with a Unified Business Impact Analysis</div>
+      <div class="rec-desc">Both NIST SP 800-34 and ISO 22301 require a Business Impact Analysis as their foundational input. Organizations should conduct a <strong>single, enterprise-wide BIA</strong> that satisfies both standards simultaneously — mapping critical business functions to the IT systems that support them, and establishing MTD, RTO, and RPO values at both the system and operational process level.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">02</div>
+    <div class="rec-content">
+      <div class="rec-title">Select Framework Lead Based on Regulatory Obligation</div>
+      <div class="rec-desc">Federal agencies and FISMA-covered organizations should treat <strong>NIST SP 800-34 as primary</strong> and use ISO 22301 as a supplemental enterprise layer. Multinational organizations with EU or international operations, financial services firms, and critical infrastructure operators should treat <strong>ISO 22301 as primary</strong> and use NIST SP 800-34 for IT system contingency appendices.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">03</div>
+    <div class="rec-content">
+      <div class="rec-title">Accelerate Recovery Time Objectives for the Modern Threat Timeline</div>
+      <div class="rec-desc">Standard BCP templates assume recovery timeframes of hours to days. The <strong>72-minute attack-to-exfiltration timeline</strong> documented in the 2026 Unit 42 Global Incident Response Report requires organizations to stress-test existing RTOs and adjust incident escalation thresholds accordingly. RTOs measured in hours may be functionally inadequate against AI-accelerated adversaries.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">04</div>
+    <div class="rec-content">
+      <div class="rec-title">Invest in Cross-Audience Communication Infrastructure</div>
+      <div class="rec-desc">Every business continuity plan should be accompanied by a <strong>role-specific communication suite</strong>: an executive one-pager for the board, a compliance gap analysis for legal, a phased implementation roadmap for operations, and a technical control mapping for IT. Plans that exist only as dense policy documents will not be acted upon. Communication is implementation.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">05</div>
+    <div class="rec-content">
+      <div class="rec-title">Test, Exercise, and Iterate Annually</div>
+      <div class="rec-desc">Both frameworks require regular testing and plan maintenance. ISO 22301 mandates documented exercises as part of certification evidence. NIST SP 800-34 specifies tabletop exercises, functional exercises, and full-scale tests at increasing fidelity levels. Organizations that complete the framework without committing to an <strong>annual exercise calendar</strong> will find their plans are outdated within 18 months.</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CONCLUSION -->
+<div class="sec-label" id="conclusion">Conclusion</div>
+<h2 class="sec-title">Resilience Is Not a Document. It Is a Practice.</h2>
+<p class="body-p">
+  Both NIST SP 800-34 and ISO 22301 provide rigorous, evidence-based frameworks for
+  building organizational resilience. Neither framework fails on technical grounds.
+  What fails, consistently, is the gap between written policy and operational
+  understanding — the moment where a dense regulatory standard meets a business
+  leader who needs to make a decision in the next 15 minutes.
+</p>
+<p class="body-p">
+  The most significant contribution a technical writer makes in a resilience program
+  is not drafting the plan. It is translating the plan into the language of every
+  stakeholder who needs to act on it — before, during, and after a disruption event.
+  Security research only protects organizations when it reaches the right audience
+  in the right format. That is precisely the gap this research was designed to close.
+</p>
+
+<div class="pull-quote">
+  <p>"Resiliency is not a process, but rather an end-state for organizations. The goal of a resilient organization is to continue mission-essential functions at all times during any type of disruption."</p>
+  <cite>NIST SP 800-34 Rev.1 — Contingency Planning Guide for Federal Information Systems</cite>
+</div>
+
+<div class="divider"></div>
+
+<!-- CITATIONS -->
+<div class="sec-label" id="citations">Sources</div>
+<h2 class="sec-title">References &amp; Citations</h2>
+<p class="body-p" style="margin-bottom:18px;">All content is sourced from publicly available standards documentation and peer-reviewed research. No proprietary data is reproduced.</p>
+<ul class="citation-list">
+  <li><span>[1]</span>NIST Special Publication 800-34 Rev.1 — Contingency Planning Guide for Federal Information Technology Systems · National Institute of Standards and Technology · nvlpubs.nist.gov</li>
+  <li><span>[2]</span>ISO 22301:2019 — Security and Resilience: Business Continuity Management Systems Requirements · International Organization for Standardization · iso.org</li>
+  <li><span>[3]</span>Religia, I. &amp; Utama, A. — "A Novel Framework for Business Continuity Plan in Public Sector Organizations Integrating ISO 22301:2019 and NIST SP 800-34 Rev.1" · Journal of System and Management Sciences, Vol.14 No.1, 2024</li>
+  <li><span>[4]</span>PNNL-32686 — Business Continuity, Cybersecurity, and Backup Control Center · Pacific Northwest National Laboratory · pnnl.gov</li>
+  <li><span>[5]</span>Unit 42 2026 Global Incident Response Report — Palo Alto Networks · unit42.paloaltonetworks.com · February 2026</li>
+  <li><span>[6]</span>ISO 22301 — A Framework for Organisational Resilience and Business Continuity · Risk Training Professionals · August 2025</li>
+  <li><span>[7]</span>Business Continuity Planning Frameworks Collection — CIO Portal Reference Library · cioindex.com</li>
+  <li><span>[8]</span>ISO 22301 vs. NIST SP 800-34: BCDR Frameworks Comparison — LinkedIn Collective Advice · 2024</li>
+</ul>
+```
+
+  </article>
+
+  <!-- TABLE OF CONTENTS SIDEBAR -->
+
+  <aside class="toc">
+    <div class="toc-heading">Contents</div>
+    <a href="#exec-summary" class="toc-link">Executive Summary</a>
+    <a href="#introduction" class="toc-link">Introduction</a>
+    <a href="#framework-overview" class="toc-link">Framework Overview</a>
+    <a href="#comparison" class="toc-link">Comparative Analysis</a>
+    <a href="#findings" class="toc-link">Key Findings</a>
+    <a href="#communication" class="toc-link">Science Communication</a>
+    <a href="#recommendations" class="toc-link">Recommendations</a>
+    <a href="#conclusion" class="toc-link">Conclusion</a>
+    <div class="toc-divider"></div>
+    <a href="#citations" class="toc-link">Citations</a>
+    <button class="print-btn" onclick="window.print()">Print / Save PDF →</button>
+  </aside>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="doc-footer">
+  <div class="footer-brand">Cipher<span>&</span>Counsel</div>
+  <div class="footer-note">
+    UTSA Research Initiative · Policy Brief · March 2026<br>
+    Shadow Sample — Original Work · Sourced from Public Research
+  </div>
+</div>
+
+<script>
+  // Active TOC highlight
+  const tocLinks = document.querySelectorAll('.toc-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    document.querySelectorAll('[id]').forEach(el => {
+      if (window.scrollY >= el.offsetTop - 120) current = el.id;
+    });
+    tocLinks.forEach(l => {
+      l.style.color = l.getAttribute('href') === '#' + current ? 'var(--white)' : '';
+      l.style.borderLeftColor = l.getAttribute('href') === '#' + current ? 'var(--red)' : '';
+    });
+  }, { passive: true });
+</script>
+
+</body>
+</html>
