@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boggy Serpens Threat Intelligence Report — Cipher & Counsel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:    #C41E3A;
+    --gold:   #C9A84C;
+    --dark:   #000000;
+    --ink:    #080808;
+    --panel:  #0e0e0e;
+    --p2:     #141414;
+    --border: rgba(196,30,58,0.22);
+    --soft:   rgba(255,255,255,0.07);
+    --text:   #dde2ec;
+    --muted:  #8896b3;
+    --white:  #ffffff;
+    --green:  #4caf7d;
+    --yellow: #e8d44d;
+    --orange: #ff8c42;
+    --blue:   #4fc3f7;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark); color: var(--text);
+    font-family: 'Lato', sans-serif; font-size: 15px;
+    line-height: 1.78; overflow-x: hidden;
+  }
+
+/* TOPBAR */
+.topbar {
+background: rgba(0,0,0,0.96); border-bottom: 1px solid var(–border);
+padding: 13px 60px; display: flex; align-items: center;
+justify-content: space-between; position: sticky; top: 0; z-index: 200;
+backdrop-filter: blur(16px);
+}
+.topbar-brand { font-family: ‘IBM Plex Mono’, monospace; font-weight: 600;
+font-size: .88rem; color: var(–white); text-decoration: none; letter-spacing: .05em; }
+.topbar-brand span { color: var(–red); }
+.topbar-right { display: flex; align-items: center; gap: 18px; }
+.topbar-tag { font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–gold); letter-spacing: .14em; text-transform: uppercase;
+border: 1px solid rgba(201,168,76,0.35); padding: 4px 10px; }
+.topbar-back { font-family: ‘IBM Plex Mono’, monospace; font-size: .62rem;
+color: var(–muted); text-decoration: none; letter-spacing: .06em;
+text-transform: uppercase; transition: color .2s; }
+.topbar-back:hover { color: var(–white); }
+
+/* REPORT MASTHEAD */
+.masthead {
+background: var(–ink);
+border-bottom: 1px solid var(–border);
+padding: 56px 60px 44px;
+position: relative; overflow: hidden;
+}
+.masthead::before {
+content: ‘’; position: absolute; top: -60px; right: -60px;
+width: 500px; height: 500px;
+background: radial-gradient(circle, rgba(196,30,58,0.09) 0%, transparent 65%);
+pointer-events: none;
+}
+.mast-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.mast-badge {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .56rem;
+letter-spacing: .16em; text-transform: uppercase;
+padding: 4px 10px; border: 1px solid var(–border);
+color: var(–red); background: rgba(196,30,58,0.08);
+}
+.mast-badge-gold {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .56rem;
+letter-spacing: .16em; text-transform: uppercase;
+padding: 4px 10px; border: 1px solid rgba(201,168,76,0.3);
+color: var(–gold); background: rgba(201,168,76,0.07);
+}
+.mast-classification {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .56rem;
+color: var(–muted); letter-spacing: .1em;
+}
+.mast-title {
+font-family: ‘Outfit’, sans-serif; font-weight: 900;
+font-size: clamp(2rem, 4.5vw, 3.4rem);
+color: var(–white); line-height: 1.05;
+letter-spacing: -.02em; margin-bottom: 8px;
+}
+.mast-title span { color: var(–red); }
+.mast-subtitle {
+font-family: ‘Outfit’, sans-serif; font-weight: 400;
+font-size: 1.05rem; color: var(–gold);
+margin-bottom: 24px; letter-spacing: .01em;
+}
+.mast-rule { width: 48px; height: 2px;
+background: linear-gradient(90deg, var(–red), var(–gold));
+margin-bottom: 24px; }
+.mast-summary {
+font-size: .96rem; color: var(–muted); line-height: 1.85;
+max-width: 760px; margin-bottom: 28px;
+}
+.mast-summary strong { color: var(–text); }
+.mast-meta {
+display: grid; grid-template-columns: repeat(5, auto);
+gap: 0; border: 1px solid var(–soft);
+width: fit-content; margin-bottom: 20px;
+}
+.mast-meta-cell {
+padding: 12px 18px; border-right: 1px solid var(–soft);
+}
+.mast-meta-cell:last-child { border-right: none; }
+.mast-meta-label { font-family: ‘IBM Plex Mono’, monospace; font-size: .54rem;
+color: var(–red); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 4px; }
+.mast-meta-value { font-size: .82rem; color: var(–text); line-height: 1.35; }
+.shadow-note {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .6rem;
+color: var(–muted); padding: 8px 14px;
+border-left: 2px solid rgba(201,168,76,0.3); opacity: .75; line-height: 1.6;
+}
+
+/* AUDIENCE TABS */
+.audience-bar {
+background: var(–panel); border-bottom: 1px solid var(–soft);
+padding: 0 60px; display: flex; align-items: center; gap: 0;
+position: sticky; top: 53px; z-index: 100;
+}
+.aud-tab {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .68rem;
+letter-spacing: .08em; text-transform: uppercase;
+padding: 14px 24px; cursor: pointer; transition: all .2s;
+border-bottom: 2px solid transparent; color: var(–muted);
+background: none; border-left: none; border-right: none; border-top: none;
+}
+.aud-tab:hover { color: var(–text); }
+.aud-tab.active { color: var(–white); border-bottom-color: var(–red); }
+.aud-divider { font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–soft); padding: 0 4px; align-self: center; }
+
+/* PAGE LAYOUT */
+.report-body { max-width: 1200px; margin: 0 auto; padding: 0 60px 80px; }
+
+/* AUDIENCE PANELS */
+.audience-panel { display: none; }
+.audience-panel.active { display: block; }
+
+/* ── EXECUTIVE VIEW ── */
+.exec-wrap { max-width: 780px; margin: 0 auto; padding-top: 44px; }
+
+.exec-sec-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–red); letter-spacing: .18em; text-transform: uppercase;
+display: flex; align-items: center; gap: 12px; margin-bottom: 10px; margin-top: 40px;
+}
+.exec-sec-label::after { content: ‘’; flex: 1; height: 1px; background: var(–border); }
+.exec-sec-label:first-child { margin-top: 0; }
+
+h2.exec-h2 { font-family: ‘Outfit’, sans-serif; font-weight: 700;
+font-size: 1.35rem; color: var(–white); margin-bottom: 14px; letter-spacing: -.01em; }
+h3.exec-h3 { font-family: ‘Outfit’, sans-serif; font-weight: 600;
+font-size: 1rem; color: var(–gold); margin-top: 24px; margin-bottom: 8px; }
+
+.exec-p { font-size: .95rem; color: var(–muted); line-height: 1.88; margin-bottom: 14px; }
+.exec-p strong { color: var(–text); }
+
+/* STAT CARDS */
+.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 20px 0 28px; }
+.stat-card { background: var(–panel); border: 1px solid var(–soft); padding: 20px; border-top: 2px solid var(–red); }
+.stat-num { font-family: ‘Outfit’, sans-serif; font-weight: 900;
+font-size: 2.2rem; color: var(–red); line-height: 1; margin-bottom: 6px; }
+.stat-num span { font-size: 1.1rem; color: var(–gold); }
+.stat-label { font-family: ‘IBM Plex Mono’, monospace; font-size: .62rem;
+color: var(–muted); letter-spacing: .06em; line-height: 1.5; }
+
+/* TIMELINE */
+.timeline { margin: 20px 0; position: relative; }
+.timeline::before { content: ‘’; position: absolute; left: 11px; top: 0; bottom: 0;
+width: 1px; background: var(–border); }
+.tl-item { display: flex; gap: 20px; margin-bottom: 20px; position: relative; }
+.tl-dot { width: 24px; height: 24px; background: var(–red); border-radius: 50%;
+flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+font-family: ‘IBM Plex Mono’, monospace; font-size: .55rem;
+color: var(–white); font-weight: 600; z-index: 1; }
+.tl-content { padding-top: 2px; flex: 1; }
+.tl-date { font-family: ‘IBM Plex Mono’, monospace; font-size: .62rem;
+color: var(–gold); letter-spacing: .06em; margin-bottom: 4px; }
+.tl-title { font-size: .92rem; color: var(–white); font-weight: 600; margin-bottom: 4px; }
+.tl-desc { font-size: .85rem; color: var(–muted); line-height: 1.7; }
+
+/* RISK TABLE */
+.risk-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: .86rem; }
+.risk-table thead tr { background: #0a0a0a; border-bottom: 1px solid var(–border); }
+.risk-table th { font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–red); letter-spacing: .1em; text-transform: uppercase;
+padding: 9px 14px; text-align: left; }
+.risk-table td { padding: 9px 14px; color: var(–muted);
+border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; line-height: 1.6; }
+.risk-table tr:hover td { background: rgba(255,255,255,0.02); }
+.risk-crit { color: var(–red); font-weight: 700; font-family: ‘IBM Plex Mono’, monospace; font-size: .76rem; }
+.risk-high { color: var(–orange); font-weight: 700; font-family: ‘IBM Plex Mono’, monospace; font-size: .76rem; }
+.risk-med { color: var(–yellow); font-weight: 700; font-family: ‘IBM Plex Mono’, monospace; font-size: .76rem; }
+.risk-table td:first-child { color: var(–text); font-weight: 500; }
+
+/* RECOMMENDATION CARDS */
+.rec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+.rec-card { background: var(–panel); border: 1px solid var(–soft);
+padding: 18px 20px; border-left: 3px solid var(–red); }
+.rec-num { font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–red); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; }
+.rec-title { font-size: .92rem; color: var(–white); font-weight: 600; margin-bottom: 6px; line-height: 1.35; }
+.rec-desc { font-size: .83rem; color: var(–muted); line-height: 1.72; }
+.rec-desc strong { color: var(–text); }
+
+/* INFO BOX */
+.info-box { background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.2);
+border-left: 3px solid var(–gold); padding: 14px 18px; margin: 18px 0; }
+.info-label { font-family: ‘IBM Plex Mono’, monospace; font-size: .56rem;
+color: var(–gold); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 6px; }
+.info-box p { font-size: .87rem; color: var(–muted); line-height: 1.78; }
+.info-box p strong { color: var(–text); }
+
+.divider { height: 1px; background: var(–soft); margin: 36px 0; }
+
+/* ── ANALYST VIEW ── */
+.analyst-wrap { padding-top: 44px; }
+.two-col { display: grid; grid-template-columns: 1fr 280px; gap: 48px; align-items: start; }
+
+/* SIDEBAR */
+.sidebar { position: sticky; top: 107px; }
+.sidebar-head { font-family: ‘IBM Plex Mono’, monospace; font-size: .56rem;
+color: var(–red); letter-spacing: .16em; text-transform: uppercase;
+padding-bottom: 10px; border-bottom: 1px solid var(–soft); margin-bottom: 12px; }
+.sidebar-link { display: block; font-family: ‘IBM Plex Mono’, monospace;
+font-size: .65rem; color: var(–muted); text-decoration: none;
+padding: 5px 0 5px 10px; letter-spacing: .02em;
+border-left: 2px solid transparent; transition: color .15s, border-color .15s;
+line-height: 1.4; }
+.sidebar-link:hover { color: var(–white); border-left-color: var(–red); }
+.sidebar-divider { height: 1px; background: var(–soft); margin: 10px 0; }
+
+.an-sec-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–red); letter-spacing: .18em; text-transform: uppercase;
+display: flex; align-items: center; gap: 12px;
+margin-bottom: 10px; margin-top: 40px;
+}
+.an-sec-label::after { content: ‘’; flex: 1; height: 1px; background: var(–border); }
+.an-sec-label:first-child { margin-top: 0; }
+
+h2.an-h2 { font-family: ‘Outfit’, sans-serif; font-weight: 700;
+font-size: 1.35rem; color: var(–white); margin-bottom: 14px; letter-spacing: -.01em; }
+h3.an-h3 { font-family: ‘Outfit’, sans-serif; font-weight: 600;
+font-size: .98rem; color: var(–gold); margin-top: 24px; margin-bottom: 8px; }
+
+.an-p { font-size: .93rem; color: var(–muted); line-height: 1.88; margin-bottom: 14px; }
+.an-p strong { color: var(–text); }
+.an-p code { font-family: ‘IBM Plex Mono’, monospace; font-size: .78rem;
+color: var(–gold); background: rgba(201,168,76,0.09); padding: 2px 6px; border-radius: 2px; }
+
+/* ATT&CK TABLE */
+.attack-table { width: 100%; border-collapse: collapse; font-size: .83rem; margin: 12px 0; }
+.attack-table thead tr { background: #0a0a0a; border-bottom: 1px solid var(–border); }
+.attack-table th { font-family: ‘IBM Plex Mono’, monospace; font-size: .56rem;
+color: var(–red); letter-spacing: .1em; text-transform: uppercase;
+padding: 9px 12px; text-align: left; white-space: nowrap; }
+.attack-table td { padding: 9px 12px; color: var(–muted);
+border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; line-height: 1.55; }
+.attack-table tr:hover td { background: rgba(255,255,255,0.02); }
+.td-tid { font-family: ‘IBM Plex Mono’, monospace; font-size: .74rem;
+color: var(–blue); font-weight: 600; white-space: nowrap; }
+.td-tactic { font-family: ‘IBM Plex Mono’, monospace; font-size: .7rem;
+color: var(–gold); white-space: nowrap; }
+.td-obs { font-size: .78rem; }
+.td-freq { text-align: center; }
+.freq-h { color: var(–red); font-family: ‘IBM Plex Mono’, monospace; font-size: .7rem; font-weight: 700; }
+.freq-m { color: var(–yellow); font-family: ‘IBM Plex Mono’, monospace; font-size: .7rem; font-weight: 700; }
+
+/* MALWARE TABLE */
+.malware-table { width: 100%; border-collapse: collapse; font-size: .83rem; margin: 12px 0; }
+.malware-table thead tr { background: #0a0a0a; border-bottom: 1px solid var(–border); }
+.malware-table th { font-family: ‘IBM Plex Mono’, monospace; font-size: .56rem;
+color: var(–red); letter-spacing: .1em; text-transform: uppercase;
+padding: 9px 12px; text-align: left; }
+.malware-table td { padding: 9px 12px; color: var(–muted);
+border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; line-height: 1.6; }
+.malware-table tr:hover td { background: rgba(255,255,255,0.02); }
+.malware-name { font-family: ‘IBM Plex Mono’, monospace; font-size: .76rem;
+color: var(–red); font-weight: 600; }
+.malware-lang { font-family: ‘IBM Plex Mono’, monospace; font-size: .7rem;
+color: var(–muted); }
+.malware-new { font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–green); background: rgba(76,175,125,0.1);
+border: 1px solid rgba(76,175,125,0.25); padding: 2px 7px; letter-spacing: .08em; }
+
+/* IOC TABLE */
+.ioc-table { width: 100%; border-collapse: collapse; font-size: .8rem; margin: 12px 0; }
+.ioc-table thead tr { background: #0a0a0a; border-bottom: 1px solid var(–border); }
+.ioc-table th { font-family: ‘IBM Plex Mono’, monospace; font-size: .56rem;
+color: var(–red); letter-spacing: .1em; text-transform: uppercase;
+padding: 8px 12px; text-align: left; }
+.ioc-table td { padding: 8px 12px; color: var(–muted);
+border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; }
+.ioc-val { font-family: ‘IBM Plex Mono’, monospace; font-size: .72rem;
+color: var(–text); word-break: break-all; }
+.ioc-type { font-family: ‘IBM Plex Mono’, monospace; font-size: .66rem;
+color: var(–gold); white-space: nowrap; }
+
+/* DETECTION BOX */
+.detect-box { background: rgba(76,175,125,0.05); border: 1px solid rgba(76,175,125,0.2);
+border-left: 3px solid var(–green); padding: 14px 18px; margin: 14px 0; }
+.detect-label { font-family: ‘IBM Plex Mono’, monospace; font-size: .56rem;
+color: var(–green); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 6px; }
+.detect-box ul { list-style: none; }
+.detect-box ul li { font-size: .85rem; color: var(–muted); padding: 4px 0;
+padding-left: 16px; position: relative; line-height: 1.65; }
+.detect-box ul li::before { content: ‘▸’; color: var(–green);
+position: absolute; left: 0; font-size: .7rem; top: 6px; }
+.detect-box ul li strong { color: var(–text); }
+
+/* CITE */
+.cite { font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–muted); line-height: 1.65; margin-top: 10px;
+padding: 8px 12px; border-left: 2px solid rgba(201,168,76,0.3); opacity: .72; }
+
+/* CITATION LIST */
+.cit-list { list-style: none; }
+.cit-list li { font-family: ‘IBM Plex Mono’, monospace; font-size: .68rem;
+color: var(–muted); padding: 7px 0; line-height: 1.65;
+border-bottom: 1px solid rgba(255,255,255,0.04); }
+.cit-list li:last-child { border-bottom: none; }
+.cit-list li span { color: var(–gold); margin-right: 8px; }
+
+/* DOC FOOTER */
+.doc-footer { max-width: 1200px; margin: 0 auto; padding: 22px 60px 36px;
+border-top: 1px solid var(–soft);
+display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-brand { font-family: ‘IBM Plex Mono’, monospace; font-weight: 600;
+font-size: .82rem; color: var(–white); }
+.footer-brand span { color: var(–red); }
+.footer-note { font-family: ‘IBM Plex Mono’, monospace; font-size: .58rem;
+color: var(–muted); text-align: right; line-height: 1.6; }
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+.topbar, .masthead, .audience-bar, .report-body, .doc-footer { padding-left: 20px; padding-right: 20px; }
+.mast-meta { grid-template-columns: 1fr 1fr; }
+.stat-row { grid-template-columns: 1fr; }
+.rec-grid { grid-template-columns: 1fr; }
+.two-col { grid-template-columns: 1fr; }
+.sidebar { display: none; }
+.aud-tab { font-size: .58rem; padding: 12px 14px; }
+}
+@media (max-width: 540px) {
+.mast-title { font-size: 1.7rem; }
+.mast-meta { grid-template-columns: 1fr; }
+.attack-table th:nth-child(4),
+.attack-table td:nth-child(4) { display: none; }
+}
+
+/* PRINT */
+@media print {
+.topbar, .audience-bar, .sidebar { display: none !important; }
+.report-body { padding: 0; max-width: 100%; }
+.two-col { grid-template-columns: 1fr; }
+.audience-panel { display: block !important; }
+body { background: #fff; color: #111; font-size: 10pt; }
+.masthead { background: #f5f5f5; }
+.mast-title, h2.exec-h2, h2.an-h2 { color: #111; }
+.mast-subtitle, h3.exec-h3, h3.an-h3 { color: #8B6914; }
+.exec-p, .an-p { color: #333; }
+.stat-card, .rec-card { background: #f7f7f7; border-color: #ddd; }
+.attack-table th, .malware-table th, .risk-table th, .ioc-table th { color: #C41E3A; background: #f0f0f0; }
+.attack-table td, .malware-table td, .risk-table td, .ioc-table td { color: #333; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+  <a href="index.html" class="topbar-brand">Cipher<span>&</span>Counsel</a>
+  <div class="topbar-right">
+    <span class="topbar-tag">Threat Intelligence · Research Report</span>
+    <a href="index.html" class="topbar-back">← Portfolio</a>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+
+<div class="masthead">
+  <div class="mast-eyebrow">
+    <span class="mast-badge">UTSA Capstone · 2025</span>
+    <span class="mast-badge-gold">Threat Intelligence Report</span>
+    <span class="mast-classification">TLP:WHITE · Unclassified · Shadow Sample</span>
+  </div>
+  <h1 class="mast-title">Boggy Serpens<br><span>Threat Assessment</span></h1>
+  <p class="mast-subtitle">AI-Enhanced Cyberespionage — Multi-Wave Campaign Against Critical Infrastructure</p>
+  <div class="mast-rule"></div>
+  <p class="mast-summary">
+    Iranian threat group Boggy Serpens — also tracked as MuddyWater, G0069, and TA450 — has
+    significantly escalated its cyberespionage operations from April 2025 through March 2026.
+    The group is attributed with high confidence to Iran's Ministry of Intelligence and Security (MOIS)
+    and has demonstrated a marked evolution in tradecraft: moving from high-volume, noisy phishing
+    operations to <strong>precision multi-wave campaigns</strong> against diplomats, maritime operators,
+    energy companies, and financial institutions. Most significantly, the group has integrated
+    <strong>AI-generated code and Rust-based implants</strong> into its toolchain, dramatically
+    accelerating custom malware development and complicating detection and reverse engineering.
+  </p>
+  <div class="mast-meta">
+    <div class="mast-meta-cell">
+      <div class="mast-meta-label">Threat Actor</div>
+      <div class="mast-meta-value">Boggy Serpens<br>MuddyWater · G0069</div>
+    </div>
+    <div class="mast-meta-cell">
+      <div class="mast-meta-label">Attribution</div>
+      <div class="mast-meta-value">Iran · MOIS<br>High Confidence</div>
+    </div>
+    <div class="mast-meta-cell">
+      <div class="mast-meta-label">Active Period</div>
+      <div class="mast-meta-value">Apr 2025 · Mar 2026<br>Ongoing</div>
+    </div>
+    <div class="mast-meta-cell">
+      <div class="mast-meta-label">Primary Targets</div>
+      <div class="mast-meta-value">Diplomats · Energy<br>Maritime · Finance</div>
+    </div>
+    <div class="mast-meta-cell">
+      <div class="mast-meta-label">Report Date</div>
+      <div class="mast-meta-value">March 2026<br>UTSA Research Initiative</div>
+    </div>
+  </div>
+  <div class="shadow-note">Shadow Sample — Original threat intelligence research produced as a UTSA capstone portfolio piece. All TTPs, malware families, campaign details, and statistics are sourced from publicly available Unit 42, Group-IB, CISA, and MITRE ATT&CK research. No proprietary or classified data is reproduced.</div>
+</div>
+
+<!-- AUDIENCE TABS -->
+
+<div class="audience-bar">
+  <button class="aud-tab active" onclick="switchView('exec', this)">Executive Brief</button>
+  <span class="aud-divider">·</span>
+  <button class="aud-tab" onclick="switchView('analyst', this)">Technical Analysis</button>
+  <span class="aud-divider">·</span>
+  <button class="aud-tab" onclick="switchView('citations', this)">Citations</button>
+</div>
+
+<!-- REPORT BODY -->
+
+<div class="report-body">
+
+  <!-- ════════════════════════════════════════
+       EXECUTIVE VIEW
+  ════════════════════════════════════════ -->
+
+  <div class="audience-panel active" id="panel-exec">
+    <div class="exec-wrap">
+
+```
+  <!-- THREAT SNAPSHOT -->
+  <div class="exec-sec-label">Threat at a Glance</div>
+  <h2 class="exec-h2">What You Need to Know</h2>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">4<span>waves</span></div>
+      <div class="stat-label">Distinct attack waves against a single UAE marine &amp; energy company — August 2025 through February 2026</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">100<span>+</span></div>
+      <div class="stat-label">Government entities targeted in a single phishing campaign using a compromised Omani Ministry of Foreign Affairs account</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">AI<span>-gen</span></div>
+      <div class="stat-label">First documented use of AI-generated code in Boggy Serpens implants — accelerating custom malware development and evasion</div>
+    </div>
+  </div>
+
+  <p class="exec-p">
+    Boggy Serpens is an Iranian state-sponsored cyber espionage group active since 2017.
+    Its mission is intelligence collection in support of Iran's Ministry of Intelligence and
+    Security — targeting government ministries, diplomatic missions, energy infrastructure,
+    maritime operators, and financial institutions across the Middle East, Europe, Central
+    Asia, and the Americas.
+  </p>
+  <p class="exec-p">
+    What changed in 2025 is <strong>not the target profile — it is the operational
+    sophistication</strong>. The group shifted from noisy, high-volume phishing to
+    precision multi-wave campaigns built on compromised trusted accounts, AI-assisted
+    malware development, and custom implants designed specifically to defeat behavioral
+    detection and evade reverse engineering.
+  </p>
+
+  <div class="divider"></div>
+
+  <!-- CAMPAIGN TIMELINE -->
+  <div class="exec-sec-label">Campaign Timeline</div>
+  <h2 class="exec-h2">How the Campaign Unfolded</h2>
+  <p class="exec-p">The defining operation of this reporting period was a six-month, four-wave campaign against a UAE-based marine and energy company with strategic links to regional energy supply chains. Each wave was tailored to a different business unit — engineering, finance, operations — demonstrating a specific mandate to penetrate the organization at every level.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot">01</div>
+      <div class="tl-content">
+        <div class="tl-date">August 2025</div>
+        <div class="tl-title">Account Compromise &amp; Diplomatic Lure</div>
+        <div class="tl-desc">Boggy Serpens hijacks an Omani Ministry of Foreign Affairs email account and sends fabricated "Sustainable Peace" seminar invitations to more than 100 embassies and government organizations worldwide. The trusted sender identity bypasses reputation-based email filtering entirely.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">02</div>
+      <div class="tl-content">
+        <div class="tl-date">September · October 2025</div>
+        <div class="tl-title">Escalation — Waves 1 and 2 Against Marine Target</div>
+        <div class="tl-desc">First and second attack waves against the UAE marine and energy company deploy macro-laden Office documents tailored to engineering and operations departments. Lures include references to local currency (AED) and legitimate-looking transaction codes to increase credibility and bypass user skepticism.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">03</div>
+      <div class="tl-content">
+        <div class="tl-date">November · December 2025</div>
+        <div class="tl-title">Wave 3 — Custom Platform Deployment</div>
+        <div class="tl-desc">Unit 42 identifies a custom-built web-based orchestration platform hosted on a Python server, enabling operators to automate mass email delivery while maintaining granular control over sender identities and target lists. This infrastructure formalization signals a shift from opportunistic to systematic operations.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">04</div>
+      <div class="tl-content">
+        <div class="tl-date">January · February 2026</div>
+        <div class="tl-title">Wave 4 — New Payload Family Nuso Deployed</div>
+        <div class="tl-desc">The fourth wave introduces Nuso, an entirely new custom HTTP backdoor, delivered via an Excel document titled "Consumption Report (Jan 21 2025 – Feb 20 2026)." The shift to a new payload family mid-campaign demonstrates the group's capacity for rapid tool development — enabled in part by AI code generation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTOR RISK -->
+  <div class="exec-sec-label">Sector Risk Assessment</div>
+  <h2 class="exec-h2">Who Is at Risk</h2>
+  <table class="risk-table">
+    <thead><tr><th>Sector</th><th>Risk Level</th><th>Why Targeted</th><th>Observed Activity</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Government &amp; Diplomatic</td>
+        <td class="risk-crit">CRITICAL</td>
+        <td>Intelligence collection; diplomatic access; policy intelligence</td>
+        <td>Compromised ministry accounts; fabricated diplomatic invitations</td>
+      </tr>
+      <tr>
+        <td>Energy &amp; Maritime</td>
+        <td class="risk-crit">CRITICAL</td>
+        <td>Strategic infrastructure disruption; energy supply chain intelligence</td>
+        <td>Four-wave sustained campaign against UAE marine and energy company</td>
+      </tr>
+      <tr>
+        <td>Aviation</td>
+        <td class="risk-high">HIGH</td>
+        <td>Critical infrastructure access; national security implications</td>
+        <td>Confirmed targeting across Middle East aviation sector</td>
+      </tr>
+      <tr>
+        <td>Financial Services</td>
+        <td class="risk-high">HIGH</td>
+        <td>Financial intelligence; sanctions evasion support</td>
+        <td>Active targeting confirmed in Middle East financial sector</td>
+      </tr>
+      <tr>
+        <td>Telecommunications</td>
+        <td class="risk-med">MEDIUM</td>
+        <td>Communication interception; network access for lateral expansion</td>
+        <td>Historical targeting consistent with current operational profile</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="divider"></div>
+
+  <!-- RECOMMENDATIONS -->
+  <div class="exec-sec-label">Executive Recommendations</div>
+  <h2 class="exec-h2">What to Do Now</h2>
+
+  <div class="rec-grid">
+    <div class="rec-card">
+      <div class="rec-num">Priority 01</div>
+      <div class="rec-title">Enforce Multi-Factor Authentication on All Email Accounts</div>
+      <div class="rec-desc">The group's primary initial access vector is <strong>hijacked internal email accounts</strong>. MFA that cannot be bypassed by credential theft — such as hardware security keys or phishing-resistant authenticators — is the single highest-impact defensive control against this actor.</div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-num">Priority 02</div>
+      <div class="rec-title">Deploy Behavioral Email Analytics Beyond Sender Reputation</div>
+      <div class="rec-desc">Boggy Serpens emails <strong>originate from compromised legitimate accounts</strong>, making traditional sender reputation controls ineffective. Email security must assess behavioral anomalies — unusual recipients, content themes inconsistent with sender history, attachment patterns — not just sender identity.</div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-num">Priority 03</div>
+      <div class="rec-title">Restrict Macro Execution Across All Microsoft Office Environments</div>
+      <div class="rec-desc">The group's primary malware delivery mechanism is <strong>macro-laden Office documents</strong>. Enforcing Group Policy to disable macros for all users except verified business processes eliminates the initial execution vector across all four documented campaign waves.</div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-num">Priority 04</div>
+      <div class="rec-title">Monitor for UDP-Based Command and Control Traffic</div>
+      <div class="rec-desc">The UDPGangster implant uses <strong>UDP channels to execute commands and exfiltrate data</strong> — bypassing traditional TCP-focused network defenses. Network monitoring must include UDP traffic analysis at the perimeter and between internal segments.</div>
+    </div>
+  </div>
+
+  <div class="info-box" style="margin-top:20px;">
+    <div class="info-label">Strategic Context</div>
+    <p>The 2026 Unit 42 Global Incident Response Report documents that <strong>65% of all initial access in major incidents was driven by identity-based techniques</strong> — stolen credentials, token abuse, and account compromise — consistent with Boggy Serpens' core methodology. Organizations that have not implemented phishing-resistant MFA and behavioral email analytics are systematically exposed to this actor's primary attack chain.</p>
+  </div>
+
+</div>
+```
+
+  </div>
+
+  <!-- ════════════════════════════════════════
+       ANALYST VIEW
+  ════════════════════════════════════════ -->
+
+  <div class="audience-panel" id="panel-analyst">
+    <div class="analyst-wrap">
+      <div class="two-col">
+
+```
+    <!-- MAIN CONTENT -->
+    <div class="an-main">
+
+      <div class="an-sec-label" id="an-overview">Actor Overview</div>
+      <h2 class="an-h2">Boggy Serpens — Group Profile</h2>
+      <p class="an-p">
+        Boggy Serpens (MITRE ATT&CK G0069) is an Iranian advanced persistent threat group
+        assessed with <strong>high confidence</strong> to be a subordinate element of Iran's
+        Ministry of Intelligence and Security (MOIS). Also tracked as MuddyWater, Seedworm,
+        TA450, Earth Vetala, MERCURY, and Mango Sandstorm, the group has been active since
+        at least 2017 with consistent targeting of government, diplomatic, telecommunications,
+        energy, and financial sector organizations across the Middle East, Asia, Africa,
+        Europe, and North America.
+      </p>
+      <p class="an-p">
+        The group's historical tradecraft relied heavily on living-off-the-land (LotL) techniques,
+        abusing legitimate remote monitoring and management (RMM) tools including Atera,
+        ScreenConnect, SimpleHelp, and PDQ RMM, alongside public post-exploitation utilities
+        including LaZagne and CrackMapExec. From 2025 forward, Unit 42 and Group-IB analysis
+        documents a <strong>deliberate shift toward custom-compiled toolkits</strong>, including
+        Rust-based backdoors, UDP-based implants, and AI-assisted malware development — a
+        maturation that significantly complicates detection and incident response.
+      </p>
+
+      <div class="an-sec-label" id="an-ttps">MITRE ATT&CK Mapping</div>
+      <h2 class="an-h2">Documented Techniques — April 2025 to March 2026</h2>
+      <p class="an-p">The following technique table maps observed Boggy Serpens TTPs to MITRE ATT&CK Enterprise v18 (October 2025), sourced from Unit 42 Threat Assessment and Group-IB analysis of the October 2025 Phoenix backdoor campaign.</p>
+
+      <div style="overflow-x:auto;">
+        <table class="attack-table">
+          <thead>
+            <tr>
+              <th>Technique ID</th>
+              <th>Tactic</th>
+              <th>Technique Name</th>
+              <th>Observed Implementation</th>
+              <th>Freq</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-tid">T1566.001</td>
+              <td class="td-tactic">Initial Access</td>
+              <td>Phishing: Spearphishing Attachment</td>
+              <td class="td-obs">Macro-laden Excel and Word documents; lures tailored to target department and geography</td>
+              <td class="td-freq freq-h">HIGH</td>
+            </tr>
+            <tr>
+              <td class="td-tid">T1078</td>
+              <td class="td-tactic">Initial Access</td>
+              <td>Valid Accounts</td>
+              <td class="td-obs">Compromised government and corporate mailboxes used as trusted senders; Omani MFA mailbox used to target 100+ embassies</td>
+              <td class="td-freq freq-h">HIGH</td>
+            </tr>
+            <tr>
+              <td class="td-tid">T1059.001</td>
+              <td class="td-tactic">Execution</td>
+              <td>PowerShell</td>
+              <td class="td-obs">POWERSTATS first-stage backdoor; VBA macros dropping PS-based loaders</td>
+              <td class="td-freq freq-h">HIGH</td>
+            </tr>
+            <tr>
+              <td class="td-tid">T1059.005</td>
+              <td class="td-tactic">Execution</td>
+              <td>Visual Basic</td>
+              <td class="td-obs">Dual VBA builder tracks — Phoenix Lineage and UDPGangster Operations sharing identical decryption key and novaservice.exe path</td>
+              <td class="td-freq freq-h">HIGH</td>
+            </tr>
+            <tr>
+              <td class="td-tid">T1053.005</td>
+              <td class="td-tactic">Persistence</td>
+              <td>Scheduled Task / Job</td>
+              <td class="td-obs">Scheduled tasks used for persistence across victim environments following initial compromise</td>
+              <td class="td-freq freq-h">HIGH</td>
+            </tr>
+            <tr>
+              <td class="td-tid">T1071.001</td>
+              <td class="td-tactic">Command &amp; Control</td>
+              <td>Application Layer Protocol: Web Protocols</td>
+              <td class="td-obs">BlackBeard communicates via standard HTTP status codes for tasking; data embedded in headers</td>
+              <td class="td-freq freq-h">HIGH</td>
+            </tr>
+            <tr>
+              <td class="td-tid">T1095</td>
+              <td class="td-tactic">Command &amp; Control</td>
+              <td>Non-Application Layer Protocol</td>
+              <td class="td-obs">UDPGangster uses UDP channels for command execution, data exfiltration, and payload delivery — bypassing TCP-focused defenses</td>
+              <td class="td-freq freq-h">HIGH</td>
+            </tr>
+            <tr>
+              <td class="td-tid">T1483 / T1132</td>
+              <td class="td-tactic">Command &amp; Control</td>
+              <td>Domain Generation / Encoding</td>
+              <td class="td-obs">Telegram API used for C2 communications in select campaigns; data encoding in HTTP headers</td>
+              <td class="td-freq freq-m">MED</td>
+            </tr>
+            <tr>
+              <td class="td-tid">T1041</td>
+              <td class="td-tactic">Exfiltration</td>
+              <td>Exfiltration Over C2 Channel</td>
+              <td class="td-obs">Data exfiltration via established C2 channels — HTTP, UDP, and Telegram API</td>
+              <td class="td-freq freq-h">HIGH</td>
+            </tr>
+            <tr>
+              <td class="td-tid">T1027</td>
+              <td class="td-tactic">Defense Evasion</td>
+              <td>Obfuscated Files or Information</td>
+              <td class="td-obs">Rust-based tooling (BlackBeard) uses memory-safe constructs to hinder reverse engineering; AI-generated code incorporates anti-analysis techniques</td>
+              <td class="td-freq freq-h">HIGH</td>
+            </tr>
+            <tr>
+              <td class="td-tid">T1219</td>
+              <td class="td-tactic">Command &amp; Control</td>
+              <td>Remote Access Software</td>
+              <td class="td-obs">Historical: Atera, ScreenConnect, SimpleHelp, PDQ RMM abused for LotL persistence; decreasing frequency in 2025–26</td>
+              <td class="td-freq freq-m">MED</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cite">MITRE ATT&CK Enterprise v18, October 2025 · attack.mitre.org · Unit 42 Boggy Serpens Threat Assessment, March 2026 · Group-IB MuddyWater Espionage Analysis, October 2025</div>
+
+      <div class="an-sec-label" id="an-malware">Malware Toolkit</div>
+      <h2 class="an-h2">Custom Implant Families — 2025 to 2026</h2>
+      <p class="an-p">The group's toolchain expanded significantly over this reporting period, with three newly identified malware families representing a departure from earlier reliance on public RMM tools and PowerShell-based loaders. The integration of Rust as an implementation language and AI-assisted code generation marks a meaningful capability development milestone.</p>
+
+      <table class="malware-table">
+        <thead>
+          <tr>
+            <th>Name</th><th>Also Known As</th><th>Language</th><th>C2 Protocol</th><th>Primary Function</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="malware-name">BlackBeard</td>
+            <td>—</td>
+            <td class="malware-lang">Rust</td>
+            <td>HTTP (status codes for tasking; data in headers)</td>
+            <td>Backdoor; persistence; lateral movement. Anti-analysis via Rust memory-safe constructs.</td>
+            <td><span class="malware-new">NEW 2025</span></td>
+          </tr>
+          <tr>
+            <td class="malware-name">Nuso</td>
+            <td>HTTP_VIP</td>
+            <td class="malware-lang">Unknown</td>
+            <td>Custom HTTP</td>
+            <td>Custom HTTP backdoor; deployed in Wave 4 of UAE campaign. Distinct payload family introduced mid-campaign.</td>
+            <td><span class="malware-new">NEW 2026</span></td>
+          </tr>
+          <tr>
+            <td class="malware-name">UDPGangster</td>
+            <td>—</td>
+            <td class="malware-lang">Unknown</td>
+            <td>UDP</td>
+            <td>Command execution; data exfiltration; payload delivery via UDP. Bypasses TCP-focused network defenses.</td>
+            <td><span class="malware-new">NEW 2025</span></td>
+          </tr>
+          <tr>
+            <td class="malware-name">GhostBackDoor</td>
+            <td>—</td>
+            <td class="malware-lang">Unknown</td>
+            <td>Unknown</td>
+            <td>Backdoor deployed in UAE campaign alongside Nuso. Limited public technical documentation.</td>
+            <td><span class="malware-new">NEW 2026</span></td>
+          </tr>
+          <tr>
+            <td class="malware-name">Phoenix</td>
+            <td>—</td>
+            <td class="malware-lang">VBA / loader</td>
+            <td>HTTP</td>
+            <td>Full backdoor delivered via Phoenix Lineage VBA builder track. Shares decryption key with UDPGangster — common development pipeline.</td>
+            <td>Active</td>
+          </tr>
+          <tr>
+            <td class="malware-name">LampoRAT</td>
+            <td>CHAR</td>
+            <td class="malware-lang">Unknown</td>
+            <td>Unknown</td>
+            <td>Remote access trojan in active toolset. Limited public technical documentation.</td>
+            <td>Active</td>
+          </tr>
+          <tr>
+            <td class="malware-name">POWERSTATS</td>
+            <td>—</td>
+            <td class="malware-lang">PowerShell</td>
+            <td>HTTP / HTTPS</td>
+            <td>First-stage backdoor; hallmark Boggy Serpens tool since 2017. Continued use alongside newer custom tooling.</td>
+            <td>Legacy · Active</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="cite">Unit 42 Boggy Serpens Threat Assessment, March 2026 · CISA KEV Entry CVE-2025-54068, March 2026 · Group-IB MuddyWater Espionage Analysis, October 2025 · Israeli National Cyber Directorate BlackBeard tracking</div>
+
+      <div class="an-sec-label" id="an-infra">Infrastructure Analysis</div>
+      <h2 class="an-h2">Command and Control Infrastructure</h2>
+
+      <h3 class="an-h3">Mass Email Delivery Platform</h3>
+      <p class="an-p">
+        On October 3, 2025, Unit 42 identified IP <code>157.20.182[.]75</code> hosting a
+        unique web-based Python server on port 5000 assessed to be the group's custom
+        mass email delivery platform. This infrastructure enables operators to automate
+        large-scale phishing operations while maintaining granular control over sender
+        identities and target lists — a significant capability formalization compared to
+        earlier ad-hoc phishing operations.
+      </p>
+
+      <h3 class="an-h3">Group-IB Phoenix C2 Infrastructure — August 2025</h3>
+      <p class="an-p">
+        Group-IB analysis of the October 2025 Phoenix backdoor campaign identified C2
+        domain <code>screenai[.]online</code>, registered August 17, 2025 via NameCheap,
+        resolving to <code>159[.]198[.]36[.]115</code> behind Cloudflare infrastructure.
+        The C2 was active for approximately five days before takedown, consistent with
+        Boggy Serpens' pattern of short, tightly controlled attack windows. The server
+        initially ran on Uvicorn before switching to Apache — indicating active
+        management and operational security awareness during the campaign window.
+      </p>
+
+      <h3 class="an-h3">Indicator Summary</h3>
+      <table class="ioc-table">
+        <thead>
+          <tr><th>Indicator</th><th>Type</th><th>Context</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="ioc-val">157.20.182[.]75</td>
+            <td class="ioc-type">IP Address</td>
+            <td>Mass email delivery platform — Python server port 5000, observed October 2025</td>
+          </tr>
+          <tr>
+            <td class="ioc-val">screenai[.]online</td>
+            <td class="ioc-type">Domain</td>
+            <td>Phoenix backdoor C2 — August 2025, active ~5 days</td>
+          </tr>
+          <tr>
+            <td class="ioc-val">159[.]198[.]36[.]115</td>
+            <td class="ioc-type">IP Address</td>
+            <td>Real IP behind screenai[.]online Cloudflare infrastructure — NameCheap ASN</td>
+          </tr>
+          <tr>
+            <td class="ioc-val">novaservice.exe</td>
+            <td class="ioc-type">File Path</td>
+            <td>Shared file path across Phoenix Lineage and UDPGangster — confirms common development pipeline</td>
+          </tr>
+          <tr>
+            <td class="ioc-val">Consumption Report (Jan 21 2025 – Feb 20 2026).xls</td>
+            <td class="ioc-type">Filename</td>
+            <td>Wave 4 lure document delivering Nuso HTTP backdoor — UAE marine/energy target</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="an-p" style="margin-top:10px;font-size:.8rem;">
+        <strong>Note:</strong> IOCs are defanged per TLP:WHITE conventions. Restore brackets before use in detection tooling. Additional IOCs available in the Unit 42 Boggy Serpens Threat Assessment published March 2026.
+      </p>
+      <div class="cite">Unit 42 Boggy Serpens Threat Assessment, March 2026 · Group-IB MuddyWater Espionage Analysis, October 2025 · MITRE ATT&CK G0069, v18</div>
+
+      <div class="an-sec-label" id="an-detection">Detection Guidance</div>
+      <h2 class="an-h2">Detection and Mitigation Recommendations</h2>
+
+      <h3 class="an-h3">Email Security Controls</h3>
+      <div class="detect-box">
+        <div class="detect-label">Detection</div>
+        <ul>
+          <li>Implement email security controls that assess <strong>behavioral and thematic anomalies</strong> beyond sender reputation — compromised trusted accounts bypass standard reputation filtering entirely</li>
+          <li>Flag emails from known-compromised domains; monitor for external emails claiming government or diplomatic sender identity</li>
+          <li>Implement DMARC, DKIM, and SPF enforcement and monitor for alignment failures on inbound mail</li>
+          <li>Require MFA that cannot be bypassed by credential theft — <strong>hardware security keys or phishing-resistant FIDO2 authenticators</strong> are recommended over SMS or TOTP</li>
+        </ul>
+      </div>
+
+      <h3 class="an-h3">Endpoint Detection</h3>
+      <div class="detect-box">
+        <div class="detect-label">Detection</div>
+        <ul>
+          <li>Enforce Group Policy to <strong>block macro execution</strong> in Office applications for all users except verified business process owners; monitor for macro execution by flagged processes</li>
+          <li>Monitor for <code>novaservice.exe</code> process creation — shared across Phoenix Lineage and UDPGangster toolchains</li>
+          <li>Deploy behavioral endpoint monitoring capable of detecting <strong>drop-and-execute activity</strong> from Office processes, particularly spawning of PowerShell or cmd.exe child processes</li>
+          <li>Alert on execution of Rust-compiled binaries from user-writable directories — consistent with BlackBeard deployment patterns</li>
+        </ul>
+      </div>
+
+      <h3 class="an-h3">Network Detection</h3>
+      <div class="detect-box">
+        <div class="detect-label">Detection</div>
+        <ul>
+          <li>Implement <strong>UDP traffic monitoring at perimeter and east-west segments</strong> — UDPGangster C2 bypasses TCP-focused network defenses and standard IDS signatures</li>
+          <li>Alert on unexpected HTTP responses using non-standard status code patterns — BlackBeard uses HTTP status codes for tasking with data embedded in response headers</li>
+          <li>Monitor for Telegram API traffic from non-user endpoints — consistent with C2 channel abuse observed in select Boggy Serpens campaigns</li>
+          <li>Block and monitor Python server activity on non-standard ports (port 5000 observed in email delivery infrastructure)</li>
+        </ul>
+      </div>
+      <div class="cite">Unit 42 Boggy Serpens Threat Assessment, March 2026 · CISA Advisory — Iranian Government-Sponsored MuddyWater Actors, February 2022 · Group-IB MuddyWater Espionage Analysis, October 2025</div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-head">Contents</div>
+      <a href="#an-overview" class="sidebar-link">Actor Overview</a>
+      <a href="#an-ttps" class="sidebar-link">MITRE ATT&CK Mapping</a>
+      <a href="#an-malware" class="sidebar-link">Malware Toolkit</a>
+      <a href="#an-infra" class="sidebar-link">Infrastructure</a>
+      <a href="#an-detection" class="sidebar-link">Detection Guidance</a>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-head">Quick Reference</div>
+      <a href="#panel-exec" class="sidebar-link" onclick="switchViewByAnchor('exec')">→ Executive Brief</a>
+      <a href="#panel-citations" class="sidebar-link" onclick="switchViewByAnchor('citations')">→ Citations</a>
+    </aside>
+
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- ════════════════════════════════════════
+       CITATIONS VIEW
+  ════════════════════════════════════════ -->
+
+  <div class="audience-panel" id="panel-citations">
+    <div class="exec-wrap" style="padding-top:44px;">
+      <div class="exec-sec-label">Sources</div>
+      <h2 class="exec-h2">Citations &amp; References</h2>
+      <p class="exec-p" style="margin-bottom:20px;">All technical content is sourced from publicly available threat research. No proprietary or classified data is reproduced. All IOCs are defanged per TLP:WHITE conventions.</p>
+      <ul class="cit-list">
+        <li><span>[1]</span>Unit 42 — Boggy Serpens Threat Assessment · Palo Alto Networks · unit42.paloaltonetworks.com · March 2026</li>
+        <li><span>[2]</span>Unit 42 — Iranian Cyber Threat Evolution: From MBR Wipers to Identity Weaponization · Palo Alto Networks · March 2026</li>
+        <li><span>[3]</span>Unit 42 — Threat Brief: March 2026 Escalation of Cyber Risk Related to Iran · Palo Alto Networks · March 2026</li>
+        <li><span>[4]</span>Unit 42 — 2026 Global Incident Response Report · Palo Alto Networks · February 2026</li>
+        <li><span>[5]</span>Group-IB — Unmasking MuddyWater's New Malware Toolkit Driving International Espionage · group-ib.com · October 2025</li>
+        <li><span>[6]</span>CISA — Iranian Government-Sponsored MuddyWater Actors Conducting Malicious Cyber Operations · cisa.gov · February 2022</li>
+        <li><span>[7]</span>MITRE ATT&CK — MuddyWater Group Profile G0069 · attack.mitre.org/groups/G0069 · Updated October 2025 (v18)</li>
+        <li><span>[8]</span>CISA KEV — CVE-2025-54068 Laravel Livewire Exploitation Flagged in Boggy Serpens Activity · March 2026</li>
+        <li><span>[9]</span>Malpedia — MuddyWater Actor Profile · malpedia.caad.fkie.fraunhofer.de/actor/muddywater</li>
+        <li><span>[10]</span>Israeli National Cyber Directorate — BlackBeard Backdoor Tracking · 2025</li>
+        <li><span>[11]</span>Lookout Security — DCHSpy: Iranian APT MuddyWater Leveraging New Spyware · July 2025</li>
+        <li><span>[12]</span>FBI / CISA / CNMF / NCSC-UK — Iranian Government-Sponsored Actors Conduct Cyber Operations Against Global Government and Commercial Networks · February 2022</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<div class="doc-footer">
+  <div class="footer-brand">Cipher<span>&</span>Counsel</div>
+  <div class="footer-note">
+    UTSA Capstone Research · Threat Intelligence Report · March 2026<br>
+    Shadow Sample · Original Work · TLP:WHITE · All sources publicly available
+  </div>
+</div>
+
+<script>
+  function switchView(id, btn) {
+    document.querySelectorAll('.audience-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.aud-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+  function switchViewByAnchor(id) {
+    const tabs = document.querySelectorAll('.aud-tab');
+    const map = { exec: 0, analyst: 1, citations: 2 };
+    switchView(id, tabs[map[id]]);
+  }
+
+  // Sidebar scroll highlight
+  window.addEventListener('scroll', () => {
+    const links = document.querySelectorAll('.sidebar-link[href^="#"]');
+    let current = '';
+    document.querySelectorAll('[id]').forEach(el => {
+      if (window.scrollY >= el.offsetTop - 130) current = el.id;
+    });
+    links.forEach(l => {
+      const active = l.getAttribute('href') === '#' + current;
+      l.style.color = active ? 'var(--white)' : '';
+      l.style.borderLeftColor = active ? 'var(--red)' : '';
+    });
+  }, { passive: true });
+</script>
+
+</body>
+</html>
