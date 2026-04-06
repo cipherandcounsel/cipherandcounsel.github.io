@@ -147,7 +147,10 @@ line-height: 1.08; color: var(–white); margin-bottom: 26px;
 letter-spacing: -0.01em;
 }
 h1 .outline {
-color: transparent; -webkit-text-stroke: 1.5px var(–red);
+color: transparent;
+-webkit-text-stroke: 2px var(–red);
+text-stroke: 2px var(–red);
+paint-order: stroke fill;
 }
 .hero-desc {
 font-size: 1.05rem; color: var(–muted);
@@ -170,11 +173,11 @@ box-shadow: 0 0 24px rgba(204,32,38,0.25);
 font-family: ‘IBM Plex Mono’, monospace; font-size: .75rem;
 letter-spacing: .08em; text-transform: uppercase;
 padding: 14px 30px; background: transparent;
-color: var(–muted); text-decoration: none;
-border: 1px solid var(–border-soft);
+color: var(–white); text-decoration: none;
+border: 1px solid rgba(255,255,255,0.25);
 transition: color .2s, border-color .2s;
 }
-.btn-secondary:hover { color: var(–white); border-color: rgba(255,255,255,0.2); }
+.btn-secondary:hover { color: var(–white); border-color: rgba(255,255,255,0.5); }
 
 /* HERO CARD */
 .hero-card {
@@ -700,7 +703,6 @@ pre.api-code { font-size: .62rem; }
     <li><a href="#projects">Credentials</a></li>
     <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#skills">Skills</a></li>
-    <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#contact">Connect</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Connect</a>
