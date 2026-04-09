@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Poster — Enterprise Resilience Frameworks | UTSA 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  /* ── PRINT TARGET: 36 x 24 inches at 96dpi ── */
+  :root {
+    --red:   #C41E3A;
+    --gold:  #C9A84C;
+    --dark:  #0a0a0a;
+    --panel: #141414;
+    --p2:    #1c1c1c;
+    --text:  #e8eaf0;
+    --muted: #9aa3b8;
+    --white: #ffffff;
+    --blue:  #4fc3f7;
+    --green: #4caf7d;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; }
+  body {
+    background: #1a1a1a;
+    font-family: 'Source Serif 4', Georgia, serif;
+    display: flex; justify-content: center; align-items: flex-start;
+    padding: 24px;
+    min-height: 100vh;
+  }
+
+/* ── POSTER CANVAS — 36:24 ratio ── */
+.poster {
+width: 1440px;
+min-height: 960px;
+background: var(–dark);
+position: relative;
+overflow: hidden;
+display: grid;
+grid-template-rows: auto 1fr auto;
+box-shadow: 0 0 80px rgba(0,0,0,0.8);
+}
+
+/* Background grid texture */
+.poster::before {
+content: ‘’;
+position: absolute; inset: 0;
+background-image:
+linear-gradient(rgba(196,30,58,0.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(196,30,58,0.04) 1px, transparent 1px);
+background-size: 48px 48px;
+pointer-events: none; z-index: 0;
+}
+
+/* ── HEADER ── */
+.poster-header {
+background: linear-gradient(135deg, #0d0d0d 0%, #111 100%);
+border-bottom: 3px solid var(–red);
+padding: 28px 48px 24px;
+position: relative; z-index: 1;
+display: grid;
+grid-template-columns: 1fr auto;
+gap: 24px;
+align-items: center;
+}
+.poster-header::after {
+content: ‘’;
+position: absolute; bottom: -3px; left: 0;
+width: 40%; height: 3px;
+background: var(–gold);
+}
+.header-left {}
+.header-eyebrow {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 11px;
+color: var(–gold); letter-spacing: .18em; text-transform: uppercase;
+margin-bottom: 8px; display: flex; align-items: center; gap: 12px;
+}
+.header-eyebrow::before {
+content: ‘’; display: inline-block;
+width: 28px; height: 1px; background: var(–gold);
+}
+.poster-title {
+font-family: ‘Playfair Display’, Georgia, serif;
+font-weight: 800; font-size: 38px; color: var(–white);
+line-height: 1.08; letter-spacing: -.02em; margin-bottom: 6px;
+}
+.poster-title span { color: var(–red); }
+.poster-subtitle {
+font-family: ‘Playfair Display’, Georgia, serif;
+font-style: italic; font-size: 16px; color: var(–gold);
+line-height: 1.4;
+}
+.header-right {
+text-align: right;
+border-left: 1px solid rgba(255,255,255,0.08);
+padding-left: 28px;
+}
+.utsa-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 10px;
+color: var(–muted); letter-spacing: .12em; text-transform: uppercase;
+margin-bottom: 4px;
+}
+.author-name {
+font-family: ‘Playfair Display’, serif; font-size: 15px;
+color: var(–white); font-weight: 700; margin-bottom: 2px;
+}
+.author-detail {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 10px;
+color: var(–muted); line-height: 1.6;
+}
+.event-badge {
+margin-top: 10px; display: inline-block;
+font-family: ‘IBM Plex Mono’, monospace; font-size: 9px;
+letter-spacing: .12em; text-transform: uppercase;
+padding: 4px 10px;
+border: 1px solid rgba(201,168,76,0.4); color: var(–gold);
+background: rgba(201,168,76,0.06);
+}
+
+/* ── BODY GRID ── */
+.poster-body {
+display: grid;
+grid-template-columns: 320px 1fr 320px;
+gap: 0;
+position: relative; z-index: 1;
+padding: 0;
+}
+
+/* ── COLUMNS ── */
+.col {
+padding: 24px 20px;
+border-right: 1px solid rgba(255,255,255,0.06);
+}
+.col:last-child { border-right: none; }
+.col-center {
+padding: 24px 24px;
+border-right: 1px solid rgba(255,255,255,0.06);
+background: rgba(255,255,255,0.01);
+}
+
+/* ── SECTION LABELS ── */
+.sec-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 9px;
+color: var(–red); letter-spacing: .18em; text-transform: uppercase;
+display: flex; align-items: center; gap: 8px;
+margin-bottom: 8px; margin-top: 20px;
+}
+.sec-label:first-child { margin-top: 0; }
+.sec-label::after { content: ‘’; flex: 1; height: 1px; background: rgba(196,30,58,0.25); }
+
+h2.s-title {
+font-family: ‘Playfair Display’, Georgia, serif; font-weight: 700;
+font-size: 16px; color: var(–white); margin-bottom: 10px;
+line-height: 1.25; letter-spacing: -.01em;
+}
+h3.sub-title {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 10px;
+color: var(–gold); text-transform: uppercase; letter-spacing: .1em;
+margin-top: 14px; margin-bottom: 6px;
+}
+.body-p {
+font-size: 11px; color: var(–muted); line-height: 1.75;
+margin-bottom: 10px;
+}
+.body-p strong { color: var(–text); }
+
+/* ── FINDING CARDS ── */
+.finding-card {
+background: var(–panel); border: 1px solid rgba(255,255,255,0.06);
+border-top: 2px solid var(–red); padding: 12px;
+margin-bottom: 10px;
+}
+.finding-num {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 8px;
+color: var(–red); letter-spacing: .12em; text-transform: uppercase;
+margin-bottom: 4px;
+}
+.finding-title {
+font-family: ‘Playfair Display’, serif; font-size: 12px;
+color: var(–white); font-weight: 700; margin-bottom: 4px; line-height: 1.3;
+}
+.finding-desc { font-size: 10.5px; color: var(–muted); line-height: 1.68; }
+.finding-desc strong { color: var(–text); }
+
+/* ── FRAMEWORK COMPARISON TABLE ── */
+.fw-table { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+.fw-table thead tr { background: #0a0a0a; border-bottom: 1px solid rgba(196,30,58,0.25); }
+.fw-table th {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 9px;
+letter-spacing: .1em; text-transform: uppercase;
+padding: 8px 10px; text-align: left;
+}
+.fw-table th:first-child { color: var(–red); }
+.fw-table th:nth-child(2) { color: var(–blue); }
+.fw-table th:nth-child(3) { color: var(–gold); }
+.fw-table td {
+padding: 8px 10px; color: var(–muted);
+border-bottom: 1px solid rgba(255,255,255,0.04);
+vertical-align: top; line-height: 1.55;
+}
+.fw-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+.fw-table td:first-child {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 9px;
+color: var(–text); font-weight: 500; white-space: nowrap;
+}
+.td-nist { color: var(–blue) !important; }
+.td-iso  { color: var(–gold) !important; }
+
+/* ── RECOMMENDATION CARDS ── */
+.rec-card {
+display: grid; grid-template-columns: 28px 1fr;
+gap: 10px; background: var(–panel);
+border: 1px solid rgba(255,255,255,0.06);
+border-left: 3px solid var(–red);
+padding: 10px 12px; margin-bottom: 8px;
+}
+.rec-num {
+font-family: ‘Playfair Display’, serif; font-size: 20px;
+color: var(–red); font-weight: 800; line-height: 1; opacity: .55;
+}
+.rec-title { font-size: 11px; color: var(–white); font-weight: 600; margin-bottom: 3px; line-height: 1.3; }
+.rec-desc { font-size: 10px; color: var(–muted); line-height: 1.65; }
+.rec-desc strong { color: var(–text); }
+
+/* ── STAT CARDS ── */
+.stat-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 12px 0; }
+.stat-card {
+background: var(–panel); border: 1px solid rgba(255,255,255,0.06);
+border-top: 2px solid var(–red); padding: 12px 10px; text-align: center;
+}
+.stat-num {
+font-family: ‘Playfair Display’, serif; font-weight: 800;
+font-size: 28px; color: var(–red); line-height: 1; margin-bottom: 4px;
+}
+.stat-unit { font-size: 14px; color: var(–gold); }
+.stat-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 8.5px;
+color: var(–muted); letter-spacing: .04em; line-height: 1.5;
+}
+
+/* ── METHODOLOGY BOX ── */
+.method-box {
+background: rgba(196,30,58,0.05); border: 1px solid rgba(196,30,58,0.18);
+border-left: 3px solid var(–red); padding: 12px 14px; margin: 10px 0;
+}
+.method-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 8px;
+color: var(–red); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 5px;
+}
+.method-box p { font-size: 10.5px; color: var(–muted); line-height: 1.72; }
+.method-box p strong { color: var(–text); }
+
+/* ── AUDIENCE TABLE ── */
+.aud-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+.aud-table thead tr { background: #0a0a0a; border-bottom: 1px solid rgba(196,30,58,0.25); }
+.aud-table th {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 8.5px;
+color: var(–red); letter-spacing: .1em; text-transform: uppercase;
+padding: 7px 9px; text-align: left;
+}
+.aud-table td {
+padding: 7px 9px; color: var(–muted);
+border-bottom: 1px solid rgba(255,255,255,0.04);
+vertical-align: top; line-height: 1.55;
+}
+.aud-table td:first-child { color: var(–text); font-weight: 600; }
+
+/* ── CITE ── */
+.cite {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 8.5px;
+color: var(–muted); line-height: 1.65; margin-top: 8px;
+padding: 6px 10px; border-left: 2px solid rgba(201,168,76,0.3); opacity: .72;
+}
+
+/* ── INFO BOX ── */
+.info-box {
+background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.2);
+border-left: 3px solid var(–gold); padding: 11px 13px; margin: 10px 0;
+}
+.info-label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 8px;
+color: var(–gold); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 5px;
+}
+.info-box p { font-size: 10.5px; color: var(–muted); line-height: 1.72; }
+.info-box p strong { color: var(–text); }
+
+/* ── FOOTER ── */
+.poster-footer {
+background: #0a0a0a; border-top: 1px solid rgba(255,255,255,0.07);
+padding: 14px 48px; position: relative; z-index: 1;
+display: flex; align-items: center; justify-content: space-between;
+flex-wrap: wrap; gap: 12px;
+}
+.footer-brand {
+font-family: ‘IBM Plex Mono’, monospace; font-weight: 600;
+font-size: 13px; color: var(–white); letter-spacing: .05em;
+}
+.footer-brand span { color: var(–red); }
+.footer-tagline {
+font-family: ‘Playfair Display’, serif; font-style: italic;
+font-size: 11px; color: var(–muted);
+}
+.footer-sources {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 8.5px;
+color: var(–muted); text-align: right; line-height: 1.6;
+}
+
+/* ── PRINT ── */
+@media print {
+body { background: white; padding: 0; }
+.poster {
+width: 100%; box-shadow: none;
+background: white; color: #111;
+}
+.poster::before { display: none; }
+.poster-header { background: #f0f0f0; border-bottom-color: #C41E3A; }
+.poster-title, h2.s-title { color: #111; }
+.poster-subtitle, h3.sub-title { color: #8B6914; }
+.body-p, .finding-desc, .rec-desc { color: #444; }
+.finding-card, .rec-card, .stat-card { background: #f7f7f7; border-color: #ddd; }
+.method-box { background: #fdecea; }
+.info-box { background: #fffbf0; }
+.fw-table th, .aud-table th { color: #C41E3A; background: #f0f0f0; }
+.fw-table td, .aud-table td { color: #444; }
+.poster-footer { background: #f5f5f5; border-top-color: #ddd; }
+.footer-brand, .footer-tagline, .footer-sources { color: #555; }
+}
+</style>
+
+</head>
+<body>
+<div class="poster">
+
+  <!-- HEADER -->
+
+  <div class="poster-header">
+    <div class="header-left">
+      <div class="header-eyebrow">UTSA Research Initiative · Undergraduate Research Week 2026</div>
+      <h1 class="poster-title">Enterprise Resilience<br><span>Frameworks Benchmarked</span></h1>
+      <p class="poster-subtitle">Comparing NIST SP 800-34 and ISO 22301:2019 for Organizational Decision-Makers</p>
+    </div>
+    <div class="header-right">
+      <div class="utsa-label">Presenter</div>
+      <div class="author-name">Undergraduate Researcher</div>
+      <div class="author-detail">
+        BBA Cybersecurity · Minor: Public Policy &amp; Law<br>
+        University of Texas at San Antonio · Class of 2028<br>
+        Founder, Cipher &amp; Counsel
+      </div>
+      <div class="event-badge">Undergraduate Research Week · April 2026</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+
+  <div class="poster-body">
+
+```
+<!-- LEFT COLUMN -->
+<div class="col">
+
+  <div class="sec-label">Abstract</div>
+  <h2 class="s-title">The Research Question</h2>
+  <p class="body-p">
+    Organizations facing ransomware, supply chain attacks, and growing regulatory pressure must select business continuity frameworks that match their sector, risk profile, and compliance obligations. This research benchmarks two dominant standards — <strong>NIST SP 800-34 Rev.1</strong> and <strong>ISO 22301:2019</strong> — translating dense regulatory language into accessible recommendations for decision-makers at every level of technical fluency.
+  </p>
+
+  <div class="method-box">
+    <div class="method-label">Methodology</div>
+    <p>Structured comparative analysis across <strong>six dimensions</strong>: scope, regulatory alignment, certification pathway, Business Impact Analysis approach, cybersecurity integration, and implementation complexity. Sources: NIST primary documentation, ISO 22301:2019, Religia &amp; Utama (JSMS 2024), PNNL-32686, and Unit 42 2026 Global Incident Response Report.</p>
+  </div>
+
+  <div class="sec-label" style="margin-top:18px;">Why It Matters Now</div>
+  <h2 class="s-title">The Threat Context</h2>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-num">72<span class="stat-unit">min</span></div>
+      <div class="stat-label">Fastest observed access-to-exfiltration timeline (Unit 42, 2026)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">87<span class="stat-unit">%</span></div>
+      <div class="stat-label">Of incidents unfolded across multiple attack surfaces</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">4<span class="stat-unit">x</span></div>
+      <div class="stat-label">Attack speed increase year over year per Unit 42 IR Report</div>
+    </div>
+  </div>
+
+  <p class="body-p">Standard business continuity frameworks assume recovery timeframes of hours to days. These statistics reveal a structural deficit — most organizations are planning for a threat environment that no longer exists. This research quantifies that gap and proposes corrective action.</p>
+
+  <div class="sec-label" style="margin-top:18px;">Science Communication</div>
+  <h2 class="s-title">Multi-Audience Translation</h2>
+  <p class="body-p">A core contribution of this research is demonstrating that <strong>the same regulatory finding requires four different documents</strong> for four different audiences.</p>
+
+  <table class="aud-table">
+    <thead><tr><th>Audience</th><th>Format</th><th>Language</th></tr></thead>
+    <tbody>
+      <tr><td>Board</td><td>One-pager · KPI cards</td><td>Business risk only</td></tr>
+      <tr><td>Legal Counsel</td><td>Compliance gap table</td><td>Regulatory language</td></tr>
+      <tr><td>Operations</td><td>Phased roadmap</td><td>Process-oriented</td></tr>
+      <tr><td>IT / Security</td><td>Control mapping table</td><td>Full technical depth</td></tr>
+    </tbody>
+  </table>
+  <div class="cite">Science communication principle: a framework nobody understands cannot protect anyone.</div>
+
+</div>
+
+<!-- CENTER COLUMN -->
+<div class="col-center">
+
+  <div class="sec-label">Comparative Analysis</div>
+  <h2 class="s-title">Six Dimensions Benchmarked</h2>
+
+  <table class="fw-table">
+    <thead>
+      <tr>
+        <th>Dimension</th>
+        <th>NIST SP 800-34</th>
+        <th>ISO 22301:2019</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Primary Scope</td>
+        <td class="td-nist">IT system contingency planning and recovery</td>
+        <td class="td-iso">Enterprise-wide continuity — people, operations, supply chain</td>
+      </tr>
+      <tr>
+        <td>Target Org</td>
+        <td class="td-nist">U.S. federal agencies · FISMA-covered entities</td>
+        <td class="td-iso">Any organization globally · sector-neutral</td>
+      </tr>
+      <tr>
+        <td>Regulatory Status</td>
+        <td class="td-nist">Mandatory · U.S. federal · DoD · DHS contractors</td>
+        <td class="td-iso">Voluntary · recognized in EU, UK, APAC</td>
+      </tr>
+      <tr>
+        <td>Certification</td>
+        <td class="td-nist">No third-party pathway · internal audit</td>
+        <td class="td-iso">ANAB-accredited third-party certification</td>
+      </tr>
+      <tr>
+        <td>BIA Approach</td>
+        <td class="td-nist">System-level · FIPS 199 · MTD · RTO · RPO per system</td>
+        <td class="td-iso">Enterprise-level · critical business functions · operational dependencies</td>
+      </tr>
+      <tr>
+        <td>Cyber Integration</td>
+        <td class="td-nist">Deep: NIST RMF · SP 800-53 · FIPS 199</td>
+        <td class="td-iso">Via ISO/IEC 27001 · requires supplementation</td>
+      </tr>
+      <tr>
+        <td>Structure</td>
+        <td class="td-nist">7-plan suite · prescriptive · step-by-step</td>
+        <td class="td-iso">10-clause PDCA · outcome-based · org determines how</td>
+      </tr>
+      <tr>
+        <td>Documentation</td>
+        <td class="td-nist">Moderate · defined templates per plan type</td>
+        <td class="td-iso">High · extensive evidence required for certification</td>
+      </tr>
+      <tr>
+        <td>Cost Intensity</td>
+        <td class="td-nist">Lower · standard freely available · no cert costs</td>
+        <td class="td-iso">Higher · audit fees · surveillance requirements</td>
+      </tr>
+      <tr>
+        <td>Best Fit</td>
+        <td class="td-nist">Federal · DoD contractors · healthcare IT · state/local govt</td>
+        <td class="td-iso">Multinationals · financial services · critical infrastructure</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="sec-label" style="margin-top:18px;">Key Findings</div>
+  <h2 class="s-title">What the Research Reveals</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
+    <div class="finding-card">
+      <div class="finding-num">Finding 01</div>
+      <div class="finding-title">The Frameworks Are Complementary</div>
+      <div class="finding-desc">The most effective resilience programs integrate both — NIST SP 800-34 for IT contingency planning and ISO 22301 for enterprise-wide BCM — through a shared Business Impact Analysis process.</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">Finding 02</div>
+      <div class="finding-title">Certification Creates External Credibility</div>
+      <div class="finding-desc">ISO 22301 certification provides externally verified proof of resilience readiness to customers, regulators, and insurers. NIST compliance is meaningful but not visible to commercial stakeholders.</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">Finding 03</div>
+      <div class="finding-title">Both Frameworks Underaddress AI Threat Timelines</div>
+      <div class="finding-desc">Neither standard addresses the 72-minute attack timeline. Organizations relying on standard RTO assumptions may be systematically underestimating how fast disruption becomes catastrophic.</div>
+    </div>
+    <div class="finding-card">
+      <div class="finding-num">Finding 04</div>
+      <div class="finding-title">Communication Is the Primary Failure Point</div>
+      <div class="finding-desc">Both frameworks produce plans that leaders rarely read. The most common failure mode is not a technical gap — it is the absence of plain-language assets that translate requirements into decisions.</div>
+    </div>
+  </div>
+
+  <div class="cite" style="margin-top:10px;">Sources: NIST SP 800-34 Rev.1 · ISO 22301:2019 · Religia &amp; Utama, JSMS Vol.14 No.1 (2024) · PNNL-32686 · Unit 42 2026 Global Incident Response Report</div>
+
+</div>
+
+<!-- RIGHT COLUMN -->
+<div class="col">
+
+  <div class="sec-label">Recommendations</div>
+  <h2 class="s-title">Five Evidence-Based Actions</h2>
+
+  <div class="rec-card">
+    <div class="rec-num">01</div>
+    <div>
+      <div class="rec-title">Start with a Unified Business Impact Analysis</div>
+      <div class="rec-desc">A single enterprise-wide BIA can satisfy both standards simultaneously — mapping critical business functions to the IT systems that support them and establishing MTD, RTO, and RPO at both levels.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">02</div>
+    <div>
+      <div class="rec-title">Select Framework Lead Based on Regulatory Obligation</div>
+      <div class="rec-desc">Federal agencies: <strong>NIST SP 800-34 primary</strong>, ISO 22301 supplemental. Multinationals and regulated private-sector: <strong>ISO 22301 primary</strong>, NIST for IT contingency appendices.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">03</div>
+    <div>
+      <div class="rec-title">Accelerate Recovery Time Objectives</div>
+      <div class="rec-desc">Standard RTO assumptions were built for a different threat environment. The 72-minute attack timeline requires organizations to stress-test existing RTOs against AI-accelerated adversary speeds.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">04</div>
+    <div>
+      <div class="rec-title">Invest in Cross-Audience Communication</div>
+      <div class="rec-desc">Every plan requires a role-specific communication suite: executive one-pager, compliance gap analysis for legal, implementation roadmap for operations, and technical control mapping for IT.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">05</div>
+    <div>
+      <div class="rec-title">Test, Exercise, and Iterate Annually</div>
+      <div class="rec-desc">Both frameworks require regular testing. ISO 22301 mandates documented exercises for certification. Organizations that complete the framework without an annual exercise calendar will find their plans outdated within 18 months.</div>
+    </div>
+  </div>
+
+  <div class="sec-label" style="margin-top:18px;">Conclusion</div>
+  <h2 class="s-title">Resilience Is Not a Document</h2>
+
+  <div class="info-box">
+    <div class="info-label">Core Argument</div>
+    <p>Both frameworks fail not on technical grounds but at the communication layer — where dense regulatory language meets a leader who needs to decide in 15 minutes. <strong>The most important contribution a researcher makes in a resilience program is not drafting the plan. It is translating the plan into the language of every stakeholder who needs to act on it.</strong></p>
+  </div>
+
+  <p class="body-p" style="margin-top:10px;">
+    This research was produced as part of the UTSA BBA Cybersecurity capstone and published through Cipher &amp; Counsel — a platform for women shaping the future of cybersecurity policy and privacy law. Full interactive publication available at:
+  </p>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--gold);margin-top:4px;padding:8px 12px;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);">
+    cipherandcounsel.github.io
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- FOOTER -->
+
+  <div class="poster-footer">
+    <div class="footer-brand">Cipher<span>&</span>Counsel</div>
+    <div class="footer-tagline">"Security intelligence. Legal clarity. Women leading both."</div>
+    <div class="footer-sources">
+      NIST SP 800-34 Rev.1 · ISO 22301:2019 · Religia &amp; Utama, JSMS 2024 · PNNL-32686 · Unit 42 2026 IR Report<br>
+      UTSA Office of Undergraduate Research · Undergraduate Research Week · April 2026
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
