@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editorial Style Guide — Cipher & Counsel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:    #C41E3A;
+    --gold:   #C9A84C;
+    --dark:   #000000;
+    --ink:    #080808;
+    --panel:  #0f0f0f;
+    --border: rgba(196,30,58,0.2);
+    --soft:   rgba(255,255,255,0.07);
+    --rule:   rgba(255,255,255,0.09);
+    --text:   #dde0e8;
+    --muted:  #8896b3;
+    --white:  #ffffff;
+    --gold-light: #e8d5a3;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark); color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 15.5px; line-height: 1.82; overflow-x: hidden;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    background: rgba(0,0,0,0.96); border-bottom: 1px solid var(--border);
+    padding: 13px 60px; display: flex; align-items: center;
+    justify-content: space-between; position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(16px);
+  }
+  .topbar-brand { font-family: 'IBM Plex Mono', monospace; font-weight: 600;
+    font-size: .88rem; color: var(--white); text-decoration: none; letter-spacing: .05em; }
+  .topbar-brand span { color: var(--red); }
+  .topbar-right { display: flex; align-items: center; gap: 18px; }
+  .topbar-tag { font-family: 'IBM Plex Mono', monospace; font-size: .58rem;
+    color: var(--gold); letter-spacing: .14em; text-transform: uppercase;
+    border: 1px solid rgba(201,168,76,0.35); padding: 4px 10px; }
+  .topbar-back { font-family: 'IBM Plex Mono', monospace; font-size: .62rem;
+    color: var(--muted); text-decoration: none; letter-spacing: .06em;
+    text-transform: uppercase; transition: color .2s; }
+  .topbar-back:hover { color: var(--white); }
+
+  /* LAYOUT */
+  .page-wrap { display: grid; grid-template-columns: 220px 1fr;
+    max-width: 1300px; margin: 0 auto; min-height: 100vh; }
+
+  /* SIDEBAR */
+  .sidebar { border-right: 1px solid var(--soft); padding: 40px 0;
+    position: sticky; top: 53px; height: calc(100vh - 53px);
+    overflow-y: auto; background: #050505;
+    scrollbar-width: thin; scrollbar-color: var(--soft) transparent; }
+  .sidebar-head { font-family: 'IBM Plex Mono', monospace; font-size: .55rem;
+    color: var(--red); letter-spacing: .18em; text-transform: uppercase;
+    padding: 0 24px 8px; border-bottom: 1px solid var(--soft); margin-bottom: 8px; }
+  .sidebar-link { display: block; padding: 5px 24px;
+    font-family: 'IBM Plex Mono', monospace; font-size: .64rem;
+    color: var(--muted); text-decoration: none; letter-spacing: .02em;
+    border-left: 2px solid transparent; transition: all .15s; line-height: 1.4; }
+  .sidebar-link:hover { color: var(--white); border-left-color: var(--red); }
+  .sidebar-section { margin-bottom: 24px; }
+  .print-btn { font-family: 'IBM Plex Mono', monospace; font-size: .6rem;
+    letter-spacing: .1em; text-transform: uppercase; padding: 9px 16px;
+    background: transparent; border: 1px solid var(--red); color: var(--red);
+    cursor: pointer; transition: all .2s; width: calc(100% - 48px);
+    margin: 20px 24px 0; display: block; text-align: center; }
+  .print-btn:hover { background: var(--red); color: var(--white); }
+
+  /* MAIN */
+  .main { padding: 52px 64px 100px; max-width: 820px; }
+
+  /* MASTHEAD */
+  .masthead { border-bottom: 1px solid var(--rule); padding-bottom: 36px; margin-bottom: 44px; }
+  .mast-eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .mast-badge { font-family: 'IBM Plex Mono', monospace; font-size: .56rem;
+    letter-spacing: .16em; text-transform: uppercase; padding: 4px 10px;
+    border: 1px solid var(--border); color: var(--red); background: rgba(196,30,58,0.07); }
+  .mast-badge-gold { font-family: 'IBM Plex Mono', monospace; font-size: .56rem;
+    letter-spacing: .16em; text-transform: uppercase; padding: 4px 10px;
+    border: 1px solid rgba(201,168,76,0.3); color: var(--gold); background: rgba(201,168,76,0.06); }
+  .mast-edition { font-family: 'IBM Plex Mono', monospace; font-size: .56rem;
+    color: var(--muted); letter-spacing: .06em; }
+  .mast-title { font-family: 'Playfair Display', Georgia, serif; font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3rem); color: var(--white);
+    line-height: 1.06; letter-spacing: -.02em; margin-bottom: 8px; }
+  .mast-title span { color: var(--red); }
+  .mast-sub { font-family: 'Playfair Display', Georgia, serif; font-weight: 400;
+    font-style: italic; font-size: 1.1rem; color: var(--gold);
+    margin-bottom: 22px; line-height: 1.4; }
+  .mast-rule { width: 44px; height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--gold)); margin-bottom: 22px; }
+  .mast-intro { font-size: .95rem; color: var(--muted); line-height: 1.9;
+    max-width: 680px; margin-bottom: 22px; border-left: 2px solid var(--gold);
+    padding-left: 18px; font-style: italic; }
+  .mast-intro strong { color: var(--text); font-style: normal; }
+  .mast-meta { display: flex; gap: 28px; flex-wrap: wrap; }
+  .mast-meta-item { font-family: 'IBM Plex Mono', monospace; font-size: .6rem;
+    color: var(--muted); letter-spacing: .04em; }
+  .mast-meta-item strong { color: var(--text); font-weight: 500; }
+
+  /* SECTION */
+  .sec-label { font-family: 'IBM Plex Mono', monospace; font-size: .57rem;
+    color: var(--red); letter-spacing: .18em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 10px; margin-top: 40px; }
+  .sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .sec-label:first-child { margin-top: 0; }
+
+  h2.s-title { font-family: 'Playfair Display', Georgia, serif; font-weight: 700;
+    font-size: 1.38rem; color: var(--white); margin-bottom: 14px; letter-spacing: -.01em; }
+  h3.sub-title { font-family: 'Playfair Display', Georgia, serif; font-weight: 600;
+    font-size: 1rem; color: var(--gold); margin-top: 26px; margin-bottom: 8px; }
+
+  .body-p { font-size: .94rem; color: var(--muted); line-height: 1.92; margin-bottom: 14px; }
+  .body-p strong { color: var(--text); }
+
+  /* RULE CARDS */
+  .rule-stack { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+  .rule-card { display: grid; grid-template-columns: 36px 1fr;
+    gap: 14px; background: var(--panel); border: 1px solid var(--soft);
+    padding: 14px 16px; align-items: start; }
+  .rule-icon { font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    color: var(--red); font-weight: 700; margin-top: 2px; text-align: center; }
+  .rule-title { font-size: .9rem; color: var(--white); font-weight: 600;
+    margin-bottom: 4px; line-height: 1.3;
+    font-family: 'Playfair Display', serif; }
+  .rule-body { font-size: .84rem; color: var(--muted); line-height: 1.72; }
+  .rule-body strong { color: var(--text); }
+  .rule-body em { color: var(--gold-light); font-style: italic; }
+
+  /* EXAMPLE BOXES */
+  .example-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+  .ex-box { padding: 14px 16px; border-radius: 0; }
+  .ex-no { background: rgba(196,30,58,0.06); border: 1px solid rgba(196,30,58,0.2);
+    border-left: 3px solid var(--red); }
+  .ex-yes { background: rgba(76,175,125,0.05); border: 1px solid rgba(76,175,125,0.2);
+    border-left: 3px solid #4caf7d; }
+  .ex-label { font-family: 'IBM Plex Mono', monospace; font-size: .54rem;
+    letter-spacing: .14em; text-transform: uppercase; margin-bottom: 6px; }
+  .ex-no .ex-label { color: var(--red); }
+  .ex-yes .ex-label { color: #4caf7d; }
+  .ex-text { font-size: .84rem; color: var(--muted); line-height: 1.7;
+    font-style: italic; }
+
+  /* AUDIENCE TABLE */
+  .tbl-wrap { overflow-x: auto; margin: 12px 0 16px; }
+  table.tbl { width: 100%; border-collapse: collapse; font-size: .84rem; }
+  table.tbl thead tr { background: #0a0a0a; border-bottom: 1px solid var(--border); }
+  table.tbl th { font-family: 'IBM Plex Mono', monospace; font-size: .56rem;
+    color: var(--red); letter-spacing: .1em; text-transform: uppercase;
+    padding: 9px 13px; text-align: left; white-space: nowrap; }
+  table.tbl td { padding: 9px 13px; color: var(--muted);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: top; line-height: 1.6; font-family: 'Source Serif 4', serif; }
+  table.tbl tbody tr:hover td { background: rgba(255,255,255,0.02); }
+  table.tbl td:first-child { color: var(--text); font-weight: 600; }
+
+  /* CITATION FORMAT */
+  .cite-example { background: #050505; border: 1px solid rgba(255,255,255,0.06);
+    border-left: 2px solid var(--gold); padding: 14px 16px; margin: 12px 0;
+    font-family: 'IBM Plex Mono', monospace; font-size: .76rem;
+    line-height: 1.8; color: var(--text); }
+  .cite-label { font-family: 'IBM Plex Mono', monospace; font-size: .54rem;
+    color: var(--gold); letter-spacing: .14em; text-transform: uppercase;
+    margin-bottom: 6px; }
+
+  /* INFO BOX */
+  .info-box { background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.2);
+    border-left: 3px solid var(--gold); padding: 14px 18px; margin: 16px 0; }
+  .info-label { font-family: 'IBM Plex Mono', monospace; font-size: .56rem;
+    color: var(--gold); letter-spacing: .14em; text-transform: uppercase; margin-bottom: 6px; }
+  .info-box p { font-size: .87rem; color: var(--muted); line-height: 1.78; }
+  .info-box p strong { color: var(--text); }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--soft); margin: 36px 0; }
+
+  /* CHANGELOG */
+  .changelog-row { display: grid; grid-template-columns: 80px 100px 1fr;
+    gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--soft);
+    align-items: start; }
+  .cl-ver { font-family: 'IBM Plex Mono', monospace; font-size: .76rem;
+    color: var(--red); font-weight: 600; }
+  .cl-date { font-family: 'IBM Plex Mono', monospace; font-size: .7rem; color: var(--muted); }
+  .cl-desc { font-size: .86rem; color: var(--muted); line-height: 1.6; }
+
+  /* FOOTER */
+  .doc-footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--soft);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-brand { font-family: 'IBM Plex Mono', monospace; font-weight: 600;
+    font-size: .82rem; color: var(--white); }
+  .footer-brand span { color: var(--red); }
+  .footer-note { font-family: 'IBM Plex Mono', monospace; font-size: .58rem;
+    color: var(--muted); text-align: right; line-height: 1.6; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .topbar, .main { padding-left: 20px; padding-right: 20px; }
+    .page-wrap { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .example-pair { grid-template-columns: 1fr; }
+    .changelog-row { grid-template-columns: 1fr; gap: 4px; }
+    .mast-meta { flex-direction: column; gap: 8px; }
+  }
+
+  /* PRINT */
+  @media print {
+    .topbar, .sidebar { display: none !important; }
+    .page-wrap { grid-template-columns: 1fr; }
+    .main { padding: 0; max-width: 100%; }
+    body { background: #fff; color: #111; font-size: 10pt; }
+    .mast-title, h2.s-title { color: #111; }
+    .mast-sub, h3.sub-title { color: #8B6914; }
+    .body-p, .rule-body { color: #333; }
+    .rule-card { background: #f7f7f7; border-color: #ddd; }
+    .ex-no { background: #fdecea; }
+    .ex-yes { background: #f0faf5; }
+    .info-box { background: #fffbf0; }
+    .cite-example { background: #f7f7f7; border-left-color: #C9A84C; }
+    table.tbl th { color: #C41E3A; background: #f0f0f0; }
+    table.tbl td { color: #333; }
+    .doc-footer { border-top-color: #ddd; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="index.html" class="topbar-brand">Cipher<span>&</span>Counsel</a>
+  <div class="topbar-right">
+    <span class="topbar-tag">Editorial Style Guide</span>
+    <a href="index.html" class="topbar-back">← Portfolio</a>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-head">Foundations</div>
+      <a href="#mission" class="sidebar-link">Editorial Mission</a>
+      <a href="#voice" class="sidebar-link">Voice and Tone</a>
+      <a href="#active-passive" class="sidebar-link">Active vs Passive</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-head">Language</div>
+      <a href="#technical-terms" class="sidebar-link">Technical Terms</a>
+      <a href="#punctuation" class="sidebar-link">Punctuation</a>
+      <a href="#numbers" class="sidebar-link">Numbers and Data</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-head">Structure</div>
+      <a href="#audiences" class="sidebar-link">Audience Frameworks</a>
+      <a href="#document-types" class="sidebar-link">Document Types</a>
+      <a href="#headers" class="sidebar-link">Headings and Labels</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-head">Sources</div>
+      <a href="#citations" class="sidebar-link">Citation Format</a>
+      <a href="#iocs" class="sidebar-link">IOC Handling</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-head">Document</div>
+      <a href="#changelog" class="sidebar-link">Changelog</a>
+    </div>
+    <button class="print-btn" onclick="window.print()">Print / Save PDF →</button>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- MASTHEAD -->
+    <div class="masthead" id="mission">
+      <div class="mast-eyebrow">
+        <span class="mast-badge">Cipher & Counsel</span>
+        <span class="mast-badge-gold">Internal Reference</span>
+        <span class="mast-edition">Edition 1.0 · April 2026</span>
+      </div>
+      <h1 class="mast-title">Editorial<br><span>Style Guide</span></h1>
+      <p class="mast-sub">Writing conventions for cybersecurity research, policy communication, and threat intelligence documentation</p>
+      <div class="mast-rule"></div>
+      <p class="mast-intro">
+        This guide defines the editorial standards that govern all written output produced
+        under the Cipher &amp; Counsel platform. It exists because <strong>good technical
+        writing is not intuitive — it is systematic.</strong> Every convention documented
+        here reflects a deliberate choice about how to close the gap between what security
+        researchers know and what decision-makers can act on.
+      </p>
+      <div class="mast-meta">
+        <div class="mast-meta-item">Scope: <strong>All Cipher &amp; Counsel Publications</strong></div>
+        <div class="mast-meta-item">Audience: <strong>Author · Editor · Contributor</strong></div>
+        <div class="mast-meta-item">Version: <strong>1.0 · Living Document</strong></div>
+      </div>
+    </div>
+
+    <!-- EDITORIAL MISSION -->
+    <div class="sec-label">Foundation</div>
+    <h2 class="s-title">Editorial Mission</h2>
+    <p class="body-p">
+      Every document produced under Cipher &amp; Counsel serves one purpose: to get the
+      right information to the right person in the right format so they can make a better
+      decision. Technical accuracy is not enough. A finding that cannot be understood by
+      its intended reader has not yet done its job.
+    </p>
+    <p class="body-p">
+      The editorial standard at Cipher &amp; Counsel is <strong>clarity without
+      condescension and depth without inaccessibility.</strong> We write for readers
+      who are intelligent but not necessarily technical. We never talk down. We never
+      obscure. We translate.
+    </p>
+
+    <div class="info-box">
+      <div class="info-label">The Test for Every Sentence</div>
+      <p>Before publishing, ask: <strong>Does this sentence help the reader decide something, understand something, or do something?</strong> If the answer is no, the sentence does not belong in the document.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- VOICE AND TONE -->
+    <div class="sec-label" id="voice">Voice and Tone</div>
+    <h2 class="s-title">How Cipher & Counsel Sounds</h2>
+    <p class="body-p">
+      The Cipher &amp; Counsel voice is <strong>authoritative without being cold,
+      precise without being stiff, and accessible without being casual.</strong>
+      It sounds like a knowledgeable colleague who respects the reader's time.
+    </p>
+
+    <div class="rule-stack">
+      <div class="rule-card">
+        <div class="rule-icon">01</div>
+        <div>
+          <div class="rule-title">Write to a specific person, not a general audience</div>
+          <div class="rule-body">Before writing, identify the primary reader and what decision they need to make. A CISO reading a threat brief needs to know risk and response priority. A SOC analyst needs to know what to look for and how to act. Write to that person. If the document serves multiple audiences, use tabbed sections or clearly labeled audience callouts.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">02</div>
+        <div>
+          <div class="rule-title">Lead with the finding, not the methodology</div>
+          <div class="rule-body">The reader wants to know what you found before they want to know how you found it. State the key finding in the first sentence or the first paragraph. Save methodology for supporting sections. <em>Exception: academic research publications where methodology is the primary audience concern.</em></div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">03</div>
+        <div>
+          <div class="rule-title">Confidence language must match evidence quality</div>
+          <div class="rule-body">Use <strong>assessed, likely, probable</strong> for analytical judgments supported by strong evidence. Use <strong>possible, may, could</strong> for lower-confidence assessments. Never state an analytical judgment as fact. Attribution claims always carry a confidence qualifier: <em>attributed with high confidence</em> or <em>assessed with moderate confidence.</em></div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">04</div>
+        <div>
+          <div class="rule-title">Eliminate throat-clearing</div>
+          <div class="rule-body">Remove any sentence that restates what the document is about, thanks the reader for their time, or announces what you are about to say instead of saying it. Start with content. The reader knows they are reading a report. Do not tell them they are reading a report.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ACTIVE VS PASSIVE -->
+    <div class="sec-label" id="active-passive">Voice</div>
+    <h2 class="s-title">Active vs Passive Voice</h2>
+    <p class="body-p">
+      <strong>Default to active voice.</strong> Active voice names the actor and the
+      action directly. It is shorter, clearer, and more authoritative. Passive voice
+      obscures accountability and inflates sentence length.
+    </p>
+    <p class="body-p">
+      <strong>Use passive voice only when the actor is unknown, irrelevant, or
+      deliberately withheld.</strong> In threat intelligence, passive voice is
+      appropriate when attribution is unconfirmed. In policy and process documentation,
+      active voice is almost always correct.
+    </p>
+
+    <div class="example-pair">
+      <div class="ex-box ex-no">
+        <div class="ex-label">Avoid</div>
+        <div class="ex-text">"Malicious macros were executed by the attacker after the document was opened by the user."</div>
+      </div>
+      <div class="ex-box ex-yes">
+        <div class="ex-label">Preferred</div>
+        <div class="ex-text">"The attacker executed malicious macros after the user opened the document."</div>
+      </div>
+    </div>
+
+    <div class="example-pair">
+      <div class="ex-box ex-no">
+        <div class="ex-label">Avoid</div>
+        <div class="ex-text">"The endpoint was isolated and the threat was contained."</div>
+      </div>
+      <div class="ex-box ex-yes">
+        <div class="ex-label">Preferred</div>
+        <div class="ex-text">"The SOC analyst isolated the endpoint and confirmed containment."</div>
+      </div>
+    </div>
+
+    <div class="example-pair">
+      <div class="ex-box ex-yes" style="border-left-color: var(--gold); background: rgba(201,168,76,0.05);">
+        <div class="ex-label" style="color: var(--gold);">Passive — Correct Use</div>
+        <div class="ex-text">"The payload was delivered via a macro-laden document. Attribution has not been confirmed at time of publication."</div>
+      </div>
+      <div class="ex-box ex-yes">
+        <div class="ex-label">Active — Confirmed Attribution</div>
+        <div class="ex-text">"Boggy Serpens delivered the payload via a macro-laden document consistent with prior campaign TTPs."</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- TECHNICAL TERMS -->
+    <div class="sec-label" id="technical-terms">Language</div>
+    <h2 class="s-title">Technical Terms and Abbreviations</h2>
+
+    <div class="rule-stack">
+      <div class="rule-card">
+        <div class="rule-icon">01</div>
+        <div>
+          <div class="rule-title">Define on first use, then abbreviate</div>
+          <div class="rule-body">Write the full term followed by the abbreviation in parentheses on first use in every document. Use the abbreviation only thereafter. Do not assume the reader knows the abbreviation even if it appears common in the field. Example: <em>tactics, techniques, and procedures (TTPs)</em> on first reference, then <em>TTPs</em> throughout.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">02</div>
+        <div>
+          <div class="rule-title">Audience determines technical depth</div>
+          <div class="rule-body">For analyst audiences: technique IDs (T1566.001), malware family names, and IOC formats are appropriate without definition. For executive audiences: replace technique IDs with plain-language descriptions. Replace <em>T1566.001 Spearphishing Attachment</em> with <em>a malicious document delivered by email.</em> The technical accuracy does not change. The language does.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">03</div>
+        <div>
+          <div class="rule-title">Never use jargon as a substitute for explanation</div>
+          <div class="rule-body">If a term cannot be defined in one clear sentence, it is being used as jargon. Either define it or replace it. Terms like <em>threat actor, adversary, implant, persistence mechanism,</em> and <em>lateral movement</em> all require a brief definition the first time they appear in any document written for a mixed audience.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">04</div>
+        <div>
+          <div class="rule-title">Capitalize proper nouns, not common nouns used as jargon</div>
+          <div class="rule-body">Capitalize named frameworks, standards, and tools: <em>MITRE ATT&amp;CK, NIST SP 800-61r3, Cortex XDR, ISO 22301.</em> Do not capitalize generic terms used as technical shorthand: <em>ransomware, backdoor, playbook, threat actor, lateral movement.</em> Exception: named malware families are capitalized: <em>BlackBeard, POWERSTATS, Nuso.</em></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- PUNCTUATION -->
+    <div class="sec-label" id="punctuation">Punctuation</div>
+    <h2 class="s-title">Punctuation Conventions</h2>
+
+    <div class="rule-stack">
+      <div class="rule-card">
+        <div class="rule-icon">·</div>
+        <div>
+          <div class="rule-title">No em dashes in any publication</div>
+          <div class="rule-body">Em dashes create visual noise and are inconsistently rendered across platforms and screen readers. Replace with a period, a comma, or a restructured sentence. If an em dash is creating a parenthetical, use parentheses or a separate sentence instead.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">·</div>
+        <div>
+          <div class="rule-title">Oxford comma is required</div>
+          <div class="rule-body">Always use the serial comma before the final item in a list of three or more. <em>Threat classification, severity rating, and confidence score</em> not <em>threat classification, severity rating and confidence score.</em> Ambiguity in lists undermines precision.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">·</div>
+        <div>
+          <div class="rule-title">Use the interpunct as a separator in labels and metadata</div>
+          <div class="rule-body">The centered dot ( · ) is the Cipher &amp; Counsel separator for navigation labels, metadata strings, and multi-item inline lists where a comma would create confusion. Do not use pipes (|), slashes (/), or hyphens (-) as separators in display text.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">·</div>
+        <div>
+          <div class="rule-title">Periods inside quotation marks for American English conventions</div>
+          <div class="rule-body">Follow American English punctuation conventions in all publications. Periods and commas go inside closing quotation marks. Question marks and exclamation points go inside only when they are part of the quoted material.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- NUMBERS -->
+    <div class="sec-label" id="numbers">Numbers and Data</div>
+    <h2 class="s-title">Handling Numbers and Statistics</h2>
+
+    <div class="rule-stack">
+      <div class="rule-card">
+        <div class="rule-icon">01</div>
+        <div>
+          <div class="rule-title">Spell out numbers one through nine. Use numerals for 10 and above.</div>
+          <div class="rule-body">Exception: always use numerals for percentages (65%), version numbers (v18), confidence scores (94), and technical measurements regardless of value.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">02</div>
+        <div>
+          <div class="rule-title">Every statistic requires a source</div>
+          <div class="rule-body">No statistic appears in a Cipher &amp; Counsel publication without an inline attribution or a footnote citation. Unsourced statistics undermine credibility regardless of accuracy. Use the format: <em>According to the Unit 42 2026 Global Incident Response Report, attackers moved from initial access to exfiltration in under one hour in the fastest observed incidents.</em></div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">03</div>
+        <div>
+          <div class="rule-title">Contextualize percentages with the base they reference</div>
+          <div class="rule-body">Do not write <em>65% of incidents.</em> Write <em>65% of the 750 major incidents Unit 42 investigated in 2025.</em> A percentage without a base number is meaningless and creates the appearance of precision without delivering it.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- AUDIENCE FRAMEWORKS -->
+    <div class="sec-label" id="audiences">Structure</div>
+    <h2 class="s-title">Audience Frameworks</h2>
+    <p class="body-p">
+      Every document begins with a declared audience. The audience determines the vocabulary,
+      the level of technical detail, the format, and the length. The same research finding
+      requires a different document for each audience listed below.
+    </p>
+
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Audience</th>
+            <th>Primary Question</th>
+            <th>Format</th>
+            <th>Technical Depth</th>
+            <th>Max Length</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Board / Executive</td>
+            <td>What is at risk and what does it cost us?</td>
+            <td>One-pager, KPI cards, plain narrative</td>
+            <td>None. Business language only.</td>
+            <td>1 page</td>
+          </tr>
+          <tr>
+            <td>General Counsel / Legal</td>
+            <td>What are our obligations and liabilities?</td>
+            <td>Annotated analysis, compliance gap table</td>
+            <td>Regulatory language. No technique IDs.</td>
+            <td>2 to 3 pages</td>
+          </tr>
+          <tr>
+            <td>Operations Leadership</td>
+            <td>What do we do and in what order?</td>
+            <td>Phased roadmap, checklist, priority table</td>
+            <td>Process-oriented. Action-focused.</td>
+            <td>2 pages</td>
+          </tr>
+          <tr>
+            <td>SOC Analyst / IR Team</td>
+            <td>What do I look for and how do I respond?</td>
+            <td>Playbook, ATT&amp;CK table, IOC list</td>
+            <td>Full technical depth. Technique IDs required.</td>
+            <td>No limit</td>
+          </tr>
+          <tr>
+            <td>General Cybersecurity Community</td>
+            <td>What happened and why does it matter to me?</td>
+            <td>Narrative blog post, accessible threat brief</td>
+            <td>Light. Define all terms. Tell the story.</td>
+            <td>800 to 1200 words</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- DOCUMENT TYPES -->
+    <div class="sec-label" id="document-types">Document Types</div>
+    <h2 class="s-title">Standard Document Formats</h2>
+
+    <h3 class="sub-title">Threat Intelligence Report</h3>
+    <p class="body-p">Structure: Executive Summary, Actor Overview, Campaign Timeline, MITRE ATT&amp;CK Mapping, Malware Toolkit, Detection Guidance, Citations. Always dual-audience: executive brief and technical analysis in separate clearly labeled sections or tabs.</p>
+
+    <h3 class="sub-title">Incident Response Documentation</h3>
+    <p class="body-p">Four required documents per incident: Technical Investigation Report, Executive Briefing, Escalation Log, Lessons Learned. Each document is self-contained and readable without the others. The Lessons Learned is formatted for the broadest possible distribution.</p>
+
+    <h3 class="sub-title">Policy Research Brief</h3>
+    <p class="body-p">Structure: Abstract, Introduction, Methodology, Framework Analysis, Key Findings, Recommendations, Citations. Written in academic register with a science communication layer. Every dense regulatory finding must be followed by a plain-language translation.</p>
+
+    <h3 class="sub-title">API Reference</h3>
+    <p class="body-p">Structure: Overview, Base URL, Authentication, Rate Limiting, Endpoints (each with path parameters, query parameters, example request, example response, response fields), Error Reference, Code Examples, SIEM Integration Guide, Changelog, Citations. All code examples must be functional and include error handling.</p>
+
+    <h3 class="sub-title">SOC Playbook</h3>
+    <p class="body-p">Structure: Purpose, Threat Context, Prerequisites, Numbered Steps (each with full narrative, tool alignment, ATT&amp;CK mapping, and output), Reference Tables, Escalation Matrix, Citations. Steps are numbered. Each step is independently actionable without reading the others.</p>
+
+    <div class="divider"></div>
+
+    <!-- HEADINGS -->
+    <div class="sec-label" id="headers">Headings and Labels</div>
+    <h2 class="s-title">Heading Conventions</h2>
+
+    <div class="rule-stack">
+      <div class="rule-card">
+        <div class="rule-icon">H1</div>
+        <div>
+          <div class="rule-title">Document title only. One per document.</div>
+          <div class="rule-body">The H1 is the document name. It appears once at the top. It is not repeated, summarized, or paraphrased anywhere else in the document.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">H2</div>
+        <div>
+          <div class="rule-title">Major section headings. Complete thought, not a label.</div>
+          <div class="rule-body">H2 headings should communicate meaning, not just category. Prefer <em>"What the Investigation Revealed"</em> over <em>"Findings."</em> Prefer <em>"Five Actions for the Next 30 Days"</em> over <em>"Recommendations."</em></div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">H3</div>
+        <div>
+          <div class="rule-title">Subsection headings. Specific and descriptive.</div>
+          <div class="rule-body">H3 headings identify specific content within a major section. They are short, specific, and do not repeat language from the H2 above them.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">TAG</div>
+        <div>
+          <div class="rule-title">Section labels in monospace uppercase for navigation and metadata</div>
+          <div class="rule-body">Short uppercase labels in IBM Plex Mono are used for navigation anchors, document metadata, and section identifiers. They appear above H2 headings and are not part of the document's prose hierarchy. Examples: <em>THREAT CONTEXT · EXECUTIVE SUMMARY · DOCUMENT 01 OF 04</em></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CITATIONS -->
+    <div class="sec-label" id="citations">Sources</div>
+    <h2 class="s-title">Citation Format and Source Standards</h2>
+    <p class="body-p">
+      All factual claims, statistics, IOCs, TTPs, and threat actor attributions require
+      a traceable source. Unsourced claims are not published. When sources conflict,
+      both are cited and the conflict is noted explicitly.
+    </p>
+
+    <h3 class="sub-title">Inline Attribution Format</h3>
+    <div class="cite-label">Use for statistics and key findings within prose</div>
+    <div class="cite-example">According to the Unit 42 2026 Global Incident Response Report, attackers moved from initial access to data exfiltration in under one hour in the fastest observed incidents.</div>
+
+    <h3 class="sub-title">Footnote Citation Format</h3>
+    <div class="cite-label">Use in reference tables and citation sections</div>
+    <div class="cite-example">Author / Organization — Title of Publication · Publisher · URL · Date</div>
+    <div class="cite-example">Unit 42 — Boggy Serpens Threat Assessment · Palo Alto Networks · unit42.paloaltonetworks.com · March 2026</div>
+    <div class="cite-example">MITRE ATT&CK — MuddyWater Group Profile G0069 · attack.mitre.org/groups/G0069 · Updated October 2025 (v18)</div>
+
+    <h3 class="sub-title">Source Hierarchy</h3>
+    <p class="body-p">Prefer sources in this order: primary standards documentation (NIST, ISO, IETF RFC), peer-reviewed academic research, named threat intelligence vendor reports (Unit 42, Group-IB, Mandiant, CrowdStrike), government advisories (CISA, FBI, NCSC), then secondary analysis. Do not cite aggregator sites, forums, or unnamed sources.</p>
+
+    <div class="divider"></div>
+
+    <!-- IOC HANDLING -->
+    <div class="sec-label" id="iocs">IOC Handling</div>
+    <h2 class="s-title">Indicator of Compromise Conventions</h2>
+
+    <div class="rule-stack">
+      <div class="rule-card">
+        <div class="rule-icon">!</div>
+        <div>
+          <div class="rule-title">Defang all IOCs in TLP:WHITE publications</div>
+          <div class="rule-body">Replace dots in IP addresses and domains with bracketed dots to prevent accidental navigation or automated tooling from resolving malicious infrastructure. <strong>198.51.100.42 becomes 198.51.100[.]42. malicious-c2.example.com becomes malicious-c2.example[.]com.</strong> Always note that IOCs are defanged and must be restored before use in detection tooling.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">!</div>
+        <div>
+          <div class="rule-title">Every IOC requires source attribution</div>
+          <div class="rule-body">IOCs without traceable sources are not published. Cite the report, the date, and the organization that identified or confirmed the indicator. Note when an IOC appears in multiple sources as corroboration.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">!</div>
+        <div>
+          <div class="rule-title">Note IOC age and reliability</div>
+          <div class="rule-body">IOCs decay. An IP address observed in August 2025 may be reassigned or decommissioned by the time of publication. Always include first-seen and last-seen timestamps where available. Flag IOCs older than 90 days as potentially stale.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CHANGELOG -->
+    <div class="sec-label" id="changelog">Document History</div>
+    <h2 class="s-title">Changelog</h2>
+
+    <div class="changelog-row">
+      <div class="cl-ver">v1.0</div>
+      <div class="cl-date">April 2026</div>
+      <div class="cl-desc">Initial publication. Covers voice and tone, active vs passive voice, technical term handling, punctuation conventions, numbers and data, audience frameworks, document type standards, heading conventions, citation format, and IOC handling.</div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="doc-footer">
+      <div class="footer-brand">Cipher<span>&</span>Counsel</div>
+      <div class="footer-note">
+        Editorial Style Guide · Edition 1.0 · April 2026<br>
+        Living Document · Subject to Revision
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const links = document.querySelectorAll('.sidebar-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    document.querySelectorAll('[id]').forEach(el => {
+      if (window.scrollY >= el.offsetTop - 120) current = el.id;
+    });
+    links.forEach(l => {
+      const active = l.getAttribute('href') === '#' + current;
+      l.style.color = active ? 'var(--white)' : '';
+      l.style.borderLeftColor = active ? 'var(--red)' : '';
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>
