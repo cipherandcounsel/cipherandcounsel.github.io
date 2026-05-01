@@ -147,12 +147,15 @@
     position: absolute; inset: 0;
     background-image: url('hero-bg-globe.png');
     background-size: cover; background-position: center;
-    opacity: .12; z-index: 0; pointer-events: none;
+    opacity: .18; z-index: 1; pointer-events: none;
   }
   #hero-bg-overlay {
     position: absolute; inset: 0;
     background: linear-gradient(135deg, rgba(20,20,20,0.96) 0%, rgba(20,20,20,0.82) 50%, rgba(20,20,20,0.65) 100%);
-    z-index: 0; pointer-events: none;
+    z-index: 2; pointer-events: none;
+  }
+  .hero-inner {
+    position: relative; z-index: 3;
   }
   #hero::before {
     content: ''; position: absolute; top: 8%; right: 4%;
@@ -1054,7 +1057,7 @@
     <p class="section-sub">Founder of Cipher &amp; Counsel - a platform raising digital footprint awareness and building the next generation of women in cybersecurity, policy, and law. Cybersecurity researcher, privacy law advocate, and UTSA Honors College student pursuing a BBA in Cybersecurity with a Minor in Public Policy and Law.</p>
     <div class="about-grid">
       <div class="about-text">
-        <p>Cipher &amp; Counsel exists because security failures are not technical events, they are human ones. The gap between what security professionals know and what decision-makers can act on causes real harm. This platform is built to close that gap, and to ensure the next generation of women shaping cybersecurity, policy, and law has a community to grow in.</p>
+        <p>Building a path into cybersecurity, law, and policy - not just for myself, but to help create space for others. Cipher &amp; Counsel exists because security failures are not technical events - they are human ones. The gap between what security professionals know and what decision-makers can act on causes real harm. This platform is built to close that gap, and to ensure the next generation of women shaping cybersecurity, policy, and law has a community to grow in.</p>
         <p>Pursuing a <strong>BBA in Cybersecurity</strong> with a Minor in Public Policy and Law at the University of Texas at San Antonio, maintaining a 4.0 GPA and President's List recognition as an <strong>Honors College student</strong>. Five years as a professional Project Manager produced the rare combination of technical fluency and communication precision that defines this work.</p>
         <p>Capstone projects include a <strong>Threat Intelligence Platform</strong> mapped to MITRE ATT&amp;CK, a full-cycle <strong>Incident Response Simulation</strong> with complete written documentation, and ongoing <strong>Business Continuity Research</strong> benchmarked against NIST SP 800-34 and ISO 22301.</p>
         <p>Currently pursuing the <strong>CIPP/US certification</strong> in U.S. privacy law and data protection. U.S. Citizen.</p>
@@ -1083,9 +1086,9 @@
 
 <!-- COMMUNITY IMPACT -->
 <section id="community" style="position:relative; overflow:hidden;">
-  <div style="position:absolute;inset:0;background-image:url('shield-bg.png');background-size:cover;background-position:right center;opacity:.08;pointer-events:none;z-index:0;"></div>
-  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,20,20,0.98) 40%,rgba(20,20,20,0.7) 100%);pointer-events:none;z-index:0;"></div>
-  <div class="section-wrap anim-section">
+  <div style="position:absolute;inset:0;background-image:url('shield-bg.png');background-size:cover;background-position:right center;opacity:.12;pointer-events:none;z-index:1;"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,20,20,0.98) 40%,rgba(20,20,20,0.7) 100%);pointer-events:none;z-index:2;"></div>
+  <div class="section-wrap anim-section" style="position:relative;z-index:3;">
     <div class="section-tag">Community Impact</div>
     <h2>Making strides in cybersecurity.</h2>
     <p class="section-sub">Cipher &amp; Counsel is more than a portfolio. It is a platform with a mission - raising digital footprint awareness and building a community for the next generation of women in cybersecurity, policy, and law.</p>
