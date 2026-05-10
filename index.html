@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cipher & Counsel — Brand Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CIPHER & COUNSEL — STANFORD AESTHETIC
+
+PALETTE:
+Background:  #000000  pure black — no warmth, no gradient
+Primary:     #C9A84C  antique gold — the only color that matters
+Text:        #F0EDE6  warm off-white — not pure white, never harsh
+Muted:       #6B7280  cool gray — supporting text
+Border:      rgba(201,168,76,0.15) — barely-there gold
+Accent line: #C9A84C  gold only — never blue, never red
+
+TYPOGRAPHY:
+Headlines:   Playfair Display — serif authority
+Labels:      IBM Plex Mono — technical precision  
+Body:        Inter — modern legibility
+
+PHILOSOPHY:
+One background. One accent. Maximum restraint.
+Every element earns its place.
+Nothing decorative. Everything intentional.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; background: #0D1B2A; }
+
+body {
+background: #0D1B2A !important;
+color: #F0EDE6 !important;
+font-family: ‘Inter’, sans-serif;
+font-size: 16px;
+line-height: 1.7;
+overflow-x: hidden;
+}
+
+/* ── CURSOR (custom gold) ── */
+body { cursor: none; }
+.cursor {
+position: fixed; width: 6px; height: 6px; border-radius: 50%;
+background: #C9A84C; pointer-events: none; z-index: 9999;
+transform: translate(-50%,-50%);
+transition: width .15s, height .15s, opacity .15s;
+}
+.cursor-ring {
+position: fixed; width: 32px; height: 32px; border-radius: 50%;
+border: 1px solid rgba(201,168,76,.35); pointer-events: none; z-index: 9998;
+transform: translate(-50%,-50%);
+transition: transform .08s ease, width .2s, height .2s;
+}
+
+/* ── NAV ── */
+nav {
+position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+display: flex; align-items: center; justify-content: space-between;
+padding: 0 64px; height: 64px;
+border-bottom: 1px solid rgba(201,168,76,0.16);
+background: rgba(13,27,42,0.97);
+backdrop-filter: blur(24px);
+}
+.nav-left { display: flex; align-items: center; gap: 16px; }
+.nav-monogram {
+position: relative; width: 32px; height: 32px;
+font-family: ‘Playfair Display’, serif; font-weight: 800;
+}
+.nm-b {
+font-size: 1.7rem; color: #C9A84C; line-height: 1;
+position: absolute; top: 0; left: 0; opacity: 0.7;
+}
+.nm-f {
+font-size: 1.7rem; color: #C9A84C; line-height: 1;
+position: absolute; top: 3px; left: 6px;
+}
+.nav-wordmark {
+display: flex; flex-direction: column; gap: 1px;
+}
+.nav-name {
+font-family: ‘Playfair Display’, serif; font-weight: 700;
+font-size: 0.8rem; color: #F0EDE6; letter-spacing: 0.06em;
+line-height: 1;
+}
+.nav-name em { color: #C9A84C; font-style: normal; }
+.nav-tagline {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.42rem;
+color: rgba(201,168,76,0.72); letter-spacing: 0.18em;
+text-transform: uppercase; line-height: 1;
+}
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.65rem;
+letter-spacing: 0.12em; text-transform: uppercase;
+color: rgba(240,237,230,0.72); text-decoration: none;
+transition: color 0.2s; position: relative;
+}
+.nav-links a::after {
+content: ‘’; position: absolute; bottom: -2px; left: 0; right: 0;
+height: 1px; background: #C9A84C;
+transform: scaleX(0); transition: transform 0.25s ease;
+}
+.nav-links a:hover { color: #C9A84C; }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-cta {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.62rem;
+letter-spacing: 0.1em; text-transform: uppercase;
+padding: 8px 20px;
+border: 1px solid rgba(201,168,76,0.4);
+color: #C9A84C; text-decoration: none;
+transition: all 0.2s;
+}
+.nav-cta:hover { background: #C9A84C; color: #000; }
+
+/* ── HERO ── */
+#hero {
+min-height: 100vh;
+display: flex; align-items: center;
+padding: 120px 64px 80px;
+position: relative; overflow: hidden;
+background: #0D1B2A;
+}
+/* Subtle grid overlay */
+#hero::before {
+content: ‘’;
+position: absolute; inset: 0;
+background-image:
+linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+background-size: 80px 80px;
+z-index: 0;
+}
+/* Gold orb — top right */
+#hero::after {
+content: ‘’;
+position: absolute; top: -20%; right: -10%;
+width: 700px; height: 700px; border-radius: 50%;
+background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 65%);
+z-index: 0;
+}
+.hero-inner {
+position: relative; z-index: 1;
+max-width: 900px;
+}
+.hero-kicker {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.65rem;
+letter-spacing: 0.22em; text-transform: uppercase;
+color: #C9A84C; margin-bottom: 28px;
+display: flex; align-items: center; gap: 14px;
+}
+.hero-kicker::before {
+content: ‘’; width: 32px; height: 1px; background: #C9A84C; flex-shrink: 0;
+}
+h1 {
+font-family: ‘Playfair Display’, serif; font-weight: 800;
+font-size: clamp(3.5rem, 6vw, 6rem);
+line-height: 1.02; letter-spacing: -0.03em;
+color: #F0EDE6 !important; margin-bottom: 28px;
+}
+h1 em { color: #C9A84C; font-style: italic; }
+.hero-body {
+font-size: 1.1rem; color: rgba(240,237,230,0.82);
+line-height: 1.82; max-width: 560px; margin-bottom: 44px;
+font-weight: 300;
+}
+.hero-actions { display: flex; gap: 14px; align-items: center; }
+.btn-primary {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.68rem;
+letter-spacing: 0.1em; text-transform: uppercase;
+padding: 14px 32px; background: #C9A84C; color: #000;
+text-decoration: none; border: 1px solid #C9A84C;
+transition: all 0.2s; font-weight: 500;
+}
+.btn-primary:hover { background: transparent; color: #C9A84C; }
+.btn-text {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.65rem;
+letter-spacing: 0.1em; text-transform: uppercase;
+color: rgba(240,237,230,0.62); text-decoration: none;
+transition: color 0.2s; display: flex; align-items: center; gap: 8px;
+}
+.btn-text:hover { color: #C9A84C; }
+.btn-text::after { content: ‘→’; }
+/* Hero scroll indicator */
+.scroll-hint {
+position: absolute; bottom: 40px; left: 64px;
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.58rem;
+letter-spacing: 0.16em; text-transform: uppercase;
+color: rgba(240,237,230,0.4);
+display: flex; align-items: center; gap: 10px;
+}
+.scroll-hint::before {
+content: ‘’; width: 1px; height: 40px; background: rgba(201,168,76,0.3);
+animation: scrollLine 2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+0%, 100% { opacity: 0.3; transform: scaleY(1); }
+50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+/* ── SECTION BASE ── */
+section { position: relative; }
+.wrap { max-width: 1140px; margin: 0 auto; padding: 96px 64px; }
+
+/* Thin gold rule between sections */
+.rule {
+width: 100%; height: 1px;
+background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25), transparent);
+}
+
+/* Section labels */
+.label {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.6rem;
+letter-spacing: 0.2em; text-transform: uppercase; color: #C9A84C;
+margin-bottom: 20px; display: block;
+}
+
+/* Section headings */
+h2 {
+font-family: ‘Playfair Display’, serif; font-weight: 700;
+font-size: clamp(1.9rem, 3vw, 2.8rem);
+color: #F0EDE6 !important; line-height: 1.1; letter-spacing: -0.02em;
+margin-bottom: 14px;
+}
+h2 em { color: #C9A84C; font-style: italic; }
+.sub {
+font-size: 1rem; color: rgba(240,237,230,0.68);
+line-height: 1.8; max-width: 580px;
+margin-bottom: 48px; font-weight: 300;
+}
+
+/* ── STATEMENT SECTION ── */
+#statement { background: #0D1B2A; border-top: 1px solid rgba(201,168,76,0.14); }
+.statement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.statement-left {}
+.statement-right { padding-top: 4px; }
+.statement-body {
+font-size: 1.05rem; color: rgba(240,237,230,0.78);
+line-height: 1.88; margin-bottom: 18px; font-weight: 300;
+}
+.statement-body strong { color: #F0EDE6; font-weight: 500; }
+.gold-bar {
+display: block; width: 32px; height: 2px; background: #C9A84C; margin-bottom: 28px;
+}
+
+/* ── FRAMEWORK ── */
+#framework { background: #0D1B2A; border-top: 1px solid rgba(201,168,76,0.14); }
+.fw-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
+background: rgba(201,168,76,0.12); margin-top: 48px; }
+.fw-item { background: #0D1B2A; padding: 40px 32px; position: relative; overflow: hidden;
+transition: background 0.3s; }
+.fw-item:hover { background: #162436; }
+.fw-item::before {
+content: ‘’; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+background: #C9A84C; transform: scaleX(0); transform-origin: left;
+transition: transform 0.35s ease;
+}
+.fw-item:hover::before { transform: scaleX(1); }
+.fw-num {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.58rem;
+letter-spacing: 0.16em; text-transform: uppercase; color: rgba(201,168,76,0.7);
+margin-bottom: 20px;
+}
+.fw-title {
+font-family: ‘Playfair Display’, serif; font-weight: 700;
+font-size: 1.6rem; color: #F0EDE6; margin-bottom: 12px; line-height: 1.1;
+}
+.fw-desc { font-size: 0.9rem; color: rgba(240,237,230,0.78); line-height: 1.78; margin-bottom: 24px; }
+.fw-link {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.6rem;
+letter-spacing: 0.1em; text-transform: uppercase; color: #C9A84C;
+text-decoration: none; display: flex; align-items: center; gap: 8px;
+transition: gap 0.2s;
+}
+.fw-link:hover { gap: 14px; }
+
+/* ── PRINCIPLES ── */
+#principles { background: #0D1B2A; border-top: 1px solid rgba(201,168,76,0.14); }
+.principles-list { margin-top: 48px; }
+.principle {
+display: grid; grid-template-columns: 80px 1fr 1fr;
+gap: 40px; padding: 32px 0;
+border-bottom: 1px solid rgba(240,237,230,0.08);
+align-items: start; transition: border-color 0.2s;
+}
+.principle:hover { border-bottom-color: rgba(201,168,76,0.2); }
+.principle:first-child { border-top: 1px solid rgba(240,237,230,0.08); }
+.p-num {
+font-family: ‘IBM Plex Mono’, monospace; font-weight: 500;
+font-size: 0.65rem; letter-spacing: 0.1em; color: rgba(201,168,76,0.6);
+padding-top: 4px;
+}
+.p-title {
+font-family: ‘Playfair Display’, serif; font-weight: 700;
+font-size: 1.15rem; color: #F0EDE6; line-height: 1.3;
+}
+.p-desc { font-size: 0.9rem; color: rgba(240,237,230,0.78); line-height: 1.75; }
+
+/* ── MISSION STATEMENT ── */
+#mission { background: #0D1B2A;
+border-top: 1px solid rgba(201,168,76,0.14);
+background: #000;
+}
+.mission-inner { max-width: 800px; }
+.mission-quote {
+font-family: ‘Playfair Display’, serif; font-style: italic;
+font-size: clamp(1.4rem, 2.5vw, 2rem);
+color: #F0EDE6; line-height: 1.55; margin-bottom: 20px;
+}
+.mission-quote em { color: #C9A84C; }
+.mission-attr {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.6rem;
+letter-spacing: 0.16em; text-transform: uppercase;
+color: rgba(201,168,76,0.7);
+display: flex; align-items: center; gap: 12px;
+}
+.mission-attr::before { content: ‘’; width: 24px; height: 1px; background: rgba(201,168,76,0.4); }
+
+/* ── STATS ── */
+#stats { background: #0D1B2A; border-top: 1px solid rgba(201,168,76,0.14); }
+.stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px;
+background: rgba(201,168,76,0.12); margin-top: 48px; }
+.stat { background: #0D1B2A; padding: 40px 28px; }
+.stat-n {
+font-family: ‘Playfair Display’, serif; font-weight: 800;
+font-size: 3.2rem; color: #C9A84C; line-height: 1; margin-bottom: 8px;
+}
+.stat-n sup { font-size: 1.4rem; color: rgba(201,168,76,0.6); }
+.stat-l {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.6rem;
+letter-spacing: 0.08em; text-transform: uppercase;
+color: rgba(240,237,230,0.72); line-height: 1.5;
+}
+.stat-d { font-size: 0.85rem; color: rgba(240,237,230,0.45); margin-top: 6px; }
+
+/* ── CLOSING ── */
+#closing { background: #0D1B2A;
+border-top: 1px solid rgba(201,168,76,0.14);
+min-height: 50vh; display: flex; align-items: center;
+}
+.closing-inner { text-align: center; max-width: 700px; margin: 0 auto; }
+.closing-line {
+font-family: ‘Playfair Display’, serif; font-style: italic;
+font-size: clamp(1.6rem, 3vw, 2.6rem);
+color: rgba(240,237,230,0.85); line-height: 1.4; margin-bottom: 6px;
+}
+.closing-line.gold { color: #C9A84C; margin-bottom: 40px; }
+
+/* ── FOOTER ── */
+footer {
+background: #081422;
+border-top: 1px solid rgba(201,168,76,0.12);
+padding: 28px 64px;
+display: flex; justify-content: space-between; align-items: center;
+}
+.footer-left { display: flex; align-items: center; gap: 20px; }
+.footer-brand {
+font-family: ‘Playfair Display’, serif; font-weight: 700;
+font-size: 0.85rem; color: #F0EDE6; letter-spacing: 0.04em;
+}
+.footer-brand em { color: #C9A84C; font-style: normal; }
+.footer-sep { width: 1px; height: 16px; background: rgba(201,168,76,0.2); }
+.footer-note {
+font-family: ‘IBM Plex Mono’, monospace; font-size: 0.52rem;
+letter-spacing: 0.1em; text-transform: uppercase;
+color: rgba(240,237,230,0.4);
+}
+
+/* ── PALETTE PREVIEW BAR (bottom of page) ── */
+.palette-bar {
+position: fixed; bottom: 0; left: 0; right: 0;
+height: 3px; display: flex;
+}
+.pb-1 { flex: 3; background: #000000; }
+.pb-2 { flex: 1; background: #C9A84C; }
+.pb-3 { flex: 2; background: #F0EDE6; }
+.pb-4 { flex: 1; background: #6B7280; }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ── MOBILE ── */
+@media (max-width: 900px) {
+nav { padding: 0 22px; }
+.nav-links { display: none; }
+#hero { padding: 100px 24px 60px; }
+.wrap { padding: 64px 24px; }
+.statement-grid, .fw-grid, .stats-row { grid-template-columns: 1fr; gap: 0; }
+.principle { grid-template-columns: 48px 1fr; gap: 20px; }
+.p-desc { grid-column: 2; }
+footer { padding: 20px 24px; flex-direction: column; gap: 12px; text-align: center; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<!-- Palette indicator -->
+
+<div class="palette-bar"><div class="pb-1"></div><div class="pb-2"></div><div class="pb-3"></div><div class="pb-4"></div></div>
+
+<!-- NAV -->
+
+<nav>
+  <div class="nav-left">
+    <div class="nav-monogram"><span class="nm-b">C</span><span class="nm-f">C</span></div>
+    <div class="nav-wordmark">
+      <div class="nav-name">CIPHER <em>&</em> COUNSEL</div>
+      <div class="nav-tagline">Cybersecurity · Policy · Law</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Aware</a></li>
+    <li><a href="#">Protect</a></li>
+    <li><a href="#">Advocate</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Meet the Founder</a>
+</nav>
+
+<!-- HERO -->
+
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">Aware · Protect · Advocate</div>
+    <h1>Protect Your<br>Digital <em>Footprint.</em></h1>
+    <p class="hero-body">Most people do not understand or actively manage their digital footprint — leaving them vulnerable to privacy, security, and legal risks. Cipher & Counsel was built to change that.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Start Here</a>
+      <a href="#" class="btn-text">Meet the Founder</a>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<div class="rule"></div>
+
+<!-- STATEMENT -->
+
+<section id="statement">
+  <div class="wrap">
+    <div class="statement-grid">
+      <div class="statement-left reveal">
+        <span class="label">The Problem</span>
+        <h2>What you don't<br>know <em>can hurt you.</em></h2>
+      </div>
+      <div class="statement-right reveal">
+        <span class="gold-bar"></span>
+        <p class="statement-body">Data collection does not stop when you stop scrolling. Every action you take online leaves a trail — social media activity, apps you download, websites you visit, networks you join.</p>
+        <p class="statement-body">Your digital footprint is being built, bought, and sold — whether you manage it or <strong>not.</strong></p>
+        <p class="statement-body">Cipher & Counsel exists to give you the awareness and tools to take back control.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- FRAMEWORK -->
+
+<section id="framework">
+  <div class="wrap">
+    <span class="label reveal">Our Framework</span>
+    <h2 class="reveal">A clear approach<br>to cybersecurity</h2>
+    <p class="sub reveal">Understanding cybersecurity does not require a technical background. It requires awareness, deliberate habits, and the willingness to lead.</p>
+    <div class="fw-grid">
+      <div class="fw-item reveal">
+        <div class="fw-num">01 — Aware</div>
+        <div class="fw-title">Aware</div>
+        <div class="fw-desc">Understand your digital footprint — what you share, what is collected, and where your data exists. Knowledge is the first layer of protection.</div>
+        <a href="#" class="fw-link">Explore Aware</a>
+      </div>
+      <div class="fw-item reveal">
+        <div class="fw-num">02 — Protect</div>
+        <div class="fw-title">Protect</div>
+        <div class="fw-desc">Take control of your digital presence with practical steps that reduce risk. Lock it. Protect it. Respect it. Own it.</div>
+        <a href="#" class="fw-link">Explore Protect</a>
+      </div>
+      <div class="fw-item reveal">
+        <div class="fw-num">03 — Advocate</div>
+        <div class="fw-title">Advocate</div>
+        <div class="fw-desc">Step into leadership at the intersection of cybersecurity, law, and policy — where knowledge becomes impact.</div>
+        <a href="#" class="fw-link">Explore Advocate</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- PRINCIPLES -->
+
+<section id="principles">
+  <div class="wrap">
+    <span class="label reveal">Why It Matters</span>
+    <h2 class="reveal">Your data is worth<br><em>more than you think.</em></h2>
+    <div class="principles-list">
+      <div class="principle reveal">
+        <div class="p-num">01</div>
+        <div class="p-title">Personal Privacy</div>
+        <div class="p-desc">Your location history, health searches, financial behavior, and personal relationships are all part of your digital profile — and available to those who pay for access. Most people have no idea how much is already out there.</div>
+      </div>
+      <div class="principle reveal">
+        <div class="p-num">02</div>
+        <div class="p-title">Account Security</div>
+        <div class="p-desc">Information in your digital footprint — your birthday, employer, hometown — is often the answer to security questions protecting your most important accounts. Oversharing publicly hands attackers the keys.</div>
+      </div>
+      <div class="principle reveal">
+        <div class="p-num">03</div>
+        <div class="p-title">Legal Exposure</div>
+        <div class="p-desc">Data collected about you can be used in legal proceedings, background checks, immigration decisions, and insurance assessments — often without your knowledge or consent. This is a legal problem, not just a technical one.</div>
+      </div>
+      <div class="principle reveal">
+        <div class="p-num">04</div>
+        <div class="p-title">National Security</div>
+        <div class="p-desc">State-sponsored actors actively target civilian digital infrastructure. Your personal data, aggregated at scale, contributes to intelligence profiles used by foreign adversaries. Individual habits have national consequences.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- MISSION -->
+
+<section id="mission">
+  <div class="wrap">
+    <span class="label reveal">Mission</span>
+    <div class="mission-inner reveal">
+      <p class="mission-quote">
+        "To make cybersecurity understandable and actionable by educating individuals on protecting their digital footprint — while building pathways for women to <em>lead in cybersecurity, policy, and digital law.</em>"
+      </p>
+      <div class="mission-attr">Cipher & Counsel · Founded 2025</div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- STATS -->
+
+<section id="stats">
+  <div class="wrap">
+    <span class="label reveal">By the Numbers</span>
+    <h2 class="reveal">The case for<br><em>awareness today.</em></h2>
+    <div class="stats-row">
+      <div class="stat reveal">
+        <div class="stat-n">99<sup>%</sup></div>
+        <div class="stat-l">Of automated account attacks blocked by 2FA</div>
+        <div class="stat-d">One setting. Maximum impact.</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-n">80<sup>+</sup></div>
+        <div class="stat-l">Apps on the average smartphone</div>
+        <div class="stat-d">Most request far more access than they need.</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-n">4<sup>B</sup></div>
+        <div class="stat-l">Records exposed in data breaches in 2024</div>
+        <div class="stat-d">Your data is almost certainly in one of them.</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-n">29<sup>%</sup></div>
+        <div class="stat-l">Of all cyberattacks now target North America</div>
+        <div class="stat-d">The highest rate in six years.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- CLOSING -->
+
+<section id="closing">
+  <div class="wrap">
+    <div class="closing-inner">
+      <p class="closing-line reveal">Cybersecurity is not just technical.</p>
+      <p class="closing-line gold reveal">It is personal, legal, and constant.</p>
+      <div class="hero-actions reveal" style="justify-content:center;">
+        <a href="#" class="btn-primary">Start Here</a>
+        <a href="#" class="btn-text">Meet the Founder</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">
+    <div class="footer-brand">CIPHER <em>&</em> COUNSEL</div>
+    <div class="footer-sep"></div>
+    <div class="footer-note">Cybersecurity · Policy · Law · Est. 2025</div>
+  </div>
+  <div class="footer-note">cipherandcounsel.github.io</div>
+</footer>
+
+<script>
+// Custom cursor
+const cur = document.getElementById('cur');
+const ring = document.getElementById('ring');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+function animCursor(){
+  cur.style.left = mx+'px'; cur.style.top = my+'px';
+  rx += (mx-rx)*0.12; ry += (my-ry)*0.12;
+  ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cur.style.width='10px'; cur.style.height='10px'; cur.style.opacity='.5'; });
+  el.addEventListener('mouseleave',()=>{ cur.style.width='6px'; cur.style.height='6px'; cur.style.opacity='1'; });
+});
+
+// Scroll reveal
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
