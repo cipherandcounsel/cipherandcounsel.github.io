@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aware — Cipher &amp; Counsel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#F5F0E8;color:#1A2332;font-family:'Inter',sans-serif;font-size:16px;line-height:1.75;overflow-x:hidden;}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.in{opacity:1;transform:none;}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 64px;height:68px;background:rgba(26,35,50,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(184,150,90,.2);overflow:hidden;}
+nav::after{content:'';position:absolute;top:0;left:-30%;width:28%;height:100%;background:linear-gradient(90deg,transparent,rgba(184,150,90,.05),transparent);animation:navScan 8s ease-in-out infinite;pointer-events:none;}
+@keyframes navScan{0%{left:-30%}100%{left:130%}}
+a.nav-logo-wrap{display:flex;align-items:center;gap:13px;text-decoration:none;position:relative;z-index:1;cursor:pointer;}
+.nav-cc{position:relative;width:34px;height:34px;flex-shrink:0;}
+.nm-b{font-family:'Playfair Display',serif;font-weight:800;font-size:1.8rem;color:#B8965A;line-height:1;position:absolute;top:0;left:0;opacity:.7;}
+.nm-f{font-family:'Playfair Display',serif;font-weight:800;font-size:1.8rem;color:#B8965A;line-height:1;position:absolute;top:4px;left:6px;}
+.nav-wordmark{display:flex;flex-direction:column;gap:2px;}
+.nav-name{font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:#F5F0E8;letter-spacing:.06em;line-height:1;}
+.nav-name em{color:#B8965A;font-style:normal;}
+.nav-tag{font-family:'IBM Plex Mono',monospace;font-size:.44rem;color:rgba(184,150,90,.65);letter-spacing:.14em;text-transform:uppercase;line-height:1;}
+.nav-links{display:flex;gap:28px;list-style:none;position:relative;z-index:1;}
+.nav-links a{font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.62);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:#B8965A;}
+.nav-cta{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:9px 20px;border:1px solid rgba(184,150,90,.5);color:#B8965A;text-decoration:none;transition:all .2s;position:relative;z-index:1;}
+.nav-cta:hover{background:#B8965A;color:#1A2332;}
+/* LAYOUT */
+.wrap{max-width:1140px;margin:0 auto;padding:88px 64px;position:relative;z-index:1;}
+.rule-d{height:1px;background:linear-gradient(90deg,transparent,rgba(26,35,50,.15),transparent);}
+.rule-g{height:1px;background:linear-gradient(90deg,transparent,rgba(184,150,90,.35),transparent);}
+/* TYPOGRAPHY */
+.label{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#B8965A;margin-bottom:16px;display:block;}
+.label-red{color:#CC2936;}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.9rem,3vw,2.8rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:12px;color:#1A2332;}
+h2 em{color:#B8965A;font-style:italic;}
+h2 strong{color:#CC2936;}
+.sub{font-size:1rem;line-height:1.8;max-width:600px;margin-bottom:44px;font-weight:300;color:#6B7280;}
+.gold-bar{display:block;width:36px;height:2px;background:#B8965A;margin-bottom:22px;}
+.red-bar{display:block;width:36px;height:2px;background:#CC2936;margin-bottom:22px;}
+/* SECTIONS */
+.s-ivory{background:#F5F0E8;}
+.s-charcoal{background:#1C1C1E;}
+.s-dark{background:#0D0D0D;}
+/* HERO */
+.page-hero{min-height:62vh;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:130px 64px 60px;background:#1C1C1E;}
+.ph-img{position:absolute;top:0;left:0;width:100%;height:100%;background-size:cover;background-position:center;-webkit-background-size:cover;opacity:.16;z-index:0;}
+.ph-ov{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(28,28,30,.98) 0%,rgba(28,28,30,.85) 55%,rgba(28,28,30,.65) 100%);z-index:1;}
+.ph-content{position:relative;z-index:2;max-width:1140px;margin:0 auto;width:100%;}
+.ph-kicker{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(184,150,90,.8);margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.ph-kicker::before{content:'';width:28px;height:1px;background:rgba(184,150,90,.5);display:inline-block;flex-shrink:0;}
+.ph-h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(2.8rem,5vw,4.4rem);line-height:1.04;letter-spacing:-.03em;color:#F5F0E8;margin-bottom:16px;}
+.ph-h1 em{color:#B8965A;font-style:italic;}
+.ph-h1 strong{color:#CC2936;}
+.ph-sub{font-size:1rem;color:rgba(245,240,232,.6);line-height:1.8;max-width:560px;font-weight:300;}
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:rgba(26,35,50,.1);margin-top:36px;}
+.card{background:#F5F0E8;padding:32px 28px;transition:background .25s;}
+.card:hover{background:#EDE8DE;}
+.card-num{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:#B8965A;margin-bottom:10px;}
+.card-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:#1A2332;margin-bottom:8px;line-height:1.3;}
+.card-desc{font-size:.88rem;color:#6B7280;line-height:1.75;}
+.cards-dark{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:rgba(184,150,90,.1);margin-top:36px;}
+.card-dark{background:#1C1C1E;padding:32px 28px;transition:background .25s;}
+.card-dark:hover{background:#242424;}
+.card-dark .card-num{color:rgba(184,150,90,.7);}
+.card-dark .card-title{color:#F5F0E8;}
+.card-dark .card-desc{color:rgba(245,240,232,.55);}
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(26,35,50,.1);margin-top:36px;}
+.step{display:grid;grid-template-columns:52px 1fr;gap:20px;padding:24px 0;border-bottom:1px solid rgba(26,35,50,.08);align-items:start;transition:padding .2s;}
+.step:hover{padding-left:8px;}
+.step-n{font-family:'Playfair Display',serif;font-weight:800;font-size:1.8rem;color:rgba(184,150,90,.2);line-height:1;padding-top:2px;}
+.step h3{font-family:'Playfair Display',serif;font-weight:700;font-size:1.05rem;color:#1A2332;margin-bottom:5px;line-height:1.3;}
+.step p{font-size:.9rem;color:#6B7280;line-height:1.72;}
+.step ul{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:4px;}
+.step ul li{font-size:.85rem;color:#9CA3AF;display:flex;gap:8px;}
+.step ul li::before{content:'*';color:#B8965A;flex-shrink:0;}
+/* VISUAL SPLIT */
+.vsplit{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.vsplit.rev{direction:rtl;}
+.vsplit.rev>*{direction:ltr;}
+.vsplit img{width:100%;filter:drop-shadow(0 16px 48px rgba(26,35,50,.2));transition:transform .4s ease;}
+.vsplit img:hover{transform:scale(1.02);}
+/* CINEMATIC IMAGE SECTIONS */
+.cinema-section{position:relative;overflow:hidden;min-height:420px;display:flex;align-items:center;}
+.cinema-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-size:cover;background-position:center;-webkit-background-size:cover;}
+.cinema-ov-l{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(90deg,rgba(245,240,232,.98) 0%,rgba(245,240,232,.9) 45%,rgba(245,240,232,.5) 70%,transparent 100%);}
+.cinema-ov-d{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(90deg,rgba(28,28,30,.98) 0%,rgba(28,28,30,.9) 45%,rgba(28,28,30,.5) 70%,transparent 100%);}
+.cinema-content{position:relative;z-index:1;max-width:580px;padding:72px 64px;}
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+.checklist li{font-size:.92rem;line-height:1.65;display:flex;gap:10px;align-items:baseline;color:#6B7280;}
+.checklist li::before{content:'*';color:#B8965A;flex-shrink:0;font-size:.85rem;}
+.checklist-dark li{color:rgba(245,240,232,.65);}
+/* STAT ROW */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(26,35,50,.1);margin-top:36px;}
+.stat{background:#F5F0E8;padding:36px 24px;}
+.stat-n{font-family:'Playfair Display',serif;font-weight:800;font-size:3rem;color:#1A2332;line-height:1;margin-bottom:6px;}
+.stat-n em{color:#B8965A;font-style:normal;font-size:1.4rem;}
+.stat-n strong{color:#CC2936;}
+.stat-l{font-family:'IBM Plex Mono',monospace;font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:#6B7280;line-height:1.5;}
+.stat-d{font-size:.83rem;color:#9CA3AF;margin-top:4px;}
+/* CLOSING */
+.page-close{text-align:center;padding:96px 40px;}
+.cl1{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.5rem,2.5vw,2.2rem);color:#1A2332;line-height:1.4;margin-bottom:6px;}
+.cl2{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.5rem,2.5vw,2.2rem);color:#B8965A;line-height:1.4;margin-bottom:36px;}
+.cl1-light{color:rgba(245,240,232,.85);}
+/* BUTTONS */
+.btns{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-navy{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:13px 28px;background:#1A2332;color:#F5F0E8;text-decoration:none;border:2px solid #1A2332;transition:all .2s;}
+.btn-navy:hover{background:transparent;color:#1A2332;}
+.btn-gold{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:13px 28px;background:#B8965A;color:#fff;text-decoration:none;border:2px solid #B8965A;transition:all .2s;}
+.btn-gold:hover{background:transparent;color:#B8965A;}
+.btn-outline{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:13px 28px;background:transparent;color:#1A2332;text-decoration:none;border:2px solid rgba(26,35,50,.25);transition:all .2s;}
+.btn-outline:hover{border-color:#1A2332;}
+.btn-outline-l{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:13px 28px;background:transparent;color:rgba(245,240,232,.75);text-decoration:none;border:2px solid rgba(245,240,232,.25);transition:all .2s;}
+.btn-outline-l:hover{border-color:rgba(245,240,232,.6);color:#F5F0E8;}
+/* RESEARCH */
+.r-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(26,35,50,.1);margin-top:36px;}
+.r-card{background:#F5F0E8;padding:26px 22px;position:relative;transition:background .25s;}
+.r-card:hover{background:#EDE8DE;}
+.r-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:#B8965A;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.r-card:hover::before{transform:scaleX(1);}
+.r-label{font-family:'IBM Plex Mono',monospace;font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:#B8965A;margin-bottom:8px;}
+.r-title{font-family:'Playfair Display',serif;font-weight:700;font-size:.97rem;color:#1A2332;margin-bottom:7px;line-height:1.3;}
+.r-desc{font-size:.85rem;color:#6B7280;line-height:1.7;margin-bottom:10px;}
+.r-link{font-family:'IBM Plex Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:#B8965A;text-decoration:none;}
+.r-link:hover{color:#1A2332;}
+/* FOOTER */
+footer{background:#1A2332;padding:26px 64px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(184,150,90,.15);flex-wrap:wrap;gap:10px;}
+.footer-brand{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;color:#F5F0E8;}
+.footer-brand em{color:#B8965A;font-style:normal;}
+.footer-note{font-family:'IBM Plex Mono',monospace;font-size:.52rem;color:rgba(245,240,232,.3);letter-spacing:.08em;text-transform:uppercase;}
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:0 18px;} .nav-links{display:none;}
+  .wrap{padding:60px 22px;}
+  .vsplit{grid-template-columns:1fr;gap:32px;} .vsplit.rev{direction:ltr;}
+  .page-hero{padding:100px 22px 52px;}
+  .cinema-content{padding:52px 24px;max-width:100%;}
+  .cinema-ov-l,.cinema-ov-d{background:rgba(245,240,232,.95);} .cinema-ov-d{background:rgba(28,28,30,.95);}
+  .stats{grid-template-columns:1fr 1fr;} .cards{grid-template-columns:1fr;} .r-grid{grid-template-columns:1fr;}
+  footer{padding:20px 22px;flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo-wrap">
+    <span class="nav-cc"><span class="nm-b">C</span><span class="nm-f">C</span></span>
+    <span class="nav-wordmark">
+      <span class="nav-name">CIPHER <em>&amp;</em> COUNSEL</span>
+      <span class="nav-tag">Cybersecurity · Policy · Law</span>
+    </span>
+  </a>
+  <ul class="nav-links"><li><a href="aware.html" class="active">Aware</a></li><li><a href="protect.html">Protect</a></li><li><a href="advocate.html">Advocate</a></li><li><a href="about.html">About</a></li></ul>
+  <a href="about.html" class="nav-cta">Meet the Founder</a>
+</nav>
+
+<section class="page-hero">
+  <div class="ph-img" style="background-image:url('hero-bg-globe.png');"></div>
+  <div class="ph-ov"></div>
+  <div class="ph-content">
+    <div class="ph-kicker">Aware — Module 01</div>
+    <p class="ph-h1">What Is a<br>Digital <em>Footprint?</em></p>
+    <p class="ph-sub">Every action you take online leaves data behind. Your digital footprint is the trail of information you create, share, and leave exposed, whether you know it or not.</p>
+  </div>
+</section>
+
+<div class="rule-d"></div>
+
+<section class="s-ivory">
+  <div class="wrap">
+    <span class="label reveal">The Three Types</span>
+    <h2 class="reveal">Understanding your<br><em>digital trail</em></h2>
+    <p class="sub reveal">Not all digital footprints are created the same way. Understanding the difference between active, passive, and persistent data is the foundation of awareness.</p>
+    <div class="cards">
+      <div class="card reveal">
+        <div class="card-num">Active</div>
+        <div class="card-title">What You Choose to Share</div>
+        <div class="card-desc">Social media posts, online forms, profile information, comments, and anything you deliberately publish. You control this, but most people share far more than they intend to.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-num">Passive</div>
+        <div class="card-title">Collected Without You Knowing</div>
+        <div class="card-desc">Browsing history, location data, device information, ad tracking pixels, and behavioral data collected silently in the background. You did not choose to share this. It was taken.</div>
+      </div>
+      <div class="card reveal">
+        <div class="card-num">Persistent</div>
+        <div class="card-title">Stays Even After Deletion</div>
+        <div class="card-desc">Cached pages, data broker records, screenshots, and information already sold to third parties. Deletion does not equal erasure. Data can outlive your account by years.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule-g"></div>
+
+<section class="cinema-section">
+  <div class="cinema-bg" style="background-image:url('wifi-graphic.png');background-position:right center;"></div>
+  <div class="cinema-ov-l"></div>
+  <div class="cinema-content">
+    <span class="label label-red reveal">Exposure Sources</span>
+    <span class="red-bar"></span>
+    <h2 class="reveal">Where your<br><strong>data comes from</strong></h2>
+    <p style="font-size:.97rem;color:#6B7280;line-height:1.8;margin-bottom:28px;" class="reveal">Your digital footprint is built across five primary sources, most of which operate in the background without your awareness.</p>
+    <div class="steps" style="border-top:none;">
+      <div class="step reveal"><div class="step-n">01</div><div><h3>Location Services</h3><p>Your movements tracked each time an app accesses your GPS. Many continue tracking in the background when not in use.</p></div></div>
+      <div class="step reveal"><div class="step-n">02</div><div><h3>Apps and Platforms</h3><p>The average smartphone has 80 or more apps. Many request access to camera, microphone, and contacts far beyond what they need to function.</p></div></div>
+      <div class="step reveal"><div class="step-n">03</div><div><h3>Wi-Fi Connections</h3><p>The networks you join reveal your location patterns and browsing behavior. Public Wi-Fi networks are particularly risky for sensitive activity.</p></div></div>
+      <div class="step reveal"><div class="step-n">04</div><div><h3>Search History</h3><p>Every query builds a profile of your interests, health concerns, and financial situation. This profile is sold to advertisers and retained indefinitely.</p></div></div>
+      <div class="step reveal"><div class="step-n">05</div><div><h3>Data Brokers</h3><p>Third-party trackers follow you across websites. Data brokers compile and sell your personal information legally, without your knowledge or consent.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule-d"></div>
+
+<section class="cinema-section">
+  <div class="cinema-bg" style="background-image:url('biometric-graphic.png');background-position:right center;opacity:.9;"></div>
+  <div class="cinema-ov-l"></div>
+  <div class="cinema-content">
+    <span class="label reveal">Biometric Data</span>
+    <span class="gold-bar"></span>
+    <h2 class="reveal">Protect what cannot<br><em>be changed.</em></h2>
+    <p style="font-size:.97rem;color:#6B7280;line-height:1.8;margin-bottom:20px;" class="reveal">Your face, iris, voice, and behavioral patterns are unique identifiers that, unlike passwords, cannot be reset if compromised.</p>
+    <div class="cards" style="margin-top:16px;grid-template-columns:1fr 1fr;">
+      <div class="card reveal"><div class="card-num">Face</div><div class="card-title">Facial Recognition</div><div class="card-desc">Used in law enforcement, retail surveillance, and social media tagging. Your facial structure is a permanent identifier.</div></div>
+      <div class="card reveal"><div class="card-num">Behavior</div><div class="card-title">Behavioral Patterns</div><div class="card-desc">How you type, scroll, and move through apps creates a behavioral fingerprint used to verify and track identity.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule-g"></div>
+
+<section class="s-ivory">
+  <div class="wrap">
+    <span class="label reveal">Why It Matters</span>
+    <h2 class="reveal">Your data is worth<br><em>more than you think.</em></h2>
+    <p class="sub reveal">Your digital footprint is used by advertisers to target you, employers to evaluate you, insurers to assess you, and bad actors to exploit you.</p>
+    <div class="stats">
+      <div class="stat reveal"><div class="stat-n">99<em>%</em></div><div class="stat-l">Of attacks blocked by 2FA</div><div class="stat-d">One setting. Maximum impact.</div></div>
+      <div class="stat reveal"><div class="stat-n">80<em>+</em></div><div class="stat-l">Apps on avg smartphone</div><div class="stat-d">Most request too much access.</div></div>
+      <div class="stat reveal"><div class="stat-n">4<em>B</em></div><div class="stat-l">Records breached in 2024</div><div class="stat-d">Yours may be included.</div></div>
+      <div class="stat reveal"><div class="stat-n">29<strong>%</strong></div><div class="stat-l">Attacks targeting N. America</div><div class="stat-d">Highest rate in six years.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule-d"></div>
+
+<section class="s-ivory">
+  <div class="wrap page-close">
+    <p class="cl1 reveal">Awareness is power.</p>
+    <p class="cl2 reveal">Stay aware. Stay protected.</p>
+    <div class="btns reveal" style="justify-content:center;">
+      <a href="protect.html" class="btn-navy">Next: Protect *</a>
+      <a href="index.html" class="btn-outline">Back to Home</a>
+    </div>
+  </div>
+</section>
+
+<footer><div class="footer-brand">CIPHER <em>&amp;</em> COUNSEL</div><div class="footer-note">Cybersecurity · Policy · Law · Est. 2025 · cipherandcounsel.com</div></footer>
+<script>
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
