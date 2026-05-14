@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meet the Founder — Cipher &amp; Counsel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:#0D1B2A;
+  color:#F0EDE6;
+  font-family:'Inter',sans-serif;
+  font-size:16px;line-height:1.75;
+  overflow-x:hidden;
+}
+
+/* PALETTE
+Navy deep:   #0D1B2A  main background
+Navy mid:    #1B2A3B  cards, nav
+Navy light:  #243447  hover states
+Champagne:   #C9A97A  primary accent
+Champ light: #E8D5A8  text accent on dark
+Off-white:   #F0EDE6  primary text
+Muted:       #8A9BB0  secondary text
+Border:      rgba(201,169,122,0.15)
+*/
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:none;}
+@keyframes navScan{0%{left:-30%}100%{left:130%}}
+@keyframes dotPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+@keyframes scanline{0%{top:-2%}100%{top:102%}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* NAV */
+nav{
+position:fixed;top:0;left:0;right:0;z-index:100;
+display:flex;align-items:center;justify-content:space-between;
+padding:0 64px;height:68px;
+background:rgba(13,27,42,.97);
+backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+border-bottom:1px solid rgba(201,169,122,.15);overflow:hidden;
+}
+nav::after{
+content:’’;position:absolute;top:0;left:-30%;width:28%;height:100%;
+background:linear-gradient(90deg,transparent,rgba(201,169,122,.05),transparent);
+animation:navScan 8s ease-in-out infinite;pointer-events:none;
+}
+a.nav-logo-wrap{display:flex;align-items:center;gap:13px;text-decoration:none;position:relative;z-index:1;}
+.nav-cc{position:relative;width:34px;height:34px;flex-shrink:0;}
+.nm-b{font-family:‘Playfair Display’,serif;font-weight:800;font-size:1.8rem;color:#C9A97A;line-height:1;position:absolute;top:0;left:0;opacity:.7;}
+.nm-f{font-family:‘Playfair Display’,serif;font-weight:800;font-size:1.8rem;color:#C9A97A;line-height:1;position:absolute;top:4px;left:6px;}
+.nav-wordmark{display:flex;flex-direction:column;gap:2px;}
+.nav-name{font-family:‘Playfair Display’,serif;font-weight:700;font-size:.82rem;color:#F0EDE6;letter-spacing:.06em;line-height:1;}
+.nav-name em{color:#C9A97A;font-style:normal;}
+.nav-tag{font-family:‘IBM Plex Mono’,monospace;font-size:.44rem;color:rgba(201,169,122,.6);letter-spacing:.14em;text-transform:uppercase;line-height:1;}
+.nav-links{display:flex;gap:28px;list-style:none;position:relative;z-index:1;}
+.nav-links a{font-family:‘IBM Plex Mono’,monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,237,230,.55);text-decoration:none;transition:color .2s;position:relative;}
+.nav-links a::after{content:’’;position:absolute;bottom:-2px;left:0;right:0;height:1px;background:#C9A97A;transform:scaleX(0);transition:transform .25s ease;}
+.nav-links a:hover,.nav-links a.active{color:#C9A97A;}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+.nav-cta{font-family:‘IBM Plex Mono’,monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:9px 20px;border:1px solid rgba(201,169,122,.4);color:#C9A97A;text-decoration:none;transition:all .2s;position:relative;z-index:1;}
+.nav-cta:hover{background:#C9A97A;color:#0D1B2A;}
+
+/* HERO FULL BLEED */
+#hero{
+min-height:100vh;position:relative;overflow:hidden;
+display:flex;align-items:center;
+padding:120px 64px 80px;
+background:#081422;
+}
+#hero-bg{
+position:absolute;top:0;left:0;width:100%;height:100%;
+background-image:url(‘hero-bg-globe.png’);
+background-size:cover;background-position:center;
+-webkit-background-size:cover;
+opacity:.22;z-index:0;
+animation:float 8s ease-in-out infinite;
+}
+#hero-ov{
+position:absolute;top:0;left:0;width:100%;height:100%;
+background:linear-gradient(135deg,
+rgba(8,20,34,.97) 0%,
+rgba(13,27,42,.85) 45%,
+rgba(13,27,42,.55) 100%);
+z-index:1;
+}
+/* Subtle grid lines */
+#hero::before{
+content:’’;position:absolute;inset:0;
+background-image:
+linear-gradient(rgba(201,169,122,.04) 1px,transparent 1px),
+linear-gradient(90deg,rgba(201,169,122,.04) 1px,transparent 1px);
+background-size:72px 72px;z-index:1;pointer-events:none;
+}
+/* Scanline sweep */
+#hero-scan{
+position:absolute;left:0;right:0;height:1px;top:-2%;
+background:linear-gradient(90deg,transparent,rgba(201,169,122,.12),transparent);
+animation:scanline 9s linear infinite;z-index:2;pointer-events:none;
+}
+/* Gold glow orb */
+#hero::after{
+content:’’;position:absolute;top:-15%;right:-8%;
+width:680px;height:680px;border-radius:50%;
+background:radial-gradient(circle,rgba(201,169,122,.07) 0%,transparent 65%);
+z-index:1;pointer-events:none;
+}
+.hero-content{position:relative;z-index:3;max-width:820px;}
+.hero-kicker{
+font-family:‘IBM Plex Mono’,monospace;font-size:.68rem;
+letter-spacing:.22em;text-transform:uppercase;
+color:#C9A97A;margin-bottom:24px;
+display:flex;align-items:center;gap:12px;
+}
+.hero-kicker::before{content:’’;width:32px;height:1px;background:#C9A97A;flex-shrink:0;}
+.pulse-dot{width:7px;height:7px;border-radius:50%;background:#C9A97A;box-shadow:0 0 10px rgba(201,169,122,.6);animation:dotPulse 2s ease-in-out infinite;flex-shrink:0;}
+h1.h1{
+font-family:‘Playfair Display’,serif;font-weight:800;
+font-size:clamp(3.4rem,6vw,5.8rem);
+line-height:1.02;letter-spacing:-.03em;
+color:#F0EDE6;margin-bottom:24px;
+}
+h1.h1 em{color:#C9A97A;font-style:italic;}
+.hero-desc{font-size:1.08rem;color:rgba(240,237,230,.68);line-height:1.82;max-width:560px;margin-bottom:40px;font-weight:300;}
+.btns{display:flex;gap:12px;flex-wrap:wrap;}
+.scroll-hint{
+position:absolute;bottom:38px;left:64px;z-index:3;
+font-family:‘IBM Plex Mono’,monospace;font-size:.55rem;
+letter-spacing:.16em;text-transform:uppercase;
+color:rgba(240,237,230,.3);display:flex;align-items:center;gap:10px;
+}
+.scroll-hint::before{content:’’;width:1px;height:36px;background:rgba(201,169,122,.3);}
+
+/* BUTTONS */
+.btn-primary{font-family:‘IBM Plex Mono’,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 30px;background:#C9A97A;color:#0D1B2A;text-decoration:none;border:2px solid #C9A97A;transition:all .2s;display:inline-block;font-weight:600;}
+.btn-primary:hover{background:transparent;color:#C9A97A;}
+.btn-ghost{font-family:‘IBM Plex Mono’,monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 30px;background:transparent;color:rgba(240,237,230,.8);text-decoration:none;border:2px solid rgba(240,237,230,.2);transition:all .2s;display:inline-block;}
+.btn-ghost:hover{border-color:rgba(240,237,230,.6);color:#F0EDE6;}
+
+/* SECTIONS */
+.s-deep{background:#0D1B2A;}
+.s-mid{background:#1B2A3B;}
+.s-darker{background:#081422;}
+.rule{height:1px;background:linear-gradient(90deg,transparent,rgba(201,169,122,.25),rgba(201,169,122,.4),rgba(201,169,122,.25),transparent);}
+.wrap{max-width:1140px;margin:0 auto;padding:88px 64px;position:relative;z-index:1;}
+
+/* TYPE */
+.label{font-family:‘IBM Plex Mono’,monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#C9A97A;margin-bottom:16px;display:block;}
+h2{font-family:‘Playfair Display’,serif;font-weight:700;font-size:clamp(1.9rem,3vw,2.8rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:12px;color:#F0EDE6;}
+h2 em{color:#C9A97A;font-style:italic;}
+h3{font-family:‘Playfair Display’,serif;font-weight:700;font-size:1.1rem;line-height:1.3;margin-bottom:6px;color:#F0EDE6;}
+.sub{font-size:1rem;line-height:1.8;max-width:600px;margin-bottom:44px;font-weight:300;color:rgba(240,237,230,.6);}
+.body-p{font-size:.97rem;line-height:1.88;margin-bottom:16px;color:rgba(240,237,230,.7);}
+.body-p strong{color:#F0EDE6;font-weight:500;}
+.champ-bar{display:block;width:36px;height:2px;background:#C9A97A;margin-bottom:22px;}
+
+/* INNER PAGE HERO */
+.p-hero{
+min-height:62vh;position:relative;overflow:hidden;
+display:flex;align-items:flex-end;padding:130px 64px 60px;
+background:#081422;
+}
+.p-hero::before{
+content:’’;position:absolute;inset:0;
+background-image:linear-gradient(rgba(201,169,122,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,169,122,.04) 1px,transparent 1px);
+background-size:72px 72px;z-index:1;pointer-events:none;
+}
+.p-hero::after{content:’’;position:absolute;top:-20%;right:-8%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,122,.06) 0%,transparent 65%);z-index:1;}
+.p-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-size:cover;background-position:center;-webkit-background-size:cover;opacity:.18;z-index:0;}
+.p-ov{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(8,20,34,.98) 0%,rgba(13,27,42,.88) 55%,rgba(13,27,42,.68) 100%);z-index:2;}
+.p-scan{position:absolute;left:0;right:0;height:1px;top:-2%;background:linear-gradient(90deg,transparent,rgba(201,169,122,.1),transparent);animation:scanline 9s linear infinite;z-index:3;}
+.p-content{position:relative;z-index:4;max-width:1140px;margin:0 auto;width:100%;}
+.p-kicker{font-family:‘IBM Plex Mono’,monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(201,169,122,.8);margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.p-kicker::before{content:’’;width:28px;height:1px;background:rgba(201,169,122,.5);flex-shrink:0;}
+.p-h1{font-family:‘Playfair Display’,serif;font-weight:800;font-size:clamp(2.8rem,5vw,4.4rem);line-height:1.04;letter-spacing:-.03em;color:#F0EDE6;margin-bottom:16px;}
+.p-h1 em{color:#C9A97A;font-style:italic;}
+.p-sub{font-size:1rem;color:rgba(240,237,230,.6);line-height:1.8;max-width:560px;font-weight:300;}
+
+/* FRAMEWORK PANELS */
+.fw-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(201,169,122,.12);margin-top:44px;}
+.fw-item{background:#1B2A3B;padding:40px 32px;position:relative;overflow:hidden;transition:background .25s;}
+.fw-item:hover{background:#243447;}
+.fw-item::before{content:’’;position:absolute;top:0;left:0;right:0;height:2px;background:#C9A97A;transform:scaleX(0);transform-origin:left;transition:transform .35s ease;}
+.fw-item:hover::before{transform:scaleX(1);}
+.fw-num{font-family:‘IBM Plex Mono’,monospace;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,169,122,.5);margin-bottom:16px;}
+.fw-title{font-family:‘Playfair Display’,serif;font-weight:700;font-size:1.5rem;color:#F0EDE6;margin-bottom:10px;line-height:1.1;}
+.fw-desc{font-size:.9rem;color:rgba(240,237,230,.6);line-height:1.78;margin-bottom:20px;}
+.fw-link{font-family:‘IBM Plex Mono’,monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#C9A97A;text-decoration:none;display:flex;align-items:center;gap:6px;transition:gap .2s;}
+.fw-link:hover{gap:12px;}
+
+/* CINEMATIC SPLIT SECTIONS */
+.cinema{position:relative;overflow:hidden;min-height:480px;display:grid;grid-template-columns:1fr 1fr;}
+.cinema-img{position:relative;overflow:hidden;min-height:480px;}
+.cinema-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .6s ease;}
+.cinema-img:hover img{transform:scale(1.04);}
+.cinema-img::after{content:’’;position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,27,42,.4) 0%,transparent 100%);}
+.cinema-img.right::after{background:linear-gradient(270deg,rgba(13,27,42,.4) 0%,transparent 100%);}
+.cinema-text{background:#1B2A3B;padding:64px 52px;display:flex;flex-direction:column;justify-content:center;}
+.cinema-text.deep{background:#0D1B2A;}
+
+/* IMAGE CARDS */
+.img-feature{
+position:relative;overflow:hidden;
+width:100%;aspect-ratio:16/9;
+border:1px solid rgba(201,169,122,.12);
+}
+.img-feature img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+.img-feature:hover img{transform:scale(1.05);}
+.img-feature::after{
+content:’’;position:absolute;bottom:0;left:0;right:0;height:40%;
+background:linear-gradient(transparent,rgba(13,27,42,.8));
+}
+
+/* STAT ROW */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,169,122,.12);margin-top:36px;}
+.stat{background:#1B2A3B;padding:36px 24px;}
+.stat-n{font-family:‘Playfair Display’,serif;font-weight:800;font-size:3rem;color:#C9A97A;line-height:1;margin-bottom:6px;}
+.stat-n em{font-style:normal;font-size:1.4rem;color:rgba(201,169,122,.6);}
+.stat-l{font-family:‘IBM Plex Mono’,monospace;font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(240,237,230,.5);line-height:1.5;}
+.stat-d{font-size:.82rem;color:rgba(240,237,230,.35);margin-top:4px;}
+
+/* PRINCIPLES */
+.principle{display:grid;grid-template-columns:52px 1fr 1fr;gap:36px;padding:26px 0;border-bottom:1px solid rgba(240,237,230,.07);align-items:start;}
+.principle:first-child{border-top:1px solid rgba(240,237,230,.07);}
+.p-num{font-family:‘IBM Plex Mono’,monospace;font-size:.6rem;letter-spacing:.1em;color:rgba(201,169,122,.45);padding-top:3px;}
+.p-title{font-family:‘Playfair Display’,serif;font-weight:700;font-size:1.1rem;color:#F0EDE6;line-height:1.3;}
+.p-desc{font-size:.9rem;color:rgba(240,237,230,.6);line-height:1.75;}
+
+/* STEPS */
+.steps{border-top:1px solid rgba(240,237,230,.08);margin-top:32px;}
+.step{display:grid;grid-template-columns:52px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid rgba(240,237,230,.07);align-items:start;transition:padding .2s;}
+.step:hover{padding-left:8px;}
+.step-n{font-family:‘Playfair Display’,serif;font-weight:800;font-size:1.8rem;color:rgba(201,169,122,.18);line-height:1;padding-top:2px;}
+.step h3{color:#F0EDE6;margin-bottom:5px;}
+.step p{font-size:.9rem;color:rgba(240,237,230,.6);line-height:1.72;}
+.step ul{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:4px;}
+.step ul li{font-size:.85rem;color:rgba(240,237,230,.45);display:flex;gap:8px;}
+.step ul li::before{content:’*’;color:#C9A97A;flex-shrink:0;}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(201,169,122,.1);margin-top:36px;}
+.card{background:#1B2A3B;padding:30px 26px;transition:background .25s;position:relative;overflow:hidden;}
+.card:hover{background:#243447;}
+.card::before{content:’’;position:absolute;top:0;left:0;right:0;height:1px;background:#C9A97A;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.card:hover::before{transform:scaleX(1);}
+.card-num{font-family:‘IBM Plex Mono’,monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(201,169,122,.6);margin-bottom:10px;}
+.card-title{font-family:‘Playfair Display’,serif;font-weight:700;font-size:1rem;color:#F0EDE6;margin-bottom:8px;line-height:1.3;}
+.card-desc{font-size:.87rem;color:rgba(240,237,230,.58);line-height:1.75;}
+.card-link{font-family:‘IBM Plex Mono’,monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:#C9A97A;text-decoration:none;margin-top:14px;display:inline-block;transition:letter-spacing .2s;}
+.card-link:hover{letter-spacing:.16em;}
+
+/* MISSION QUOTE */
+.mission-q{font-family:‘Playfair Display’,serif;font-style:italic;font-size:clamp(1.3rem,2.2vw,1.85rem);color:#F0EDE6;line-height:1.55;margin-bottom:18px;}
+.mission-q em{color:#C9A97A;}
+.mission-attr{font-family:‘IBM Plex Mono’,monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(201,169,122,.6);display:flex;align-items:center;gap:12px;}
+.mission-attr::before{content:’’;width:24px;height:1px;background:rgba(201,169,122,.4);}
+
+/* VSPLIT */
+.vsplit{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+.vsplit.rev{direction:rtl;}
+.vsplit.rev>*{direction:ltr;}
+
+/* RESEARCH */
+.r-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(201,169,122,.1);margin-top:32px;}
+.r-card{background:#1B2A3B;padding:26px 22px;position:relative;transition:background .25s;}
+.r-card:hover{background:#243447;}
+.r-card::before{content:’’;position:absolute;top:0;left:0;right:0;height:1px;background:#C9A97A;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.r-card:hover::before{transform:scaleX(1);}
+.r-label{font-family:‘IBM Plex Mono’,monospace;font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(201,169,122,.65);margin-bottom:8px;}
+.r-title{font-family:‘Playfair Display’,serif;font-weight:700;font-size:.97rem;color:#F0EDE6;margin-bottom:7px;line-height:1.3;}
+.r-desc{font-size:.85rem;color:rgba(240,237,230,.55);line-height:1.7;margin-bottom:10px;}
+.r-link{font-family:‘IBM Plex Mono’,monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:#C9A97A;text-decoration:none;transition:color .2s;}
+.r-link:hover{color:#F0EDE6;}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:26px;margin-top:32px;}
+.timeline::before{content:’’;position:absolute;left:7px;top:0;bottom:0;width:1px;background:rgba(201,169,122,.2);}
+.tl-item{position:relative;padding-bottom:32px;}
+.tl-item::before{content:’’;position:absolute;left:-21px;top:6px;width:9px;height:9px;border-radius:50%;background:#C9A97A;box-shadow:0 0 0 3px #0D1B2A,0 0 0 4px rgba(201,169,122,.3);}
+.tl-date{font-family:‘IBM Plex Mono’,monospace;font-size:.6rem;color:#C9A97A;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.tl-role{font-size:1rem;font-weight:600;color:#F0EDE6;margin-bottom:2px;}
+.tl-org{font-size:.86rem;color:#C9A97A;margin-bottom:8px;}
+.tl-desc{font-size:.87rem;color:rgba(240,237,230,.6);line-height:1.72;}
+.tl-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.tl-tag{font-family:‘IBM Plex Mono’,monospace;font-size:.52rem;letter-spacing:.07em;text-transform:uppercase;padding:2px 9px;border:1px solid rgba(201,169,122,.2);color:rgba(201,169,122,.65);}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+.checklist li{font-size:.92rem;line-height:1.65;display:flex;gap:10px;align-items:baseline;color:rgba(240,237,230,.65);}
+.checklist li::before{content:’*’;color:#C9A97A;flex-shrink:0;font-size:.85rem;}
+
+/* PROFILE CARD */
+.profile-card{background:#1B2A3B;border:1px solid rgba(201,169,122,.2);border-top:3px solid #C9A97A;padding:26px 22px;box-shadow:0 12px 48px rgba(0,0,0,.5);}
+.profile-card::before{content:’// founder.profile’;font-family:‘IBM Plex Mono’,monospace;font-size:.56rem;letter-spacing:.1em;color:#C9A97A;display:block;margin-bottom:14px;}
+.cr{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid rgba(240,237,230,.06);}
+.cr:last-child{border-bottom:none;}
+.cr-k{font-family:‘IBM Plex Mono’,monospace;font-size:.56rem;color:rgba(240,237,230,.38);text-transform:uppercase;letter-spacing:.06em;}
+.cr-v{font-size:.84rem;color:#F0EDE6;font-weight:500;text-align:right;}
+.cr-v.champ{color:#C9A97A;}
+
+/* CLOSING */
+.page-close{text-align:center;padding:96px 40px;}
+.cl1{font-family:‘Playfair Display’,serif;font-style:italic;font-size:clamp(1.5rem,2.5vw,2.2rem);color:rgba(240,237,230,.85);line-height:1.4;margin-bottom:6px;}
+.cl2{font-family:‘Playfair Display’,serif;font-style:italic;font-size:clamp(1.5rem,2.5vw,2.2rem);color:#C9A97A;line-height:1.4;margin-bottom:36px;}
+
+/* FOOTER */
+footer{background:#081422;padding:26px 64px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,169,122,.12);flex-wrap:wrap;gap:10px;}
+.footer-brand{font-family:‘Playfair Display’,serif;font-weight:700;font-size:.88rem;color:#F0EDE6;}
+.footer-brand em{color:#C9A97A;font-style:normal;}
+.footer-note{font-family:‘IBM Plex Mono’,monospace;font-size:.52rem;color:rgba(240,237,230,.28);letter-spacing:.08em;text-transform:uppercase;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+nav{padding:0 18px;} .nav-links{display:none;}
+#hero{padding:100px 22px 60px;}
+.wrap{padding:60px 22px;}
+.fw-grid,.vsplit,.r-grid,.cinema{grid-template-columns:1fr;}
+.vsplit.rev{direction:ltr;}
+.principle{grid-template-columns:36px 1fr;gap:16px;}
+.p-desc{grid-column:2;}
+.stats{grid-template-columns:1fr 1fr;}
+.cards{grid-template-columns:1fr;}
+.cinema-img{min-height:280px;}
+.cinema-text{padding:48px 24px;}
+.p-hero{padding:100px 22px 52px;}
+footer{padding:20px 22px;flex-direction:column;text-align:center;}
+.scroll-hint{display:none;}
+}
+</style>
+
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo-wrap">
+    <span class="nav-cc"><span class="nm-b">C</span><span class="nm-f">C</span></span>
+    <span class="nav-wordmark">
+      <span class="nav-name">CIPHER <em>&amp;</em> COUNSEL</span>
+      <span class="nav-tag">Cybersecurity · Policy · Law</span>
+    </span>
+  </a>
+  <ul class="nav-links"><li><a href="aware.html">Aware</a></li><li><a href="protect.html">Protect</a></li><li><a href="advocate.html">Advocate</a></li><li><a href="about.html" class="active">About</a></li></ul>
+  <a href="about.html" class="nav-cta">Meet the Founder</a>
+</nav>
+
+<section id="hero" style="min-height:70vh;">
+  <div id="hero-bg" style="background-image:url('hero-bg-globe.png');"></div>
+  <div id="hero-ov"></div>
+  <div id="hero-scan"></div>
+  <div class="hero-content" style="display:grid;grid-template-columns:1fr 320px;gap:56px;align-items:end;max-width:1140px;width:100%;">
+    <div>
+      <div class="hero-kicker"><span class="pulse-dot"></span>Meet the Founder</div>
+      <h1 class="h1">Cybersecurity.<br>Policy. <em>Law.</em></h1>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:.65rem;color:rgba(201,169,122,.72);letter-spacing:.1em;text-transform:uppercase;">Founder, Cipher and Counsel · UTSA Honors College · Class of 2028</p>
+    </div>
+    <div class="profile-card">
+      <div class="cr"><span class="cr-k">Institution</span><span class="cr-v">UTSA · Honors College</span></div>
+      <div class="cr"><span class="cr-k">Degree</span><span class="cr-v">BBA Cybersecurity</span></div>
+      <div class="cr"><span class="cr-k">Minor</span><span class="cr-v">Public Policy and Law</span></div>
+      <div class="cr"><span class="cr-k">GPA</span><span class="cr-v champ">4.0 · President's List</span></div>
+      <div class="cr"><span class="cr-k">Class</span><span class="cr-v">2028</span></div>
+      <div class="cr"><span class="cr-k">Citizenship</span><span class="cr-v">U.S. Citizen</span></div>
+      <div class="cr"><span class="cr-k">Clearance</span><span class="cr-v">Eligible</span></div>
+      <div class="cr"><span class="cr-k">Website</span><span class="cr-v champ">www.cipherandcounsel.com</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="s-mid">
+  <div class="wrap">
+    <span class="label reveal">Mission Statement</span>
+    <h2 class="reveal">Why this platform exists</h2>
+    <div style="max-width:760px;margin-bottom:40px;" class="reveal">
+      <p class="mission-q">"Most people do not understand or actively manage their digital footprint, leaving them vulnerable to privacy, security, and legal risks. Cipher and Counsel was built to change that."</p>
+      <div class="mission-attr" style="margin-top:16px;">Cipher and Counsel · Founded 2025</div>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><div class="stat-n">4<em>.0</em></div><div class="stat-l">GPA · President's List</div></div>
+      <div class="stat"><div class="stat-n">5<em>yr</em></div><div class="stat-l">Professional PM Experience</div></div>
+      <div class="stat"><div class="stat-n">5<em>+</em></div><div class="stat-l">Research Publications</div></div>
+      <div class="stat"><div class="stat-n">4<em>+</em></div><div class="stat-l">Industry Certifications</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:40px;">
+      <p class="body-p reveal">Security does not stay inside a network. It shows up in boardrooms, courtrooms, and policy hearings where the people making decisions rarely speak the language of the practitioners who briefed them. That disconnect is where the real damage happens.<br><br>My degree in Cybersecurity with a Minor in Public Policy and Law is a deliberate commitment to working at that junction.</p>
+      <p class="body-p reveal">As an undergraduate student in the UTSA Honors College, I founded Cipher and Counsel as a platform whose name reflects its purpose: the convergence of cyber and law. The vision is larger than a portfolio. It is an online community built to raise digital footprint awareness and develop the next generation of women working in cybersecurity, policy, and law.</p>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="s-deep">
+  <div class="wrap">
+    <span class="label reveal">Experience</span>
+    <h2 class="reveal">Professional and<br><em>academic history</em></h2>
+    <p class="sub reveal">Five years of professional project management combined with active undergraduate research and platform development.</p>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-date">2025 to Present</div>
+        <div class="tl-role">Founder and Creative Director</div>
+        <div class="tl-org">Cipher and Counsel · www.cipherandcounsel.com</div>
+        <div class="tl-desc">Founded and operates an independent cybersecurity education and digital safety platform. Designed educational campaigns, implemented secure web infrastructure using Cloudflare and GitHub Pages with HTTPS and TLS hardening, developed cross-platform branding and UX systems, and publishes ongoing digital literacy content across web and social media at @cipherandcounsel.</div>
+        <div class="tl-tags"><span class="tl-tag">Digital Safety Education</span><span class="tl-tag">Web Infrastructure</span><span class="tl-tag">Cloudflare</span><span class="tl-tag">OSINT Research</span><span class="tl-tag">Policy Communication</span></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">2025 to Present</div>
+        <div class="tl-role">Undergraduate Researcher</div>
+        <div class="tl-org">University of Texas at San Antonio · BBA Cybersecurity · Honors College</div>
+        <div class="tl-desc">Active undergraduate research across cybersecurity frameworks, threat intelligence, and policy communication applying NIST SP 800-34, ISO 22301, and MITRE ATT&amp;CK methodology to real-world cybersecurity challenges.</div>
+        <div class="tl-tags"><span class="tl-tag">MITRE ATT&amp;CK</span><span class="tl-tag">NIST Frameworks</span><span class="tl-tag">ISO 22301</span><span class="tl-tag">Incident Response</span><span class="tl-tag">Business Continuity</span></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">Aug 2020 to Aug 2025</div>
+        <div class="tl-role">Project Manager</div>
+        <div class="tl-org">Digital Marketing Agency · San Antonio, TX</div>
+        <div class="tl-desc">Managed 10 or more concurrent client campaigns using Agile and Scrum methodology across five years without a missed deadline. Built internal documentation frameworks, process playbooks, and onboarding systems. Produced technical content and synthesized campaign analytics into executive briefings that directly influenced client strategy.</div>
+        <div class="tl-tags"><span class="tl-tag">Agile · Scrum</span><span class="tl-tag">Client Management</span><span class="tl-tag">Technical Writing</span><span class="tl-tag">Documentation</span><span class="tl-tag">Team Leadership</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="s-mid">
+  <div class="wrap">
+    <span class="label reveal">Education and Credentials</span>
+    <h2 class="reveal">Academic foundation<br><em>and certifications</em></h2>
+    <p class="sub reveal">A deliberate combination of technical depth, policy fluency, and professional certification.</p>
+    <div class="cards">
+      <div class="card reveal"><div class="card-num">Education</div><div class="card-title">BBA Cybersecurity · UTSA Honors College</div><div class="card-desc">Minor: Public Policy and Law. GPA: 4.0. President's List. Coursework spanning cybersecurity frameworks, IT risk management, regulatory policy, national security law, and technical communication. Class of 2028.</div></div>
+      <div class="card reveal"><div class="card-num">In Progress</div><div class="card-title">CIPP/US · U.S. Privacy Law · IAPP</div><div class="card-desc">Certified Information Privacy Professional covering U.S. privacy law, data protection regulation, and the legal frameworks governing digital information. The most differentiated credential at the intersection of cybersecurity and legal accountability. Expected 2026.</div></div>
+      <div class="card reveal"><div class="card-num">In Progress 2026</div><div class="card-title">Palo Alto Networks Cybersecurity Certificate</div><div class="card-desc">Comprehensive cybersecurity training through Palo Alto Networks covering network security, cloud security, and threat prevention fundamentals. In progress 2026.</div></div>
+      <div class="card reveal"><div class="card-num">Certified 2025</div><div class="card-title">Google Project Management · Agile Product Owner</div><div class="card-desc">Agile methodology, Scrum frameworks, project planning, stakeholder communication, and delivery systems. Applied directly across five years of professional project management practice.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="s-deep">
+  <div class="wrap">
+    <span class="label reveal">Research and Publications</span>
+    <h2 class="reveal">Original investigation<br><em>and research</em></h2>
+    <p class="sub reveal">Five research documents built to industry standards using primary government sources, MITRE ATT&amp;CK, and named vendor threat intelligence. All research available at www.cipherandcounsel.com.</p>
+    <div class="r-grid">
+      <div class="r-card reveal"><div class="r-label">National Security · OSINT</div><div class="r-title">Volt Typhoon Threat Actor Investigation</div><div class="r-desc">End-to-end OSINT investigation into a PRC state-sponsored threat actor. Dual-audience publication with 11-technique ATT&amp;CK mapping, five-year campaign timeline, and behavioral detection guidance. Sourced exclusively from CISA, NSA, DOJ, MITRE ATT&amp;CK, and Palo Alto Networks Unit 42.</div><a href="osint-research.html" class="r-link">View Publication</a></div>
+      <div class="r-card reveal"><div class="r-label">Threat Intelligence</div><div class="r-title">Boggy Serpens Threat Assessment</div><div class="r-desc">Dual-audience threat intelligence report on an Iranian-linked threat actor. Executive brief and full technical analysis. 11-technique ATT&amp;CK mapping, 7-family malware toolkit, real IOCs from CISA, MITRE ATT&amp;CK, Group-IB, and Huntress.</div><a href="threat-report.html" class="r-link">View Publication</a></div>
+      <div class="r-card reveal"><div class="r-label">Incident Response</div><div class="r-title">IR Documentation Suite · Operation Coastal Intrusion</div><div class="r-desc">Four-document incident response suite from a single simulated incident: Technical Investigation Report, Executive Briefing, Legal Escalation Log, and Lessons Learned.</div><a href="ir-suite.html" class="r-link">View Publication</a></div>
+      <div class="r-card reveal"><div class="r-label">API Reference and SOC Operations</div><div class="r-title">Threat Intelligence API Reference and SIEM Playbook</div><div class="r-desc">Full API reference with Python examples and SIEM integration workflow. SOC enrichment playbook with IOC normalization, escalation matrix, confidence thresholds, and SLA column.</div><a href="api-reference.html" class="r-link">View Publications</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="s-mid">
+  <div class="wrap">
+    <span class="label reveal">Community and Involvement</span>
+    <h2 class="reveal">Building the community,<br><em>not just the platform</em></h2>
+    <p class="sub reveal">Representation in cybersecurity is not optional. Different perspectives strengthen security, policy, and protection.</p>
+    <div class="cards">
+      <div class="card reveal"><div class="card-num">Founder</div><div class="card-title">Cipher and Counsel</div><div class="card-desc">Founded to raise digital footprint awareness and develop the next generation of women in cybersecurity, policy, and law. The name reflects its purpose: the convergence of cyber and law. www.cipherandcounsel.com</div></div>
+      <div class="card reveal"><div class="card-num">Member</div><div class="card-title">WiCyS at UTSA</div><div class="card-desc">Women in CyberSecurity, bringing together women from academia, research, and industry for knowledge sharing, networking, and mentoring.</div></div>
+      <div class="card reveal"><div class="card-num">Member</div><div class="card-title">Cyber Jedis at UTSA</div><div class="card-desc">Collaborative cybersecurity student organization for students of all skill levels focused on hands-on learning and community-driven skill development.</div></div>
+      <div class="card reveal"><div class="card-num">Member</div><div class="card-title">UTSA Honors College</div><div class="card-desc">Pursuing an interdisciplinary path across cybersecurity, public policy, and law. Maintaining a 4.0 GPA and President's List standing throughout enrollment.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="s-darker" style="background:#081422;">
+  <div class="wrap page-close">
+    <p class="cl1 reveal">Security intelligence. Legal clarity.</p>
+    <p class="cl2 reveal">Building the next generation of women in cybersecurity.</p>
+    <div class="btns reveal" style="justify-content:center;">
+      <a href="index.html" class="btn-primary">Explore the Platform</a>
+      <a href="aware.html" class="btn-ghost">Start Here</a>
+    </div>
+  </div>
+</section>
+<footer><div class="footer-brand">CIPHER <em>&amp;</em> COUNSEL</div><div class="footer-note">Cybersecurity · Policy · Law · Est. 2025 · cipherandcounsel.com</div></footer>
+<script>
+const io=new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
