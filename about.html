@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meet the Founder — Cipher &amp; Counsel</title>
+<meta name="description" content="Founder of Cipher & Counsel — a cybersecurity, policy, and law platform. UTSA Honors College, BBA Cybersecurity. Palo Alto Networks certified.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#0D1B2A;color:#F0EDE6;font-family:'Inter',sans-serif;font-size:16px;line-height:1.75;overflow-x:hidden;}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;}*{animation:none!important;}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+@keyframes navScan{0%{left:-30%}100%{left:130%}}
+@keyframes scanline{0%{top:-2%}100%{top:102%}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 64px;height:68px;background:rgba(13,27,42,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,122,.15);overflow:hidden;}
+nav::after{content:'';position:absolute;top:0;left:-30%;width:28%;height:100%;background:linear-gradient(90deg,transparent,rgba(201,168,122,.04),transparent);animation:navScan 8s ease-in-out infinite;pointer-events:none;}
+a.nav-logo{display:flex;align-items:center;gap:13px;text-decoration:none;position:relative;z-index:1;}
+.nav-cc{position:relative;width:34px;height:34px;flex-shrink:0;}
+.nm-b{font-family:'Playfair Display',serif;font-weight:800;font-size:1.8rem;color:#C9A87A;line-height:1;position:absolute;top:0;left:0;opacity:.7;}
+.nm-f{font-family:'Playfair Display',serif;font-weight:800;font-size:1.8rem;color:#C9A87A;line-height:1;position:absolute;top:4px;left:6px;}
+.nav-wm{display:flex;flex-direction:column;gap:2px;}
+.nav-name{font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:#F0EDE6;letter-spacing:.06em;line-height:1;}
+.nav-name em{color:#C9A87A;font-style:normal;}
+.nav-tag{font-family:'IBM Plex Mono',monospace;font-size:.44rem;color:rgba(201,168,122,.6);letter-spacing:.14em;text-transform:uppercase;line-height:1;}
+.nav-links{display:flex;gap:28px;list-style:none;position:relative;z-index:1;}
+.nav-links a{font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,237,230,.62);text-decoration:none;transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:#C9A87A;transform:scaleX(0);transition:transform .25s;}
+.nav-links a:hover,.nav-links a.active{color:#C9A87A;}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+.nav-cta{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:9px 20px;border:1px solid rgba(201,168,122,.4);color:#C9A87A;text-decoration:none;transition:all .2s;position:relative;z-index:1;}
+.nav-cta:hover{background:#C9A87A;color:#0D1B2A;}
+
+/* HERO — cyber world map shows beneath nav + glassy profile box */
+.hero{min-height:82vh;position:relative;overflow:hidden;display:flex;align-items:center;padding:128px 64px 72px;background:#081422;}
+.hero-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-image:url('cyberworldmap.webp');background-size:cover;background-position:center;opacity:.92;z-index:1;}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,122,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,122,.05) 1px,transparent 1px);background-size:72px 72px;z-index:2;pointer-events:none;}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(135deg,rgba(8,20,34,.8) 0%,rgba(13,27,42,.45) 42%,rgba(13,27,42,.2) 100%);z-index:3;}
+.hero-scan{position:absolute;left:0;right:0;height:1px;top:-2%;background:linear-gradient(90deg,transparent,rgba(201,168,122,.14),transparent);animation:scanline 9s linear infinite;z-index:4;pointer-events:none;}
+.hero-inner{position:relative;z-index:5;max-width:1140px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 360px;gap:56px;align-items:center;}
+.hero-kicker{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:#C9A87A;margin-bottom:22px;display:flex;align-items:center;gap:12px;}
+.dot{width:7px;height:7px;border-radius:50%;background:#C9A87A;box-shadow:0 0 10px rgba(201,168,122,.6);animation:pulse 2s ease-in-out infinite;flex-shrink:0;}
+h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(2.8rem,5vw,4.4rem);line-height:1.04;letter-spacing:-.03em;color:#F0EDE6;margin-bottom:18px;text-shadow:0 2px 30px rgba(8,20,34,.6);}
+h1 em{color:#C9A87A;font-style:italic;}
+.hero-sub{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.08em;color:rgba(240,237,230,.72);text-transform:uppercase;}
+
+/* GLASSY PROFILE CARD — hero shows through */
+.profile-card{background:rgba(15,24,36,.5);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(201,168,122,.3);border-top:3px solid #C9A87A;padding:26px 22px;box-shadow:0 16px 56px rgba(0,0,0,.55);min-width:0;word-break:break-word;}
+.profile-card::before{content:'// founder.profile';font-family:'IBM Plex Mono',monospace;font-size:.56rem;letter-spacing:.1em;color:#C9A87A;display:block;margin-bottom:14px;}
+.cr{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid rgba(240,237,230,.08);gap:8px;}
+.cr:last-child{border-bottom:none;}
+.cr-k{font-family:'IBM Plex Mono',monospace;font-size:.56rem;color:rgba(240,237,230,.5);text-transform:uppercase;letter-spacing:.06em;flex-shrink:0;}
+.cr-v{font-size:.82rem;color:#F0EDE6;font-weight:500;text-align:right;}
+.cr-v.champ{color:#C9A87A;}
+
+/* SECTIONS */
+.s-deep{background:#0D1B2A;}.s-mid{background:#1B2A3B;}.s-dark{background:#081422;}
+.rule{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,122,.35),rgba(201,168,122,.5),rgba(201,168,122,.35),transparent);}
+.wrap{max-width:1140px;margin:0 auto;padding:88px 64px;position:relative;z-index:1;}
+.label{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#C9A87A;margin-bottom:16px;display:block;}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.9rem,3vw,2.8rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:12px;color:#F0EDE6;}
+h2 em{color:#C9A87A;font-style:italic;}
+.sub{font-size:1rem;line-height:1.8;max-width:640px;margin-bottom:24px;font-weight:300;color:rgba(240,237,230,.62);}
+.body-p{font-size:.97rem;line-height:1.88;margin-bottom:16px;color:rgba(240,237,230,.72);}
+.champ-bar{display:block;width:36px;height:2px;background:#C9A87A;margin-bottom:22px;}
+
+/* BUTTONS */
+.btn-p{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 30px;background:#C9A87A;color:#0D1B2A;text-decoration:none;border:2px solid #C9A87A;transition:all .2s;display:inline-block;font-weight:600;}
+.btn-p:hover{background:transparent;color:#C9A87A;}
+.btn-g{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 30px;background:transparent;color:rgba(240,237,230,.78);text-decoration:none;border:2px solid rgba(240,237,230,.22);transition:all .2s;display:inline-block;}
+.btn-g:hover{border-color:rgba(240,237,230,.6);color:#F0EDE6;}
+.btns{display:flex;gap:12px;flex-wrap:wrap;}
+
+/* CINEMATIC SPLIT */
+.cinema{display:grid;grid-template-columns:1fr 1fr;min-height:540px;position:relative;overflow:hidden;}
+.cinema-text{padding:64px 56px;display:flex;flex-direction:column;justify-content:center;}
+.cinema-text.deep{background:#0D1B2A;}.cinema-text.mid{background:#1B2A3B;}
+.ci{position:relative;overflow:hidden;}
+.ci img{width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;transition:transform .6s ease;}
+.ci:hover img{transform:scale(1.03);}
+.ci::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,27,42,.4) 0%,transparent 55%);pointer-events:none;}
+.ci.r::after{background:linear-gradient(270deg,rgba(13,27,42,.4) 0%,transparent 55%);}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(201,168,122,.22);margin-top:36px;}
+.stat{background:#1F3248;padding:36px 24px;border:1px solid rgba(201,168,122,.1);}
+.stat-n{font-family:'Playfair Display',serif;font-weight:800;font-size:3rem;color:#C9A87A;line-height:1;margin-bottom:6px;}
+.stat-n em{font-style:normal;font-size:1.4rem;color:rgba(201,168,122,.7);}
+.stat-l{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(240,237,230,.82);line-height:1.5;font-weight:500;}
+
+/* MISSION QUOTE */
+.mission-q{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.3rem,2.2vw,1.85rem);color:#F0EDE6;line-height:1.55;margin-bottom:18px;}
+.mission-q em{color:#C9A87A;}
+.mission-attr{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(201,168,122,.65);display:flex;align-items:center;gap:12px;}
+.mission-attr::before{content:'';width:24px;height:1px;background:rgba(201,168,122,.4);}
+
+/* CERTIFICATIONS GRID */
+.cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,168,122,.15);margin-top:44px;}
+.cert-col{background:#15212F;padding:30px 26px;}
+.cert-col.feature{background:#1B2A3B;border-top:3px solid #C9A87A;}
+.cert-cat{font-family:'IBM Plex Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:#C9A87A;margin-bottom:20px;display:flex;align-items:center;gap:9px;}
+.cert-cat .pill{font-size:.46rem;padding:2px 7px;border:1px solid rgba(201,168,122,.4);color:rgba(201,168,122,.85);letter-spacing:.08em;}
+.cert-item{padding:13px 0;border-bottom:1px solid rgba(240,237,230,.06);}
+.cert-item:last-child{border-bottom:none;}
+.cert-name{font-size:.9rem;color:#F0EDE6;line-height:1.4;margin-bottom:6px;font-weight:500;}
+.cert-status{font-family:'IBM Plex Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;display:inline-block;padding:2px 8px;border:1px solid;}
+.st-done{color:#C9A87A;border-color:rgba(201,168,122,.45);background:rgba(201,168,122,.08);}
+.st-prog{color:rgba(240,237,230,.5);border-color:rgba(240,237,230,.18);}
+
+/* LABS GRID */
+.lab-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,168,122,.15);margin-top:44px;}
+.lab{background:#0D1B2A;padding:32px 28px;position:relative;overflow:hidden;transition:background .25s;}
+.lab:hover{background:#13243a;}
+.lab::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:#C9A87A;transform:scaleX(0);transform-origin:left;transition:transform .35s ease;}
+.lab:hover::before{transform:scaleX(1);}
+.lab-tag{font-family:'IBM Plex Mono',monospace;font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:#C9A87A;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
+.lab-tag .prog{color:rgba(240,237,230,.42);}
+.lab-title{font-family:'Playfair Display',serif;font-weight:700;font-size:1.18rem;color:#F0EDE6;line-height:1.25;margin-bottom:10px;}
+.lab-desc{font-size:.86rem;color:rgba(240,237,230,.62);line-height:1.74;margin-bottom:16px;}
+.lab-tools{font-family:'IBM Plex Mono',monospace;font-size:.56rem;letter-spacing:.04em;color:rgba(201,168,122,.6);line-height:1.7;border-top:1px solid rgba(240,237,230,.07);padding-top:12px;}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:26px;margin-top:32px;}
+.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:1px;background:rgba(201,168,122,.22);}
+.tl-item{position:relative;padding-bottom:32px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-item::before{content:'';position:absolute;left:-21px;top:6px;width:9px;height:9px;border-radius:50%;background:#C9A87A;box-shadow:0 0 0 3px #1B2A3B,0 0 0 4px rgba(201,168,122,.3);}
+.tl-date{font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:#C9A87A;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.tl-role{font-size:1rem;font-weight:600;color:#F0EDE6;margin-bottom:2px;}
+.tl-org{font-size:.86rem;color:#C9A87A;margin-bottom:8px;}
+.tl-desc{font-size:.87rem;color:rgba(240,237,230,.62);line-height:1.72;}
+.tl-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+.tl-tag{font-family:'IBM Plex Mono',monospace;font-size:.52rem;letter-spacing:.07em;text-transform:uppercase;padding:2px 9px;border:1px solid rgba(201,168,122,.22);color:rgba(201,168,122,.68);}
+
+/* FOLLOW CTA */
+.follow{text-align:center;padding:92px 40px;position:relative;overflow:hidden;}
+.follow::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,122,.08) 0%,transparent 65%);pointer-events:none;}
+.follow-inner{position:relative;z-index:1;}
+.follow h2{margin-bottom:14px;}
+.follow-handle{font-family:'IBM Plex Mono',monospace;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A87A;margin-bottom:30px;}
+.socials{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.social{width:54px;height:54px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,122,.35);color:#C9A87A;transition:all .25s;background:rgba(201,168,122,.04);}
+.social:hover{background:#C9A87A;color:#0D1B2A;transform:translateY(-3px);box-shadow:0 10px 28px rgba(201,168,122,.25);}
+.social svg{width:22px;height:22px;display:block;}
+.social-labels{font-family:'IBM Plex Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,237,230,.4);margin-top:22px;}
+
+/* FOOTER */
+footer{background:#060F1A;padding:30px 64px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,168,122,.12);flex-wrap:wrap;gap:14px;}
+.footer-brand{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;color:#F0EDE6;}
+.footer-brand em{color:#C9A87A;font-style:normal;}
+.footer-links{display:flex;gap:18px;align-items:center;}
+.footer-links a{color:rgba(201,168,122,.7);transition:color .2s;display:flex;}
+.footer-links a:hover{color:#C9A87A;}
+.footer-links svg{width:17px;height:17px;}
+.footer-note{font-family:'IBM Plex Mono',monospace;font-size:.52rem;color:rgba(240,237,230,.3);letter-spacing:.08em;text-transform:uppercase;}
+
+@media(max-width:900px){
+  nav{padding:0 18px;} .nav-links{display:none;}
+  .hero{min-height:auto;padding:120px 22px 64px;}
+  .hero-inner{grid-template-columns:1fr;gap:28px;}
+  .hero-ov{background:linear-gradient(180deg,rgba(8,20,34,.74) 0%,rgba(13,27,42,.52) 100%);}
+  .profile-card{width:100%;max-width:440px;margin:0 auto;}
+  .wrap{padding:60px 22px;}
+  .cinema{grid-template-columns:1fr;}
+  .ci{min-height:0;order:1;}
+  .ci img{height:auto;object-fit:contain;}
+  .cinema-text{padding:44px 24px;order:2;}
+  .stats{grid-template-columns:1fr 1fr;}
+  .cert-grid,.lab-grid{grid-template-columns:1fr;}
+  footer{padding:22px;flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-cc"><span class="nm-b">C</span><span class="nm-f">C</span></span>
+    <span class="nav-wm">
+      <span class="nav-name">CIPHER <em>&amp;</em> COUNSEL</span>
+      <span class="nav-tag">Cybersecurity · Policy · Law</span>
+    </span>
+  </a>
+  <ul class="nav-links"><li><a href="aware.html">Aware</a></li><li><a href="protect.html">Protect</a></li><li><a href="advocate.html">Advocate</a></li><li><a href="osint-research.html">Research</a></li><li><a href="resources.html">Resources</a></li><li><a href="about.html" class="active">About</a></li></ul>
+  <a href="#follow" class="nav-cta">Follow</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-scan"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-kicker"><span class="dot"></span>Meet the Founder</div>
+      <h1>Cybersecurity.<br>Policy. <em>Law.</em></h1>
+      <p class="hero-sub">Founder, Cipher &amp; Counsel</p>
+    </div>
+    <div class="profile-card">
+      <div class="cr"><span class="cr-k">Institution</span><span class="cr-v">UTSA · Honors College</span></div>
+      <div class="cr"><span class="cr-k">Degree</span><span class="cr-v">BBA Cybersecurity</span></div>
+      <div class="cr"><span class="cr-k">Minor</span><span class="cr-v">Public Policy &amp; Law</span></div>
+      <div class="cr"><span class="cr-k">GPA</span><span class="cr-v champ">4.0 · President's List</span></div>
+      <div class="cr"><span class="cr-k">Class</span><span class="cr-v">2028</span></div>
+      <div class="cr"><span class="cr-k">Citizenship</span><span class="cr-v">U.S. Citizen</span></div>
+      <div class="cr"><span class="cr-k">Website</span><span class="cr-v champ">cipherandcounsel.com</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="cinema">
+  <div class="ci">
+    <img src="counselwoman.webp" alt="The founder of Cipher & Counsel at a security operations workstation">
+  </div>
+  <div class="cinema-text" style="background:#1B2A3B;">
+    <span class="label reveal">The Founder</span>
+    <h2 class="reveal">A platform built at the <em>junction.</em></h2>
+    <span class="champ-bar"></span>
+    <p class="body-p reveal">As an undergraduate in the UTSA Honors College, I founded Cipher &amp; Counsel as a platform whose name reflects its purpose: the convergence of cyber and law. The vision is larger than a portfolio — it is an online community built to raise digital footprint awareness and develop the next generation of women working in cybersecurity, policy, and law.</p>
+    <p class="body-p reveal">Four completed Palo Alto Networks certifications feed directly into the research and lab work published here — SOC workflow design, cloud and network security documentation, SIEM playbook engineering, and threat intelligence reporting at Unit 42 standards.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="s-deep">
+  <div class="wrap">
+    <span class="label reveal">Mission Statement</span>
+    <h2 class="reveal">Why this platform exists</h2>
+    <div style="max-width:800px;margin-bottom:8px;" class="reveal">
+      <p class="mission-q">"Most people do not understand or actively manage their digital footprint, leaving them vulnerable to privacy, security, and legal risks. Cipher &amp; Counsel was built to <em>change that.</em>"</p>
+      <div class="mission-attr" style="margin-top:16px;">Cipher &amp; Counsel · Founded 2025</div>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><div class="stat-n">4<em>.0</em></div><div class="stat-l">GPA · President's List</div></div>
+      <div class="stat"><div class="stat-n">5<em>yr</em></div><div class="stat-l">Professional PM Experience</div></div>
+      <div class="stat"><div class="stat-n">5<em>+</em></div><div class="stat-l">Research Publications</div></div>
+      <div class="stat"><div class="stat-n">7<em>+</em></div><div class="stat-l">Industry Certifications</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="s-mid">
+  <div class="wrap">
+    <span class="label reveal">Certifications &amp; Credentials</span>
+    <h2 class="reveal">Professional <em>credential stack</em></h2>
+    <p class="sub reveal">Four completed Palo Alto Networks certifications anchor the stack, alongside project-management, privacy, and compliance credentials in progress.</p>
+    <div class="cert-grid">
+      <div class="cert-col feature reveal">
+        <div class="cert-cat">Palo Alto Networks <span class="pill">4 Completed</span></div>
+        <div class="cert-item"><div class="cert-name">Security Operations (SecOps)</div><span class="cert-status st-done">Completed 2026</span></div>
+        <div class="cert-item"><div class="cert-name">Cloud Security Professional</div><span class="cert-status st-done">Completed 2026</span></div>
+        <div class="cert-item"><div class="cert-name">Network Security</div><span class="cert-status st-done">Completed 2026</span></div>
+        <div class="cert-item"><div class="cert-name">Cybersecurity Fundamentals</div><span class="cert-status st-done">Completed 2026</span></div>
+      </div>
+      <div class="cert-col reveal">
+        <div class="cert-cat">Project Mgmt &amp; Foundational</div>
+        <div class="cert-item"><div class="cert-name">Google Project Management Certificate</div><span class="cert-status st-done">Completed 2025</span></div>
+        <div class="cert-item"><div class="cert-name">Agile Product Owner Certification</div><span class="cert-status st-done">Completed 2025</span></div>
+        <div class="cert-item"><div class="cert-name">PMI CAPM · Certified Associate in Project Management</div><span class="cert-status st-prog">In Progress 2026</span></div>
+      </div>
+      <div class="cert-col reveal">
+        <div class="cert-cat">Security &amp; Compliance</div>
+        <div class="cert-item"><div class="cert-name">Google Cybersecurity Foundations</div><span class="cert-status st-done">Completed 2025</span></div>
+        <div class="cert-item"><div class="cert-name">NIST SP 800-53 · 800-53A · 800-53B</div><span class="cert-status st-prog">In Progress 2026</span></div>
+        <div class="cert-item"><div class="cert-name">CompTIA Security+</div><span class="cert-status st-prog">In Progress 2026</span></div>
+        <div class="cert-item"><div class="cert-name">ISC2 Certified in Cybersecurity (CC)</div><span class="cert-status st-prog">In Progress 2026</span></div>
+        <div class="cert-item"><div class="cert-name">CIPP/US · Certified Information Privacy Professional · IAPP</div><span class="cert-status st-prog">In Progress 2026</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="cinema">
+  <div class="cinema-text deep">
+    <span class="label">Cybersecurity · Policy · Law</span>
+    <h2>Security does not stay <em>inside a network.</em></h2>
+    <span class="champ-bar"></span>
+    <p class="body-p">It shows up in boardrooms, courtrooms, and policy hearings where the people making decisions rarely speak the language of the practitioners who briefed them. That disconnect is where the real damage happens.</p>
+    <p class="body-p">A degree in Cybersecurity with a Minor in Public Policy and Law is a deliberate commitment to working at that junction — translating technical risk into the language of governance, compliance, and accountability.</p>
+  </div>
+  <div class="ci r">
+    <img src="lawbooks.webp" alt="Scales of justice beside Cybersecurity, Policy, and Law volumes">
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="s-deep">
+  <div class="wrap">
+    <span class="label reveal">Lab Projects · Technical Skills</span>
+    <h2 class="reveal">Hands-on <em>lab simulations</em></h2>
+    <p class="sub reveal">Hands-on technical work across SIEM deployment, network traffic analysis, vulnerability assessment, and governed AI system design — each documented in a published report.</p>
+    <div class="lab-grid">
+      <div class="lab reveal">
+        <div class="lab-tag"><span>Lab 01</span><span class="prog">In Progress 2026</span></div>
+        <div class="lab-title">SIEM Deployment &amp; Detection Engineering</div>
+        <div class="lab-desc">Deploying Splunk Free with Windows event log ingestion and detection rules for brute-force and privilege-escalation indicators, with methodology and findings published in a lab report.</div>
+        <div class="lab-tools">Splunk Free · SPL · Windows Event Logs · MITRE ATT&amp;CK T1110</div>
+      </div>
+      <div class="lab reveal">
+        <div class="lab-tag"><span>Lab 02</span><span class="prog">In Progress 2026</span></div>
+        <div class="lab-title">Network Traffic Analysis</div>
+        <div class="lab-desc">Capturing and analyzing live network traffic with Wireshark — identifying anomalous patterns including unusual DNS queries, unencrypted credential transmission, and beaconing behavior.</div>
+        <div class="lab-tools">Wireshark · PCAP analysis · TCP/IP · DNS · HTTP/S</div>
+      </div>
+      <div class="lab reveal">
+        <div class="lab-tag"><span>Lab 03</span><span class="prog">In Progress 2026</span></div>
+        <div class="lab-title">Vulnerability Assessment &amp; Scanning</div>
+        <div class="lab-desc">Conducting network vulnerability assessment using Nmap for port scanning, service enumeration, and OS fingerprinting — documenting findings with risk ratings and remediation recommendations.</div>
+        <div class="lab-tools">Nmap · Port scanning · Service enumeration · OS fingerprinting</div>
+      </div>
+      <div class="lab reveal">
+        <div class="lab-tag"><span>Project 04</span><span class="prog">Proposed 2026</span></div>
+        <div class="lab-title">Governed AI Content System</div>
+        <div class="lab-desc">Designing a multi-agent research and publishing pipeline — research agent, content agent, orchestration layer — governed by an absolute human publish gate, per-run audit logging, and written criteria for loosening autonomy. Proposed to UTSA faculty under the THECB Generative AI Fellows Program.</div>
+        <div class="lab-tools">Agent orchestration · AI governance · Publish-gate design · Audit logging</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="s-mid">
+  <div class="wrap">
+    <span class="label reveal">Experience</span>
+    <h2 class="reveal">Professional &amp; <em>academic history</em></h2>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-date">2025 to Present</div>
+        <div class="tl-role">Founder &amp; Creative Director</div>
+        <div class="tl-org">Cipher &amp; Counsel · cipherandcounsel.com</div>
+        <div class="tl-desc">Manages all platform workstreams independently across research, content, web infrastructure, and social media, applying the same concurrent project-management discipline developed across five years of professional agency work. Applies four completed Palo Alto Networks certifications directly to research and lab output — SOC workflow design, cloud and network security documentation, SIEM playbook engineering, and threat-intelligence reporting at Unit 42 standards.</div>
+        <div class="tl-tags"><span class="tl-tag">GRC Research</span><span class="tl-tag">Digital Safety Education</span><span class="tl-tag">OSINT</span><span class="tl-tag">NIST SP 800-53</span><span class="tl-tag">Cloudflare</span><span class="tl-tag">GitHub Pages</span></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">2025 to Present</div>
+        <div class="tl-role">Undergraduate Researcher</div>
+        <div class="tl-org">University of Texas at San Antonio · BBA Cybersecurity · Honors College</div>
+        <div class="tl-desc">Active undergraduate research across cybersecurity frameworks, threat intelligence, and policy communication — applying NIST SP 800-53, ISO 22301, and MITRE ATT&amp;CK methodology to real-world cybersecurity challenges.</div>
+        <div class="tl-tags"><span class="tl-tag">MITRE ATT&amp;CK</span><span class="tl-tag">NIST SP 800-53</span><span class="tl-tag">ISO 22301</span><span class="tl-tag">Incident Response</span></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">Aug 2020 to Aug 2025</div>
+        <div class="tl-role">Project Manager</div>
+        <div class="tl-org">Digital Marketing Agency</div>
+        <div class="tl-desc">Managed 10+ concurrent client engagements using Agile and Scrum methodology across five years without a missed deadline. Primary client-facing contact for SOW-based scheduling, status reporting, risk identification, and delivery. Built internal documentation frameworks, process playbooks, and onboarding systems establishing PMO-level operational discipline adopted across the team.</div>
+        <div class="tl-tags"><span class="tl-tag">Agile · Scrum</span><span class="tl-tag">SOW Delivery</span><span class="tl-tag">Stakeholder Management</span><span class="tl-tag">Technical Writing</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section class="s-dark follow" id="follow">
+  <div class="follow-inner">
+    <span class="label reveal" style="display:inline-block;">Join the Community</span>
+    <h2 class="reveal">Follow <em>@cipherandcounsel</em></h2>
+    <p class="follow-handle reveal">Digital footprint awareness · New research · Free tools</p>
+    <div class="socials reveal">
+      <a class="social" href="https://www.instagram.com/cipherandcounsel" target="_blank" rel="noopener" aria-label="Instagram — @cipherandcounsel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5"></rect><circle cx="12" cy="12" r="4.2"></circle><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"></circle></svg>
+      </a>
+      <a class="social" href="https://www.facebook.com/cipherandcounsel" target="_blank" rel="noopener" aria-label="Facebook — @cipherandcounsel">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.4 8.4h2.1V5.2c-.36-.05-1.6-.16-3.04-.16-3.01 0-5.07 1.84-5.07 5.22v2.84H5.5v3.58h2.89V21h3.6v-8.5h2.77l.44-3.58h-3.21v-2.5c0-1.03.28-1.74 1.81-1.74Z"></path></svg>
+      </a>
+      <a class="social" href="https://www.linkedin.com/company/cipherandcounsel" target="_blank" rel="noopener" aria-label="LinkedIn — @cipherandcounsel">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a1.94 1.94 0 1 1-3.88 0 1.94 1.94 0 0 1 3.88 0ZM3.4 8.4h3.06V21H3.4V8.4Zm5.1 0h2.93v1.72h.04c.41-.77 1.4-1.58 2.89-1.58 3.09 0 3.66 2.03 3.66 4.67V21h-3.05v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21H8.5V8.4Z"></path></svg>
+      </a>
+    </div>
+    <div class="social-labels reveal">Instagram · Facebook · LinkedIn</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">CIPHER <em>&amp;</em> COUNSEL</div>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/cipherandcounsel" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5"></rect><circle cx="12" cy="12" r="4.2"></circle><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"></circle></svg></a>
+    <a href="https://www.facebook.com/cipherandcounsel" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.4 8.4h2.1V5.2c-.36-.05-1.6-.16-3.04-.16-3.01 0-5.07 1.84-5.07 5.22v2.84H5.5v3.58h2.89V21h3.6v-8.5h2.77l.44-3.58h-3.21v-2.5c0-1.03.28-1.74 1.81-1.74Z"></path></svg></a>
+    <a href="https://www.linkedin.com/company/cipher-and-counsel/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a1.94 1.94 0 1 1-3.88 0 1.94 1.94 0 0 1 3.88 0ZM3.4 8.4h3.06V21H3.4V8.4Zm5.1 0h2.93v1.72h.04c.41-.77 1.4-1.58 2.89-1.58 3.09 0 3.66 2.03 3.66 4.67V21h-3.05v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9V21H8.5V8.4Z"></path></svg></a>
+  </div>
+  <div class="footer-note">Cybersecurity · Policy · Law · Est. 2025 · cipherandcounsel.com</div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('in');});},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+</script>
+</body>
+</html>
