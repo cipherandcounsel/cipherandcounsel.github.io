@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources — Cipher &amp; Counsel</title>
+<meta name="description" content="Curated cybersecurity resources for students, professionals, and the general public. Free training, frameworks, threat intelligence, and community links.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#0D1B2A;color:#F0EDE6;font-family:'Inter',sans-serif;font-size:16px;line-height:1.75;overflow-x:hidden;}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:none;}
+@keyframes navScan{0%{left:-30%}100%{left:130%}}
+@keyframes scanline{0%{top:-2%}100%{top:102%}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 64px;height:68px;background:rgba(13,27,42,.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(201,168,122,.15);overflow:hidden;}
+nav::after{content:'';position:absolute;top:0;left:-30%;width:28%;height:100%;background:linear-gradient(90deg,transparent,rgba(201,168,122,.04),transparent);animation:navScan 8s ease-in-out infinite;pointer-events:none;}
+a.nav-logo{display:flex;align-items:center;gap:13px;text-decoration:none;position:relative;z-index:1;}
+.nav-cc{position:relative;width:34px;height:34px;flex-shrink:0;}
+.nm-b{font-family:'Playfair Display',serif;font-weight:800;font-size:1.8rem;color:#C9A87A;line-height:1;position:absolute;top:0;left:0;opacity:.7;}
+.nm-f{font-family:'Playfair Display',serif;font-weight:800;font-size:1.8rem;color:#C9A87A;line-height:1;position:absolute;top:4px;left:6px;}
+.nav-wm{display:flex;flex-direction:column;gap:2px;}
+.nav-name{font-family:'Playfair Display',serif;font-weight:700;font-size:.82rem;color:#F0EDE6;letter-spacing:.06em;line-height:1;}
+.nav-name em{color:#C9A87A;font-style:normal;}
+.nav-tag{font-family:'IBM Plex Mono',monospace;font-size:.44rem;color:rgba(201,168,122,.6);letter-spacing:.14em;text-transform:uppercase;line-height:1;}
+.nav-links{display:flex;gap:28px;list-style:none;position:relative;z-index:1;}
+.nav-links a{font-family:'IBM Plex Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,237,230,.55);text-decoration:none;transition:color .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:#C9A87A;transform:scaleX(0);transition:transform .25s;}
+.nav-links a:hover,.nav-links a.active{color:#C9A87A;}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1);}
+.nav-cta{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:9px 20px;border:1px solid rgba(201,168,122,.4);color:#C9A87A;text-decoration:none;transition:all .2s;position:relative;z-index:1;}
+.nav-cta:hover{background:#C9A87A;color:#0D1B2A;}
+
+/* PAGE HERO */
+.p-hero{min-height:58vh;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:130px 64px 60px;background:#081422;}
+.p-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,122,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,122,.04) 1px,transparent 1px);background-size:72px 72px;z-index:2;pointer-events:none;}
+.p-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-size:cover;background-position:center;opacity:.38;z-index:1;}
+.p-ov{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(8,20,34,.96) 0%,rgba(13,27,42,.82) 55%,rgba(13,27,42,.54) 100%);z-index:3;}
+.p-scan{position:absolute;left:0;right:0;height:1px;top:-2%;background:linear-gradient(90deg,transparent,rgba(201,168,122,.1),transparent);animation:scanline 9s linear infinite;z-index:4;pointer-events:none;}
+.p-content{position:relative;z-index:5;max-width:1140px;margin:0 auto;width:100%;}
+.p-kicker{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(201,168,122,.82);margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.p-kicker::before{content:'';width:28px;height:1px;background:rgba(201,168,122,.55);flex-shrink:0;}
+.dot{width:7px;height:7px;border-radius:50%;background:#C9A87A;box-shadow:0 0 10px rgba(201,168,122,.6);animation:pulse 2s ease-in-out infinite;flex-shrink:0;}
+.p-h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(2.8rem,5vw,4.4rem);line-height:1.04;letter-spacing:-.03em;color:#F0EDE6;margin-bottom:16px;}
+.p-h1 em{color:#C9A87A;font-style:italic;}
+.p-sub{font-size:1rem;color:rgba(240,237,230,.62);line-height:1.8;max-width:580px;font-weight:300;}
+
+/* SHARED SECTION STYLES */
+.s-deep{background:#0D1B2A;}
+.s-mid{background:#1B2A3B;}
+.s-dark{background:#081422;}
+.rule{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,122,.35),rgba(201,168,122,.5),rgba(201,168,122,.35),transparent);}
+.wrap{max-width:1140px;margin:0 auto;padding:88px 64px;position:relative;z-index:1;}
+.label{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#C9A87A;margin-bottom:16px;display:block;}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.9rem,3vw,2.8rem);line-height:1.1;letter-spacing:-.02em;margin-bottom:12px;color:#F0EDE6;}
+h2 em{color:#C9A87A;font-style:italic;}
+.sub{font-size:1rem;line-height:1.8;max-width:600px;margin-bottom:44px;font-weight:300;color:rgba(240,237,230,.62);}
+.champ-bar{display:block;width:36px;height:2px;background:#C9A87A;margin-bottom:22px;}
+.btn-p{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 30px;background:#C9A87A;color:#0D1B2A;text-decoration:none;border:2px solid #C9A87A;transition:all .2s;display:inline-block;font-weight:600;}
+.btn-p:hover{background:transparent;color:#C9A87A;}
+.btn-g{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:14px 30px;background:transparent;color:rgba(240,237,230,.78);text-decoration:none;border:2px solid rgba(240,237,230,.22);transition:all .2s;display:inline-block;}
+.btn-g:hover{border-color:rgba(240,237,230,.6);color:#F0EDE6;}
+.btns{display:flex;gap:12px;flex-wrap:wrap;}
+
+/* ── AUDIENCE TABS ── */
+.tab-bar{display:flex;gap:0;border-bottom:1px solid rgba(201,168,122,.2);margin-bottom:52px;}
+.tab-btn{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 32px;background:transparent;border:none;border-bottom:2px solid transparent;color:rgba(240,237,230,.45);cursor:pointer;transition:all .2s;margin-bottom:-1px;}
+.tab-btn:hover{color:rgba(240,237,230,.78);}
+.tab-btn.active{color:#C9A87A;border-bottom-color:#C9A87A;}
+.tab-panel{display:none;}
+.tab-panel.active{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(201,168,122,.1);}
+
+/* ── RESOURCE COLUMN ── */
+.rc{background:#0D1B2A;padding:40px 36px;}
+.rc-head{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,168,122,.55);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid rgba(201,168,122,.15);}
+.rc-cat{margin-bottom:32px;}
+.rc-cat:last-child{margin-bottom:0;}
+.rc-cat-label{font-family:'IBM Plex Mono',monospace;font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(201,168,122,.7);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.rc-cat-label::before{content:'';width:16px;height:1px;background:rgba(201,168,122,.4);flex-shrink:0;}
+.rc-links{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.rc-links li a{font-size:.88rem;color:rgba(240,237,230,.7);text-decoration:none;display:flex;align-items:flex-start;gap:8px;line-height:1.5;transition:color .2s;}
+.rc-links li a::before{content:'→';font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:rgba(201,168,122,.5);flex-shrink:0;margin-top:2px;transition:color .2s;}
+.rc-links li a:hover{color:#F0EDE6;}
+.rc-links li a:hover::before{color:#C9A87A;}
+.rc-links li a span{display:block;font-family:'IBM Plex Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,237,230,.3);margin-top:1px;}
+
+/* ── SOCIAL SECTION ── */
+.social-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(201,168,122,.1);margin-top:44px;}
+.social-card{background:#1B2A3B;padding:36px 28px;text-align:center;transition:background .25s;position:relative;overflow:hidden;}
+.social-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:#C9A87A;transform:scaleX(0);transform-origin:left;transition:transform .35s ease;}
+.social-card:hover{background:#243447;}
+.social-card:hover::before{transform:scaleX(1);}
+.social-card a{text-decoration:none;color:inherit;display:flex;flex-direction:column;align-items:center;gap:14px;}
+.social-icon{width:44px;height:44px;border:1px solid rgba(201,168,122,.3);display:flex;align-items:center;justify-content:center;margin:0 auto;}
+.social-icon svg{width:20px;height:20px;fill:none;stroke:#C9A87A;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.social-name{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#C9A87A;}
+.social-handle{font-size:.85rem;color:rgba(240,237,230,.65);line-height:1.4;}
+
+/* ── NEWSLETTER SECTION ── */
+.nl-box{background:#1B2A3B;border:1px solid rgba(201,168,122,.2);padding:52px 48px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;}
+.nl-box h3{font-family:'Playfair Display',serif;font-weight:700;font-size:1.6rem;color:#F0EDE6;margin-bottom:8px;line-height:1.2;}
+.nl-box h3 em{color:#C9A87A;font-style:italic;}
+.nl-desc{font-size:.95rem;color:rgba(240,237,230,.6);line-height:1.8;max-width:480px;}
+.nl-badge{font-family:'IBM Plex Mono',monospace;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(201,168,122,.6);margin-bottom:8px;display:block;}
+
+/* ── CLOSING ── */
+.page-close{text-align:center;padding:80px 64px;}
+.cl1{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.4rem,2.5vw,2rem);color:rgba(240,237,230,.55);margin-bottom:8px;}
+.cl2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.6rem,2.8vw,2.4rem);color:#F0EDE6;margin-bottom:36px;}
+.cl2 em{color:#C9A87A;}
+
+/* FOOTER */
+footer{background:#081422;padding:26px 64px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,168,122,.12);flex-wrap:wrap;gap:10px;}
+.footer-brand{font-family:'Playfair Display',serif;font-weight:700;font-size:.88rem;color:#F0EDE6;}
+.footer-brand em{color:#C9A87A;font-style:normal;}
+.footer-links{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.footer-link{font-family:'IBM Plex Mono',monospace;font-size:.52rem;color:rgba(201,168,122,.65);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;}
+.footer-link:hover{color:#C9A87A;}
+.footer-sep{color:rgba(240,237,230,.2);font-family:'IBM Plex Mono',monospace;font-size:.52rem;}
+.footer-note{font-family:'IBM Plex Mono',monospace;font-size:.52rem;color:rgba(240,237,230,.3);letter-spacing:.08em;text-transform:uppercase;}
+
+/* MOBILE */
+@media(max-width:900px){
+  nav{padding:0 18px;} .nav-links{display:none;}
+  .p-hero{padding:100px 22px 52px;}
+  .wrap{padding:60px 22px;}
+  .tab-panel.active{grid-template-columns:1fr;}
+  .tab-bar{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .tab-btn{padding:12px 20px;white-space:nowrap;}
+  .social-grid{grid-template-columns:1fr 1fr;}
+  .nl-box{grid-template-columns:1fr;gap:24px;}
+  footer{padding:20px 22px;flex-direction:column;text-align:center;}
+}
+@media(max-width:480px){
+  .wrap{padding:44px 16px;}
+  .social-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-cc"><span class="nm-b">C</span><span class="nm-f">C</span></span>
+    <span class="nav-wm">
+      <span class="nav-name">CIPHER <em>&amp;</em> COUNSEL</span>
+      <span class="nav-tag">Cybersecurity · Policy · Law</span>
+    </span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="aware.html">Aware</a></li>
+    <li><a href="protect.html">Protect</a></li>
+    <li><a href="advocate.html">Advocate</a></li>
+    <li><a href="resources.html" class="active">Resources</a></li>
+  </ul>
+  <a href="about.html" class="nav-cta">Meet the Founder</a>
+</nav>
+
+<!-- HERO -->
+<section class="p-hero">
+  <div class="p-bg" style="background-image:url('cybersecurityroom.webp')"></div>
+  <div class="p-ov"></div>
+  <div class="p-scan"></div>
+  <div class="p-content">
+    <div class="p-kicker"><span class="dot"></span>Verified · Curated · Free</div>
+    <h1 class="p-h1">Resources for every<br><em>level of the field.</em></h1>
+    <p class="p-sub">Whether you are just starting out, building a career, or simply trying to protect yourself online — everything here is sourced from primary organizations and free to access.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- TABBED RESOURCES -->
+<section class="s-deep">
+  <div class="wrap">
+    <span class="label reveal">Curated Links</span>
+    <span class="champ-bar reveal"></span>
+    <h2 class="reveal">The right resources,<br><em>organized for you.</em></h2>
+    <p class="sub reveal">36 verified links across three audiences. All sourced from CISA, NIST, MITRE, EFF, WiCyS, ISC², ISACA, and Palo Alto Networks.</p>
+
+    <!-- TAB BUTTONS -->
+    <div class="tab-bar reveal">
+      <button class="tab-btn active" data-tab="students">Students</button>
+      <button class="tab-btn" data-tab="professionals">Professionals</button>
+      <button class="tab-btn" data-tab="public">General Public</button>
+    </div>
+
+    <!-- STUDENTS -->
+    <div class="tab-panel active" id="tab-students">
+      <div class="rc">
+        <div class="rc-head">01 — Free Training &amp; Certifications</div>
+        <div class="rc-cat">
+          <div class="rc-cat-label">Learning Platforms</div>
+          <ul class="rc-links">
+            <li><a href="https://www.cisa.gov/resources-tools/training" target="_blank" rel="noopener">CISA Free Training Catalog<span>cisa.gov</span></a></li>
+            <li><a href="https://www.comptia.org/training/certmaster-learn" target="_blank" rel="noopener">CompTIA CertMaster Learn<span>comptia.org</span></a></li>
+            <li><a href="https://www.cybrary.it/" target="_blank" rel="noopener">Cybrary — Free Cyber Courses<span>cybrary.it</span></a></li>
+            <li><a href="https://tryhackme.com/" target="_blank" rel="noopener">TryHackMe — Hands-On Labs<span>tryhackme.com</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="rc">
+        <div class="rc-head">02 — Frameworks &amp; Academic</div>
+        <div class="rc-cat">
+          <div class="rc-cat-label">Standards &amp; Outreach</div>
+          <ul class="rc-links">
+            <li><a href="https://www.nist.gov/nice" target="_blank" rel="noopener">NIST NICE Workforce Framework<span>nist.gov</span></a></li>
+            <li><a href="https://www.nsa.gov/resources/educators/" target="_blank" rel="noopener">NSA/CSS Academic Outreach<span>nsa.gov</span></a></li>
+            <li><a href="https://niccs.cisa.gov/" target="_blank" rel="noopener">CISA NICCS — Career Resources<span>niccs.cisa.gov</span></a></li>
+            <li><a href="https://www.isc2.org/certifications/cc" target="_blank" rel="noopener">ISC² CC — Free Entry Certification<span>isc2.org</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="rc">
+        <div class="rc-head">03 — Communities &amp; Organizations</div>
+        <div class="rc-cat">
+          <div class="rc-cat-label">Women in Cybersecurity</div>
+          <ul class="rc-links">
+            <li><a href="https://www.wicys.org/" target="_blank" rel="noopener">WiCyS — Women in CyberSecurity<span>wicys.org</span></a></li>
+            <li><a href="https://www.wicys.org/membership/" target="_blank" rel="noopener">WiCyS Student Membership<span>wicys.org</span></a></li>
+            <li><a href="https://www.isaca.org/membership/student" target="_blank" rel="noopener">ISACA Student Membership<span>isaca.org</span></a></li>
+            <li><a href="https://beacon.paloaltonetworks.com/" target="_blank" rel="noopener">Palo Alto Networks Beacon<span>beacon.paloaltonetworks.com</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFESSIONALS -->
+    <div class="tab-panel" id="tab-professionals">
+      <div class="rc">
+        <div class="rc-head">01 — Threat Intelligence</div>
+        <div class="rc-cat">
+          <div class="rc-cat-label">Primary Intel Sources</div>
+          <ul class="rc-links">
+            <li><a href="https://attack.mitre.org/" target="_blank" rel="noopener">MITRE ATT&amp;CK Framework<span>attack.mitre.org</span></a></li>
+            <li><a href="https://www.cisa.gov/news-events/cybersecurity-advisories" target="_blank" rel="noopener">CISA Cybersecurity Advisories<span>cisa.gov</span></a></li>
+            <li><a href="https://unit42.paloaltonetworks.com/" target="_blank" rel="noopener">Unit 42 Threat Research<span>unit42.paloaltonetworks.com</span></a></li>
+            <li><a href="https://nvd.nist.gov/" target="_blank" rel="noopener">NIST National Vulnerability Database<span>nvd.nist.gov</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="rc">
+        <div class="rc-head">02 — Standards &amp; Frameworks</div>
+        <div class="rc-cat">
+          <div class="rc-cat-label">Compliance &amp; Architecture</div>
+          <ul class="rc-links">
+            <li><a href="https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final" target="_blank" rel="noopener">NIST SP 800-53 Rev 5<span>csrc.nist.gov</span></a></li>
+            <li><a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener">NIST Cybersecurity Framework<span>nist.gov</span></a></li>
+            <li><a href="https://d3fend.mitre.org/" target="_blank" rel="noopener">MITRE D3FEND<span>d3fend.mitre.org</span></a></li>
+            <li><a href="https://iapp.org/resources/" target="_blank" rel="noopener">IAPP Privacy Resources<span>iapp.org</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="rc">
+        <div class="rc-head">03 — Professional Communities</div>
+        <div class="rc-cat">
+          <div class="rc-cat-label">Networks &amp; Continuing Ed</div>
+          <ul class="rc-links">
+            <li><a href="https://www.isaca.org/resources" target="_blank" rel="noopener">ISACA Resource Library<span>isaca.org</span></a></li>
+            <li><a href="https://community.isc2.org/" target="_blank" rel="noopener">ISC² Community<span>community.isc2.org</span></a></li>
+            <li><a href="https://beacon.paloaltonetworks.com/" target="_blank" rel="noopener">Palo Alto Networks Beacon<span>beacon.paloaltonetworks.com</span></a></li>
+            <li><a href="https://isc.sans.edu/" target="_blank" rel="noopener">SANS Internet Storm Center<span>isc.sans.edu</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- GENERAL PUBLIC -->
+    <div class="tab-panel" id="tab-public">
+      <div class="rc">
+        <div class="rc-head">01 — Incidents &amp; Identity</div>
+        <div class="rc-cat">
+          <div class="rc-cat-label">If Something Goes Wrong</div>
+          <ul class="rc-links">
+            <li><a href="https://stopransomware.gov/" target="_blank" rel="noopener">CISA Stop Ransomware<span>stopransomware.gov</span></a></li>
+            <li><a href="https://www.identitytheft.gov/" target="_blank" rel="noopener">FTC IdentityTheft.gov<span>identitytheft.gov</span></a></li>
+            <li><a href="https://haveibeenpwned.com/" target="_blank" rel="noopener">Have I Been Pwned?<span>haveibeenpwned.com</span></a></li>
+            <li><a href="https://reportfraud.ftc.gov/" target="_blank" rel="noopener">FTC Report Fraud<span>reportfraud.ftc.gov</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="rc">
+        <div class="rc-head">02 — Privacy &amp; Digital Rights</div>
+        <div class="rc-cat">
+          <div class="rc-cat-label">Protect Yourself Online</div>
+          <ul class="rc-links">
+            <li><a href="https://ssd.eff.org/" target="_blank" rel="noopener">EFF Surveillance Self-Defense<span>ssd.eff.org</span></a></li>
+            <li><a href="https://staysafeonline.org/" target="_blank" rel="noopener">StaySafeOnline<span>staysafeonline.org</span></a></li>
+            <li><a href="https://privacybadger.org/" target="_blank" rel="noopener">EFF Privacy Badger<span>privacybadger.org</span></a></li>
+            <li><a href="https://www.cisa.gov/shields-up" target="_blank" rel="noopener">CISA Shields Up<span>cisa.gov</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="rc">
+        <div class="rc-head">03 — Awareness &amp; Education</div>
+        <div class="rc-cat">
+          <div class="rc-cat-label">Build Cyber Habits</div>
+          <ul class="rc-links">
+            <li><a href="https://www.cisa.gov/secure-our-world" target="_blank" rel="noopener">CISA Secure Our World<span>cisa.gov</span></a></li>
+            <li><a href="https://consumer.ftc.gov/identity-theft-and-online-security" target="_blank" rel="noopener">FTC Online Security Hub<span>consumer.ftc.gov</span></a></li>
+            <li><a href="https://staysafeonline.org/online-safety-basics/" target="_blank" rel="noopener">Online Safety Basics<span>staysafeonline.org</span></a></li>
+            <li><a href="https://www.consumer.ftc.gov/articles/how-recognize-and-avoid-phishing-scams" target="_blank" rel="noopener">FTC Phishing Awareness<span>consumer.ftc.gov</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- SOCIAL SECTION -->
+<section class="s-mid">
+  <div class="wrap">
+    <span class="label reveal">Stay Connected</span>
+    <span class="champ-bar reveal"></span>
+    <h2 class="reveal">Follow the <em>community.</em></h2>
+    <p class="sub reveal">Updates on new resources, platform announcements, and women in cybersecurity. Follow along wherever you are.</p>
+    <div class="social-grid reveal">
+      <div class="social-card">
+        <a href="https://www.instagram.com/cipherandcounsel/" target="_blank" rel="noopener">
+          <div class="social-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </div>
+          <span class="social-name">Instagram</span>
+          <span class="social-handle">@cipherandcounsel</span>
+        </a>
+      </div>
+      <div class="social-card">
+        <a href="https://www.linkedin.com/company/cipherandcounsel" target="_blank" rel="noopener">
+          <div class="social-icon">
+            <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </div>
+          <span class="social-name">LinkedIn</span>
+          <span class="social-handle">Cipher &amp; Counsel</span>
+        </a>
+      </div>
+      <div class="social-card">
+        <a href="https://github.com/cipherandcounsel" target="_blank" rel="noopener">
+          <div class="social-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </div>
+          <span class="social-name">GitHub</span>
+          <span class="social-handle">cipherandcounsel</span>
+        </a>
+      </div>
+      <div class="social-card">
+        <a href="#newsletter">
+          <div class="social-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <span class="social-name">Newsletter</span>
+          <span class="social-handle">Subscribe below</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- NEWSLETTER -->
+<section class="s-dark" id="newsletter">
+  <div class="wrap reveal">
+    <div class="nl-box">
+      <div>
+        <span class="nl-badge">Newsletter · Launching Soon</span>
+        <h3>Cybersecurity updates for<br><em>people who don't want to miss anything.</em></h3>
+        <p class="nl-desc">New resources, threat intelligence digests, women in cybersecurity spotlights, and platform announcements — delivered when they matter. No noise.</p>
+      </div>
+      <div class="btns" style="flex-direction:column;align-items:flex-start;gap:10px;">
+        <a href="https://substack.com/@cipherandcounsel" target="_blank" rel="noopener" class="btn-p">Get Notified at Launch</a>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:.52rem;color:rgba(240,237,230,.3);letter-spacing:.08em;text-transform:uppercase;">Via Substack · Free</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- CLOSING -->
+<section class="s-deep">
+  <div class="page-close reveal">
+    <p class="cl1">Knowledge should not have a paywall.</p>
+    <p class="cl2">Share what you know. <em>Build who's next.</em></p>
+    <div class="btns" style="justify-content:center;">
+      <a href="aware.html" class="btn-p">Start with Aware</a>
+      <a href="about.html" class="btn-g">Meet the Founder</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">CIPHER <em>&amp;</em> COUNSEL</div>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/cipherandcounsel/" class="footer-link" target="_blank" rel="noopener">Instagram</a>
+    <span class="footer-sep">·</span>
+    <a href="https://www.linkedin.com/company/cipherandcounsel" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+    <span class="footer-sep">·</span>
+    <a href="mailto:hello@cipherandcounsel.com" class="footer-link">hello@cipherandcounsel.com</a>
+  </div>
+  <div class="footer-note">Cybersecurity · Policy · Law · Est. 2025 · cipherandcounsel.com</div>
+</footer>
+
+<script>
+// Scroll reveal
+const io = new IntersectionObserver(e => {
+  e.forEach(x => { if(x.isIntersecting) x.target.classList.add('in'); });
+}, {threshold: 0.08});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Active nav
+(function(){
+  const p = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    if(a.getAttribute('href') === p) a.classList.add('active');
+  });
+})();
+
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
