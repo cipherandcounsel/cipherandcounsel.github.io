@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Volt Typhoon · OSINT Threat Actor Investigation — Cipher &amp; Counsel</title>
+<title>Volt Typhoon OSINT Investigation | Cipher &amp; Counsel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500;600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --red:    #C9A87A;   /* primary accent — champagne gold */
+    --red:    #C9A87A;   /* primary accent - champagne gold */
     --gold:   #C9A87A;   /* gold accent (unified) */
     --gold-bright:#E8C97A;
-    --crit:   #C41E3A;   /* crimson — CRITICAL severity ONLY */
-    --dark:   #081422;   /* page base — austere navy */
+    --crit:   #C41E3A;   /* crimson - CRITICAL severity ONLY */
+    --dark:   #081422;   /* page base - austere navy */
     --ink:    #0B1724;   /* masthead */
     --panel:  #15212F;   /* cards / panels */
     --p2:     #1A2738;
@@ -24,7 +24,7 @@
     --green:  #5FAE86;
     --yellow: #D6B94E;
     --orange: #E0904C;
-    --blue:   #8FB4D6;   /* restrained steel — MITRE technique IDs */
+    --blue:   #8FB4D6;   /* restrained steel - MITRE technique IDs */
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -248,6 +248,8 @@
   .cit-list li { font-family: 'IBM Plex Mono', monospace; font-size: .68rem; color: var(--muted);
     padding: 7px 0; line-height: 1.65; border-bottom: 1px solid rgba(255,255,255,0.04); }
   .cit-list li:last-child { border-bottom: none; }
+  .cit-list a { color: var(--text); text-decoration: none; border-bottom: 1px solid rgba(201,168,122,0.45); }
+  .cit-list a:hover { color: var(--gold-bright); border-bottom-color: var(--gold-bright); }
   .cit-list li span { color: var(--gold); margin-right: 8px; }
 
   .doc-footer { max-width: 1200px; margin: 0 auto; padding: 22px 60px 36px; border-top: 1px solid var(--soft);
@@ -305,30 +307,30 @@
   <div class="mast-bg"></div>
   <div class="mast-inner">
     <div class="mast-eyebrow">
-      <span class="mast-badge">UTSA Research Initiative · 2026</span>
+      <span class="mast-badge">Cipher &amp; Counsel · Threat Analysis · 2026</span>
       <span class="mast-badge-gold">OSINT Threat Actor Investigation</span>
-      <span class="mast-classification">TLP:WHITE · Unclassified · Shadow Sample</span>
+      <span class="mast-classification">TLP:CLEAR · Unclassified · Shadow Sample</span>
     </div>
     <h1 class="mast-title">Volt Typhoon<br><span>OSINT Threat Actor Investigation</span></h1>
     <p class="mast-subtitle">Living-off-the-Land Pre-Positioning Against U.S. Critical Infrastructure</p>
     <div class="mast-rule"></div>
     <p class="mast-summary">
-      Volt Typhoon — also tracked as Vanguard Panda, BRONZE SILHOUETTE, Insidious Taurus, and
-      Dev-0391 — is a People's Republic of China (PRC) state-sponsored cyber actor whose objective
-      is <strong>not espionage but pre-positioning</strong>: gaining and maintaining persistent,
-      covert access inside U.S. critical infrastructure to enable disruptive or destructive effects
-      in the event of a major crisis or conflict. Unlike financially motivated or intelligence-collection
-      actors, Volt Typhoon relies almost exclusively on <strong>living-off-the-land (LotL) techniques</strong>
-      and a botnet of compromised small-office / home-office (SOHO) routers to blend in with normal
-      network activity — achieving dwell times measured in years rather than days. This investigation
-      consolidates open-source reporting from CISA, the NSA, the FBI, and Microsoft into a single
-      five-year campaign timeline, an eleven-technique MITRE ATT&amp;CK mapping, and behavioral
-      detection guidance for defenders.
+      Volt Typhoon, also tracked as Vanguard Panda, BRONZE SILHOUETTE, Insidious Taurus, Dev-0391,
+      UNC3236, and Voltzite, is a People's Republic of China (PRC) state-sponsored cyber actor. U.S.
+      agencies assess with high confidence that it is <strong>pre-positioning</strong> inside U.S.
+      critical infrastructure networks to enable the disruption of operational technology in a major
+      crisis or conflict. The group rarely uses malware for post-compromise execution. It relies on
+      <strong>living-off-the-land (LotL) techniques</strong> and a botnet of compromised small-office /
+      home-office (SOHO) routers to blend in with normal network activity, and U.S. agencies report
+      access lasting at least five years in some victim IT environments. This investigation consolidates
+      reporting from CISA, the NSA, the FBI, the Department of Justice, and the Office of the Director of
+      National Intelligence into a multi-year timeline, a government-sourced MITRE ATT&amp;CK technique
+      mapping, and behavioral detection guidance for defenders.
     </p>
     <div class="mast-meta">
       <div class="mast-meta-cell">
         <div class="mast-meta-label">Threat Actor</div>
-        <div class="mast-meta-value">Volt Typhoon<br>Vanguard Panda · G1017</div>
+        <div class="mast-meta-value">Volt Typhoon<br>Vanguard Panda</div>
       </div>
       <div class="mast-meta-cell">
         <div class="mast-meta-label">Attribution</div>
@@ -336,7 +338,7 @@
       </div>
       <div class="mast-meta-cell">
         <div class="mast-meta-label">Active Period</div>
-        <div class="mast-meta-value">Mid-2021 · 2026<br>Ongoing</div>
+        <div class="mast-meta-value">5+ years in some victims<br>Named in Apr 2026 advisory</div>
       </div>
       <div class="mast-meta-cell">
         <div class="mast-meta-label">Primary Targets</div>
@@ -344,7 +346,7 @@
       </div>
       <div class="mast-meta-cell">
         <div class="mast-meta-label">Report Date</div>
-        <div class="mast-meta-value">March 2026<br>UTSA Research Initiative</div>
+        <div class="mast-meta-value">Updated Nov 2026<br>Cipher &amp; Counsel</div>
       </div>
     </div>
   </div>
@@ -355,12 +357,12 @@
   <img src="cybersecurityworldmap.webp" alt="Analysts monitoring a global cyber threat map in a security operations center">
   <div class="feature-cap">
     <div class="fc-label">Defending Forward</div>
-    <div class="fc-text">LotL intrusions hide in legitimate traffic — detection depends on the analyst, not the signature.</div>
+    <div class="fc-text">LotL intrusions hide in legitimate traffic. Detection depends on the analyst, not the signature.</div>
   </div>
   <div class="feature-cred">Cipher &amp; Counsel · SOC Imagery</div>
 </div>
 
-<div class="shadow-note">Shadow Sample — Original OSINT threat actor investigation produced as a UTSA research portfolio piece. All TTPs, infrastructure details, timelines, and statistics are drawn from publicly available CISA, NSA, FBI, and Microsoft reporting. No proprietary or classified data is reproduced. IOCs are defanged per TLP:WHITE conventions.</div>
+<div class="shadow-note">Shadow Sample: independent OSINT analysis produced as a portfolio piece by Cipher &amp; Counsel. All techniques, infrastructure details, timelines, and statistics are drawn from publicly available U.S. government reporting (CISA, NSA, FBI, DOJ, and ODNI). No proprietary or classified data is reproduced. This page lists no network indicators. Last reviewed November 2026.</div>
 
 <!-- AUDIENCE TABS -->
 <div class="audience-bar">
@@ -382,54 +384,53 @@
       <div class="stat-row">
         <div class="stat-card">
           <div class="stat-num">5<span>yr</span></div>
-          <div class="stat-label">Confirmed dwell time inside at least one U.S. critical-infrastructure network before discovery — access measured in years, not days</div>
+          <div class="stat-label">Access of at least five years reported in some victim IT environments (CISA, NSA, FBI, Feb 2024). Access is measured in years, not days</div>
         </div>
         <div class="stat-card">
-          <div class="stat-num">0<span>malware</span></div>
-          <div class="stat-label">Near-zero custom malware in core operations — intrusions executed almost entirely with built-in Windows tools to evade detection</div>
+          <div class="stat-num">Rare<span>malware</span></div>
+          <div class="stat-label">Volt Typhoon actors rarely use malware for post-compromise execution. They rely on built-in tools and valid accounts to avoid detection</div>
         </div>
         <div class="stat-card">
           <div class="stat-num">KV<span>botnet</span></div>
-          <div class="stat-label">Hundreds of end-of-life SOHO routers hijacked as covert proxy infrastructure — disrupted by a court-authorized FBI operation in Jan 2024</div>
+          <div class="stat-label">Hundreds of end-of-life SOHO routers hijacked as covert proxy infrastructure, disrupted by a court-authorized FBI operation announced Jan 31, 2024</div>
         </div>
       </div>
 
       <p class="exec-p">
-        Volt Typhoon is a Chinese state-sponsored actor active since at least mid-2021. What makes
-        it distinct is <strong>intent</strong>. Most nation-state groups steal information; Volt
-        Typhoon steals <strong>time and position</strong> — quietly embedding inside the networks
-        that run America's communications, energy, water, and transportation systems so that access
-        is already in place if a future crisis demands it.
+        Volt Typhoon is a Chinese state-sponsored actor that U.S. agencies assess is pre-positioning
+        inside the networks that run America's communications, energy, water, and transportation
+        systems. What makes it distinct is <strong>intent</strong>: the access is meant to be in place
+        if a future crisis demands disruption.
       </p>
       <p class="exec-p">
-        Because the group operates almost entirely with <strong>legitimate, built-in administrative
-        tools</strong> rather than malware, traditional antivirus and signature-based defenses rarely
-        catch it. The intrusions look like normal IT activity. Detection requires watching
-        <strong>behavior</strong> — who is logging in, from where, doing what — not scanning for
-        malicious files.
+        Because the group rarely uses malware and works mostly with <strong>legitimate, built-in
+        administrative tools</strong>, traditional antivirus and signature-based defenses rarely catch
+        it. The intrusions resemble normal IT activity. Detection requires watching
+        <strong>behavior</strong>: who is logging in, from where, and doing what, rather than scanning
+        for malicious files.
       </p>
 
       <div class="divider"></div>
 
       <div class="exec-sec-label">Campaign Timeline</div>
-      <h2 class="exec-h2">A Five-Year Pre-Positioning Campaign</h2>
-      <p class="exec-p">Volt Typhoon's public story unfolds across five years — from quiet initial access, to a coordinated government disclosure, to a law-enforcement disruption of its infrastructure, and continued activity through the current reporting period.</p>
+      <h2 class="exec-h2">A Multi-Year Pre-Positioning Campaign</h2>
+      <p class="exec-p">The public record, drawn from U.S. government sources, runs from long-term quiet access, to a joint advisory, to a law enforcement disruption of the group's proxy infrastructure, to continued government warnings through 2026.</p>
 
       <div class="timeline">
         <div class="tl-item">
           <div class="tl-dot">01</div>
           <div class="tl-content">
-            <div class="tl-date">Mid-2021 · 2022</div>
-            <div class="tl-title">Quiet Initial Access</div>
-            <div class="tl-desc">The group establishes access to U.S. critical-infrastructure networks by exploiting internet-facing appliances — VPNs, firewalls, and routers from vendors including Fortinet, Citrix, and Ivanti — and harvesting administrator credentials. Activity is low-and-slow by design, avoiding any tooling that would trip detection.</div>
+            <div class="tl-date">Years before 2024</div>
+            <div class="tl-title">Long-Term Quiet Access</div>
+            <div class="tl-desc">U.S. agencies report Volt Typhoon actors maintaining access and footholds within some victim IT environments for at least five years. Actors gain entry by exploiting vulnerabilities in networking appliances from Fortinet, Ivanti, NETGEAR, Citrix, and Cisco, then rely mainly on valid credentials to persist.</div>
           </div>
         </div>
         <div class="tl-item">
           <div class="tl-dot">02</div>
           <div class="tl-content">
             <div class="tl-date">May 2023</div>
-            <div class="tl-title">Public Disclosure — Microsoft &amp; Five Eyes</div>
-            <div class="tl-desc">Microsoft, the NSA, CISA, and Five Eyes partners jointly disclose Volt Typhoon activity, highlighting living-off-the-land tradecraft and targeting of critical infrastructure on Guam — a strategic U.S. military hub in the Pacific. The disclosure reframes the group as a pre-positioning, not espionage, threat.</div>
+            <div class="tl-title">Joint Government Advisory AA23-144A</div>
+            <div class="tl-desc">CISA, NSA, FBI, and Five Eyes partners publish a joint advisory on PRC state-sponsored activity that uses living-off-the-land techniques to evade detection. The February 2024 advisory describes May 2023 as the first disclosure of related activity.</div>
           </div>
         </div>
         <div class="tl-item">
@@ -437,7 +438,7 @@
           <div class="tl-content">
             <div class="tl-date">January 2024</div>
             <div class="tl-title">KV Botnet Disruption</div>
-            <div class="tl-desc">The U.S. Department of Justice and FBI announce a court-authorized operation that remotely removes Volt Typhoon's malware from hundreds of compromised end-of-life SOHO routers comprising the "KV Botnet" — the covert proxy network the group used to obscure the origin of its intrusions.</div>
+            <div class="tl-desc">The U.S. Department of Justice announces on January 31, 2024 a court-authorized operation in which the FBI deleted KV Botnet malware from hundreds of U.S.-based end-of-life SOHO routers, mostly Cisco and NETGEAR models, and took steps to block their connection to the botnet. DOJ states that Volt Typhoon used the botnet to conceal its hacking of critical infrastructure.</div>
           </div>
         </div>
         <div class="tl-item">
@@ -445,15 +446,15 @@
           <div class="tl-content">
             <div class="tl-date">February 2024</div>
             <div class="tl-title">CISA Advisory AA24-038A</div>
-            <div class="tl-desc">CISA, NSA, and the FBI publish a landmark joint advisory confirming Volt Typhoon had maintained access inside some victim IT environments for at least five years, and warning that the group is positioned to enable disruptive effects against critical infrastructure during a major crisis.</div>
+            <div class="tl-desc">CISA, NSA, and the FBI, with DOE, EPA, TSA, and international partners, publish a joint advisory dated February 7, 2024. It reports access in some victim IT environments for at least five years and assesses with high confidence that the actors are pre-positioning to enable the disruption of operational technology functions in a major crisis or conflict.</div>
           </div>
         </div>
         <div class="tl-item">
           <div class="tl-dot">05</div>
           <div class="tl-content">
-            <div class="tl-date">2025 · 2026</div>
-            <div class="tl-title">Persistence &amp; Reconstitution</div>
-            <div class="tl-desc">Despite the botnet takedown, open-source reporting through the current period documents continued Volt Typhoon-aligned activity — re-establishing router proxy infrastructure and probing communications and energy providers — underscoring that pre-positioning access is durable and must be assumed, not disproven.</div>
+            <div class="tl-date">2026</div>
+            <div class="tl-title">Continued Government Warnings</div>
+            <div class="tl-desc">The March 2026 ODNI Annual Threat Assessment states that China is the most active and persistent cyber threat to U.S. Government, private-sector, and critical infrastructure networks. A joint advisory published April 23, 2026 by the NSA, partner agencies in the United Kingdom, Australia, and Germany, and others (CISA AA26-113A) describes China-nexus actors, including Volt Typhoon, using large covert networks of compromised SOHO and IoT devices to hide their activity.</div>
           </div>
         </div>
       </div>
@@ -463,37 +464,37 @@
       <div class="exec-sec-label">Sector Risk Assessment</div>
       <h2 class="exec-h2">Who Is at Risk</h2>
       <table class="risk-table">
-        <thead><tr><th>Sector</th><th>Risk Level</th><th>Why Targeted</th><th>Observed Activity</th></tr></thead>
+        <thead><tr><th>Sector</th><th>Risk Level (analyst rating)</th><th>Why Targeted (analyst assessment)</th><th>Government-Reported Activity</th></tr></thead>
         <tbody>
           <tr>
             <td>Communications</td>
             <td class="risk-crit">CRITICAL</td>
             <td>Disruption of command, control, and civilian connectivity during a crisis</td>
-            <td>Confirmed access to communications providers; Guam telecom targeting</td>
+            <td>Named a primary sector of confirmed compromise in AA24-038A, including Guam</td>
           </tr>
           <tr>
             <td>Energy &amp; Electric</td>
             <td class="risk-crit">CRITICAL</td>
             <td>Ability to degrade or disrupt power delivery to populations and bases</td>
-            <td>Persistent access to energy-sector IT and adjacent OT environments</td>
+            <td>Named a primary sector of confirmed compromise in AA24-038A</td>
           </tr>
           <tr>
             <td>Water &amp; Wastewater</td>
             <td class="risk-crit">CRITICAL</td>
-            <td>Public-safety leverage; high-impact disruption with limited defenses</td>
-            <td>Targeting of water utility networks confirmed in joint advisories</td>
+            <td>Public-safety leverage and high-impact disruption</td>
+            <td>AA24-038A reports a confirmed compromise of a water and wastewater sector entity</td>
           </tr>
           <tr>
             <td>Transportation</td>
             <td class="risk-high">HIGH</td>
-            <td>Logistics and military mobility disruption during contingency</td>
-            <td>Access to transportation-sector systems documented by CISA</td>
+            <td>Logistics and military mobility disruption during a contingency</td>
+            <td>Named a primary sector of confirmed compromise in AA24-038A</td>
           </tr>
           <tr>
             <td>SOHO / Edge Devices</td>
             <td class="risk-high">HIGH</td>
-            <td>Hijacked as covert proxy infrastructure to mask intrusion origin</td>
-            <td>End-of-life routers conscripted into the KV Botnet</td>
+            <td>Hijacked as covert proxy infrastructure to mask the origin of intrusions</td>
+            <td>End-of-life Cisco and NETGEAR routers used in the KV Botnet (DOJ, Jan 2024)</td>
           </tr>
         </tbody>
       </table>
@@ -511,7 +512,7 @@
         <div class="rec-card">
           <div class="rec-num">Priority 02</div>
           <div class="rec-title">Patch and Harden Internet-Facing Appliances</div>
-          <div class="rec-desc">Initial access depends on <strong>vulnerable edge devices</strong> — VPNs, firewalls, and routers. Apply vendor patches promptly, remove end-of-life hardware from service, and disable unnecessary management interfaces exposed to the internet.</div>
+          <div class="rec-desc">Initial access depends on <strong>vulnerable edge devices</strong>: VPNs, firewalls, and routers. Apply vendor patches promptly, remove end-of-life hardware from service, and disable unnecessary management interfaces exposed to the internet.</div>
         </div>
         <div class="rec-card">
           <div class="rec-num">Priority 03</div>
@@ -527,7 +528,7 @@
 
       <div class="info-box" style="margin-top:20px;">
         <div class="info-label">Strategic Context</div>
-        <p>The February 2024 CISA / NSA / FBI advisory assessed that Volt Typhoon's pre-positioning is intended to <strong>enable disruption of critical infrastructure in the event of a major U.S.–China crisis or conflict</strong>. The threat is therefore strategic and persistent: the absence of data theft is not evidence of safety — it is the signature of an actor preparing the battlefield rather than robbing it.</p>
+        <p>The February 2024 CISA / NSA / FBI advisory assessed with high confidence that Volt Typhoon is pre-positioning on IT networks to enable the disruption of operational technology functions in the event of a <strong>major crisis or conflict</strong>. The threat is strategic and persistent: the objective is access that can be used later. A quiet network is not evidence of safety.</p>
       </div>
 
     </div>
@@ -540,104 +541,102 @@
         <div class="an-main">
 
           <div class="an-sec-label" id="an-overview">Actor Overview</div>
-          <h2 class="an-h2">Volt Typhoon — Group Profile</h2>
+          <h2 class="an-h2">Volt Typhoon: Group Profile</h2>
           <p class="an-p">
-            Volt Typhoon (MITRE ATT&amp;CK <strong>G1017</strong>) is a People's Republic of China
-            state-sponsored cyber group assessed with <strong>high confidence</strong> to be conducting
-            pre-positioning operations against United States critical infrastructure. Also tracked as
-            Vanguard Panda, BRONZE SILHOUETTE, Insidious Taurus, Dev-0391, and UNC3236, the group has
-            been active since at least mid-2021, with confirmed activity across the communications,
-            energy, water and wastewater, and transportation sectors — including U.S. territories such
-            as Guam.
+            Volt Typhoon is a People's Republic of China state-sponsored cyber group that CISA, NSA, and
+            the FBI assess with <strong>high confidence</strong> is conducting pre-positioning operations
+            against U.S. critical infrastructure. Also tracked as Vanguard Panda, BRONZE SILHOUETTE,
+            Insidious Taurus, Dev-0391, UNC3236, and Voltzite, the group has compromised organizations
+            primarily in the communications, energy, transportation, and water and wastewater sectors,
+            including in U.S. territories such as Guam. Agencies report access lasting at least five
+            years in some victim IT environments.
           </p>
           <p class="an-p">
-            Volt Typhoon is defined by its near-total reliance on <strong>living-off-the-land (LotL)</strong>
-            techniques. Rather than deploying custom backdoors, operators use legitimate, built-in
-            administrative utilities — <code>wmic</code>, <code>ntdsutil</code>, <code>netsh</code>,
-            <code>PowerShell</code>, and <code>certutil</code> — to conduct discovery, credential access,
-            and lateral movement. Command-and-control is routed through a botnet of compromised
-            SOHO network devices, allowing the group's traffic to originate from benign-looking
-            residential and small-business IP space and evade geolocation-based detection.
+            Volt Typhoon rarely uses malware for post-compromise execution. Operators rely on built-in
+            administrative utilities, including <code>wmic</code>, <code>ntdsutil</code>,
+            <code>netsh</code>, <code>PowerShell</code>, and <code>certutil</code>, for discovery,
+            credential access, and lateral movement, with limited use of open-source tools such as Fast
+            Reverse Proxy (FRP). Command and control has been routed through multi-hop proxies, including
+            a botnet of compromised SOHO network devices, which obscures the origin of the activity.
           </p>
 
           <div class="an-sec-label" id="an-ttps">MITRE ATT&amp;CK Mapping</div>
           <h2 class="an-h2">Eleven Documented Techniques</h2>
-          <p class="an-p">The following maps observed Volt Typhoon tradecraft to MITRE ATT&amp;CK Enterprise v18, consolidated from CISA advisory AA24-038A, the NSA/CISA LotL guidance, and Microsoft Threat Intelligence reporting.</p>
+          <p class="an-p">The table maps Volt Typhoon tradecraft to MITRE ATT&amp;CK Enterprise techniques as listed in the CISA, NSA, and FBI advisory AA24-038A, which uses ATT&amp;CK for Enterprise version 14. Each description summarizes the behavior that the advisory records.</p>
           <div style="overflow-x:auto;">
             <table class="attack-table">
               <thead>
-                <tr><th>Technique ID</th><th>Tactic</th><th>Technique Name</th><th>Observed Implementation</th><th>Freq</th></tr>
+                <tr><th>Technique ID</th><th>Tactic</th><th>Technique Name</th><th>Observed Implementation</th></tr>
               </thead>
               <tbody>
-                <tr><td class="td-tid">T1190</td><td class="td-tactic">Initial Access</td><td>Exploit Public-Facing Application</td><td class="td-obs">Exploitation of internet-facing Fortinet, Citrix, and Ivanti appliances to gain a foothold</td><td class="td-freq freq-h">HIGH</td></tr>
-                <tr><td class="td-tid">T1133</td><td class="td-tactic">Initial Access</td><td>External Remote Services</td><td class="td-obs">Abuse of VPN and remote-management services on edge devices for entry and re-entry</td><td class="td-freq freq-h">HIGH</td></tr>
-                <tr><td class="td-tid">T1078</td><td class="td-tactic">Defense Evasion</td><td>Valid Accounts</td><td class="td-obs">Use of stolen, legitimate administrator credentials to blend in as authorized users</td><td class="td-freq freq-h">HIGH</td></tr>
-                <tr><td class="td-tid">T1059.001</td><td class="td-tactic">Execution</td><td>Command &amp; Scripting: PowerShell</td><td class="td-obs">PowerShell used for discovery and execution without dropping files to disk</td><td class="td-freq freq-h">HIGH</td></tr>
-                <tr><td class="td-tid">T1047</td><td class="td-tactic">Execution</td><td>Windows Management Instrumentation</td><td class="td-obs"><code>wmic</code> used for remote command execution and host enumeration</td><td class="td-freq freq-h">HIGH</td></tr>
-                <tr><td class="td-tid">T1003.003</td><td class="td-tactic">Credential Access</td><td>OS Credential Dumping: NTDS</td><td class="td-obs"><code>ntdsutil</code> abused to extract the Active Directory <code>NTDS.dit</code> database via Volume Shadow Copy</td><td class="td-freq freq-h">HIGH</td></tr>
-                <tr><td class="td-tid">T1552.001</td><td class="td-tactic">Credential Access</td><td>Unsecured Credentials: Credentials In Files</td><td class="td-obs">Harvesting of credentials stored in configuration files on compromised appliances</td><td class="td-freq freq-m">MED</td></tr>
-                <tr><td class="td-tid">T1018</td><td class="td-tactic">Discovery</td><td>Remote System Discovery</td><td class="td-obs">Native commands used to map hosts, domains, and network topology quietly</td><td class="td-freq freq-h">HIGH</td></tr>
-                <tr><td class="td-tid">T1090.002</td><td class="td-tactic">Command &amp; Control</td><td>Proxy: External Proxy</td><td class="td-obs">Traffic routed through the KV Botnet of compromised SOHO routers to mask origin</td><td class="td-freq freq-h">HIGH</td></tr>
-                <tr><td class="td-tid">T1070</td><td class="td-tactic">Defense Evasion</td><td>Indicator Removal</td><td class="td-obs">Selective clearing of event logs and command history to frustrate forensics</td><td class="td-freq freq-m">MED</td></tr>
-                <tr><td class="td-tid">T1021.001</td><td class="td-tactic">Lateral Movement</td><td>Remote Services: RDP</td><td class="td-obs">Use of valid accounts over RDP and other native remote services to move laterally</td><td class="td-freq freq-m">MED</td></tr>
+                <tr><td class="td-tid">T1190</td><td class="td-tactic">Initial Access</td><td>Exploit Public-Facing Application</td><td class="td-obs">Exploits networking appliances from Fortinet, Ivanti, NETGEAR, Citrix, and Cisco</td></tr>
+                <tr><td class="td-tid">T1133</td><td class="td-tactic">Initial Access</td><td>External Remote Services</td><td class="td-obs">Uses VPN sessions to reach victim environments</td></tr>
+                <tr><td class="td-tid">T1078</td><td class="td-tactic">Persistence</td><td>Valid Accounts</td><td class="td-obs">Relies mainly on valid credentials to persist</td></tr>
+                <tr><td class="td-tid">T1059.001</td><td class="td-tactic">Execution</td><td>Command &amp; Scripting: PowerShell</td><td class="td-obs">Runs FRP clients and event log queries through PowerShell</td></tr>
+                <tr><td class="td-tid">T1047</td><td class="td-tactic">Execution</td><td>Windows Management Instrumentation</td><td class="td-obs"><code>wmic</code> used for remote execution and staging</td></tr>
+                <tr><td class="td-tid">T1003.003</td><td class="td-tactic">Credential Access</td><td>OS Credential Dumping: NTDS</td><td class="td-obs"><code>ntdsutil</code> used to copy the Active Directory <code>NTDS.dit</code> database from volume shadow copies</td></tr>
+                <tr><td class="td-tid">T1003.001</td><td class="td-tactic">Credential Access</td><td>OS Credential Dumping: LSASS Memory</td><td class="td-obs">LSASS process memory dumped to obtain credentials</td></tr>
+                <tr><td class="td-tid">T1070.001</td><td class="td-tactic">Defense Evasion</td><td>Indicator Removal: Clear Windows Event Logs</td><td class="td-obs">Selective clearing of Windows event logs to hide activity</td></tr>
+                <tr><td class="td-tid">T1090.001</td><td class="td-tactic">Command &amp; Control</td><td>Proxy: Internal Proxy</td><td class="td-obs"><code>netsh</code> used to create a PortProxy registry change on a PRTG server</td></tr>
+                <tr><td class="td-tid">T1584.005</td><td class="td-tactic">Resource Development</td><td>Compromise Infrastructure: Botnet</td><td class="td-obs">Compromised end-of-life Cisco and NETGEAR SOHO routers implanted with KV Botnet malware</td></tr>
+                <tr><td class="td-tid">T1021.001</td><td class="td-tactic">Lateral Movement</td><td>Remote Services: RDP</td><td class="td-obs">Moved to a domain controller over RDP with a compromised domain admin account</td></tr>
               </tbody>
             </table>
           </div>
-          <div class="cite">MITRE ATT&amp;CK Enterprise v18 · attack.mitre.org/groups/G1017 · CISA Advisory AA24-038A, February 2024 · NSA/CISA "Identifying and Mitigating Living off the Land Techniques," February 2024</div>
+          <div class="cite">CISA, NSA, and FBI Joint Advisory AA24-038A, February 7, 2024 · ATT&amp;CK for Enterprise version 14, technique tables in the advisory</div>
 
           <div class="an-sec-label" id="an-toolkit">Tradecraft &amp; Tooling</div>
           <h2 class="an-h2">Living-off-the-Land Toolset</h2>
-          <p class="an-p">Volt Typhoon's "toolkit" is largely the victim's own operating system. The table below summarizes the principal native binaries and capabilities documented in public reporting, in place of the custom malware families typical of other actors.</p>
+          <p class="an-p">Volt Typhoon's toolkit is largely the victim's own operating system. The table summarizes the principal native binaries and capabilities documented in AA24-038A, in place of custom malware.</p>
           <table class="malware-table">
             <thead>
               <tr><th>Tool / Capability</th><th>Type</th><th>Native?</th><th>Purpose</th><th>Status</th></tr>
             </thead>
             <tbody>
-              <tr><td class="malware-name">ntdsutil</td><td class="malware-lang">LOLBin</td><td>Built-in</td><td>Extracts the Active Directory NTDS.dit credential database via Volume Shadow Copy.</td><td><span class="malware-new">LOTL</span></td></tr>
-              <tr><td class="malware-name">wmic</td><td class="malware-lang">LOLBin</td><td>Built-in</td><td>Remote command execution, process and host enumeration.</td><td><span class="malware-new">LOTL</span></td></tr>
-              <tr><td class="malware-name">netsh</td><td class="malware-lang">LOLBin</td><td>Built-in</td><td>Port-proxy configuration to pivot and tunnel traffic through compromised hosts.</td><td><span class="malware-new">LOTL</span></td></tr>
-              <tr><td class="malware-name">PowerShell</td><td class="malware-lang">LOLBin</td><td>Built-in</td><td>Fileless discovery, execution, and scripting across the environment.</td><td><span class="malware-new">LOTL</span></td></tr>
-              <tr><td class="malware-name">certutil</td><td class="malware-lang">LOLBin</td><td>Built-in</td><td>File transfer and encoding/decoding of staged data.</td><td><span class="malware-new">LOTL</span></td></tr>
-              <tr><td class="malware-name">Fast Reverse Proxy (FRP)</td><td class="malware-lang">Open-source</td><td>Introduced</td><td>Publicly available proxy tool used to maintain covert remote access.</td><td>Observed</td></tr>
-              <tr><td class="malware-name">KV Botnet implant</td><td class="malware-lang">Router malware</td><td>Introduced</td><td>Malware on end-of-life SOHO routers forming covert proxy infrastructure; disrupted Jan 2024.</td><td>Disrupted</td></tr>
+              <tr><td class="malware-name">ntdsutil</td><td class="malware-lang">LOLBin</td><td>Built-in</td><td>Copies the Active Directory NTDS.dit database and the SYSTEM hive from volume shadow copies.</td><td><span class="malware-new">LOTL</span></td></tr>
+              <tr><td class="malware-name">wmic</td><td class="malware-lang">LOLBin</td><td>Built-in</td><td>Remote command execution and staging.</td><td><span class="malware-new">LOTL</span></td></tr>
+              <tr><td class="malware-name">netsh</td><td class="malware-lang">LOLBin</td><td>Built-in</td><td>Creates a PortProxy registry change on a PRTG server to proxy traffic.</td><td><span class="malware-new">LOTL</span></td></tr>
+              <tr><td class="malware-name">PowerShell</td><td class="malware-lang">LOLBin</td><td>Built-in</td><td>Event log queries and running FRP clients.</td><td><span class="malware-new">LOTL</span></td></tr>
+              <tr><td class="malware-name">certutil</td><td class="malware-lang">LOLBin</td><td>Built-in</td><td>Listed among the native utilities used for discovery.</td><td><span class="malware-new">LOTL</span></td></tr>
+              <tr><td class="malware-name">Fast Reverse Proxy (FRP)</td><td class="malware-lang">Open-source</td><td>Introduced</td><td>Publicly available proxy tool used for covert command and control.</td><td>Observed</td></tr>
+              <tr><td class="malware-name">KV Botnet implant</td><td class="malware-lang">Router malware</td><td>Introduced</td><td>Malware on end-of-life Cisco and NETGEAR SOHO routers forming proxy infrastructure; disrupted Jan 2024.</td><td>Disrupted</td></tr>
             </tbody>
           </table>
-          <div class="cite">CISA AA24-038A, February 2024 · FBI / DOJ KV Botnet Disruption Announcement, January 2024 · Microsoft Threat Intelligence — Volt Typhoon, May 2023</div>
+          <div class="cite">CISA, NSA, and FBI Joint Advisory AA24-038A, February 2024 · U.S. Department of Justice press release, January 31, 2024</div>
 
           <div class="an-sec-label" id="an-infra">Infrastructure Analysis</div>
           <h2 class="an-h2">The KV Botnet &amp; Edge-Device Proxying</h2>
           <h3 class="an-h3">Covert SOHO Router Proxy Network</h3>
           <p class="an-p">
-            Rather than operate from attributable cloud or hosting infrastructure, Volt Typhoon
-            routed operations through the <strong>KV Botnet</strong> — hundreds of compromised
-            small-office / home-office routers, many of them <strong>end-of-life</strong> Cisco,
-            NETGEAR, and similar devices no longer receiving security updates. By proxying through
-            residential and small-business IP space geographically close to victims, the group
-            defeated geolocation-based anomaly detection and made its inbound connections appear
-            to originate from benign local networks.
+            Volt Typhoon has used multi-hop proxies for command and control. These are typically built
+            from virtual private servers, and in some cases from compromised SOHO routers: the
+            <strong>KV Botnet</strong>, made up of hundreds of U.S.-based routers, the vast majority of
+            them <strong>end-of-life</strong> Cisco and NETGEAR models that no longer received security
+            updates. Proxying through compromised routers obscures where the malicious activity
+            originates.
           </p>
-          <h3 class="an-h3">Law-Enforcement Disruption — January 2024</h3>
+          <h3 class="an-h3">Law-Enforcement Disruption, January 2024</h3>
           <p class="an-p">
-            In January 2024 the U.S. Department of Justice disclosed a <strong>court-authorized
-            operation</strong> in which the FBI remotely removed the botnet malware from compromised
-            routers and severed their connection to Volt Typhoon's infrastructure. The action degraded
-            the group's proxy network but did not remove pre-positioned access from victim enterprise
-            environments — a reminder that infrastructure takedowns and host remediation are distinct
-            problems.
+            On January 31, 2024 the U.S. Department of Justice announced a <strong>court-authorized
+            operation</strong> in which the FBI deleted the KV Botnet malware from the compromised
+            routers and took steps to sever their connection to the botnet. DOJ states that the operation
+            did not affect the routers' legitimate functions or collect their content. The operation
+            targeted the routers. Access already held inside victim enterprise networks is a separate
+            remediation problem.
           </p>
           <h3 class="an-h3">Indicator Summary</h3>
           <table class="ioc-table">
             <thead><tr><th>Indicator</th><th>Type</th><th>Context</th></tr></thead>
             <tbody>
-              <tr><td class="ioc-val">ntdsutil.exe</td><td class="ioc-type">LOLBin</td><td>NTDS.dit extraction via Volume Shadow Copy — credential access</td></tr>
-              <tr><td class="ioc-val">netsh interface portproxy</td><td class="ioc-type">Command</td><td>Port-proxy creation for internal tunneling and pivoting</td></tr>
-              <tr><td class="ioc-val">cmd.exe /c "wmic process call create"</td><td class="ioc-type">Command</td><td>Remote execution and enumeration pattern</td></tr>
-              <tr><td class="ioc-val">End-of-life SOHO routers</td><td class="ioc-type">Infrastructure</td><td>KV Botnet proxy nodes — Cisco / NETGEAR EOL devices</td></tr>
+              <tr><td class="ioc-val">ntdsutil.exe</td><td class="ioc-type">LOLBin</td><td>NTDS.dit extraction from volume shadow copies for credential access</td></tr>
+              <tr><td class="ioc-val">netsh interface portproxy</td><td class="ioc-type">Command</td><td>PortProxy registry change used to proxy traffic internally</td></tr>
+              <tr><td class="ioc-val">wmic</td><td class="ioc-type">Command</td><td>Remote execution and staging</td></tr>
+              <tr><td class="ioc-val">End-of-life SOHO routers</td><td class="ioc-type">Infrastructure</td><td>KV Botnet proxy nodes on end-of-life Cisco and NETGEAR devices</td></tr>
               <tr><td class="ioc-val">Anomalous admin login (off-hours / new ASN)</td><td class="ioc-type">Behavioral</td><td>Valid-account abuse from unexpected source networks</td></tr>
             </tbody>
           </table>
-          <p class="an-p" style="margin-top:10px;font-size:.8rem;"><strong>Note:</strong> Volt Typhoon produces few static file-based IOCs by design. Behavioral indicators — anomalous use of native administrative tooling and valid accounts — are the primary detection surface. Restore any defanged values before use in tooling.</p>
-          <div class="cite">CISA AA24-038A, February 2024 · MITRE ATT&amp;CK G1017, v18 · Microsoft Threat Intelligence, May 2023</div>
+          <p class="an-p" style="margin-top:10px;font-size:.8rem;"><strong>Note:</strong> Volt Typhoon relies on native tools and valid accounts, which limits file-based indicators. Behavioral indicators, such as anomalous use of native administrative tooling and valid accounts, are the primary detection surface. This page lists no network indicators.</p>
+          <div class="cite">CISA, NSA, and FBI Joint Advisory AA24-038A, February 2024 · U.S. Department of Justice press release, January 31, 2024</div>
 
           <div class="an-sec-label" id="an-detection">Detection Guidance</div>
           <h2 class="an-h2">Behavioral Detection &amp; Mitigation</h2>
@@ -645,8 +644,8 @@
           <div class="detect-box">
             <div class="detect-label">Detection</div>
             <ul>
-              <li>Alert on <strong>anomalous use of valid administrator accounts</strong> — off-hours logins, new source ASNs, or impossible-travel patterns inconsistent with the account's history</li>
-              <li>Monitor for <code>ntdsutil</code> execution and Volume Shadow Copy creation on domain controllers — a high-fidelity signal of NTDS.dit theft</li>
+              <li>Alert on <strong>anomalous use of valid administrator accounts</strong>: off-hours logins, new source ASNs, or impossible-travel patterns that do not match the account's history</li>
+              <li>Monitor for <code>ntdsutil</code> execution and Volume Shadow Copy creation on domain controllers, a high-fidelity signal of NTDS.dit theft</li>
               <li>Enforce phishing-resistant MFA on all privileged and remote-access accounts; rotate credentials known to have been exposed on compromised appliances</li>
             </ul>
           </div>
@@ -654,7 +653,7 @@
           <div class="detect-box">
             <div class="detect-label">Detection</div>
             <ul>
-              <li>Enable and centrally collect <strong>command-line and PowerShell script-block logging</strong> — LotL activity is invisible without process-level telemetry</li>
+              <li>Enable and centrally collect <strong>command-line and PowerShell script-block logging</strong>. LotL activity is invisible without process-level telemetry</li>
               <li>Baseline normal administrative tool usage and alert on <code>wmic</code>, <code>netsh portproxy</code>, and <code>certutil</code> invocations outside known workflows</li>
               <li>Hunt for <strong>fileless execution chains</strong> spawning from unexpected parent processes on servers and edge hosts</li>
             </ul>
@@ -665,10 +664,10 @@
             <ul>
               <li>Patch and replace internet-facing appliances promptly; <strong>retire end-of-life routers and firewalls</strong> that can be conscripted as proxy infrastructure</li>
               <li>Monitor for unexpected <strong>port-proxy and tunneling</strong> configurations and outbound connections from servers that should not initiate them</li>
-              <li>Segment IT from OT and inspect traffic crossing that boundary — pre-positioning aims at the operational systems behind it</li>
+              <li>Segment IT from OT and inspect traffic crossing that boundary, because pre-positioning aims at the operational systems behind it</li>
             </ul>
           </div>
-          <div class="cite">NSA/CISA — Identifying and Mitigating Living off the Land Techniques, February 2024 · CISA AA24-038A · FBI / DOJ, January 2024</div>
+          <div class="cite">CISA, NSA, and FBI AA24-038A mitigations, February 2024 · CISA and partners, supplemental Living Off the Land guidance, February 2024 · Defending Against China-Nexus Covert Networks of Compromised Devices, April 2026</div>
 
         </div>
 
@@ -693,16 +692,17 @@
     <div class="exec-wrap" style="padding-top:44px;">
       <div class="exec-sec-label">Sources</div>
       <h2 class="exec-h2">Citations &amp; References</h2>
-      <p class="exec-p" style="margin-bottom:20px;">All technical content is sourced from publicly available government and vendor threat research. No proprietary or classified data is reproduced. IOCs are defanged per TLP:WHITE conventions.</p>
+      <p class="exec-p" style="margin-bottom:20px;">All content is drawn from publicly available U.S. government and allied government reporting. No proprietary or classified data is reproduced. Technique identifiers follow the MITRE ATT&amp;CK framework as published in AA24-038A. Sources were last checked in November 2026.</p>
       <ul class="cit-list">
-        <li><span>[1]</span>CISA / NSA / FBI — Joint Advisory AA24-038A: PRC State-Sponsored Actors Compromise and Maintain Persistent Access to U.S. Critical Infrastructure · cisa.gov · February 2024</li>
-        <li><span>[2]</span>NSA / CISA / FBI — Identifying and Mitigating Living off the Land Techniques · cisa.gov · February 2024</li>
-        <li><span>[3]</span>Microsoft Threat Intelligence — Volt Typhoon Targets U.S. Critical Infrastructure with Living-off-the-Land Techniques · microsoft.com · May 2023</li>
-        <li><span>[4]</span>U.S. Department of Justice — U.S. Government Disrupts Botnet (KV Botnet) Used by PRC-Linked Volt Typhoon Actors · justice.gov · January 2024</li>
-        <li><span>[5]</span>MITRE ATT&amp;CK — Volt Typhoon Group Profile G1017 · attack.mitre.org/groups/G1017 · v18</li>
-        <li><span>[6]</span>CISA — People's Republic of China Cyber Threat / Volt Typhoon Resource Hub · cisa.gov</li>
-        <li><span>[7]</span>FBI — Director's Statement on PRC Cyber Pre-Positioning Against U.S. Critical Infrastructure · fbi.gov · 2024</li>
-        <li><span>[8]</span>Lumen / Black Lotus Labs — KV Botnet Technical Analysis · blog.lumen.com · 2023–2024</li>
+        <li><span>[1]</span>CISA, NSA, FBI · Joint Advisory AA24-038A: <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-038a" target="_blank" rel="noopener">PRC State-Sponsored Actors Compromise and Maintain Persistent Access to U.S. Critical Infrastructure</a> · cisa.gov · February 7, 2024 (<a href="https://www.fbi.gov/file-repository/cyber-alerts/prc-state-sponsored-actors-compromise-and-maintain-persistent-access-to-u-s-critical-infrastructure.pdf" target="_blank" rel="noopener">FBI-hosted copy</a>)</li>
+        <li><span>[2]</span>CISA and partners · <a href="https://cisa.gov/news-events/alerts/2024/02/07/cisa-and-partners-release-advisory-prc-sponsored-volt-typhoon-activity-and-supplemental-living-land" target="_blank" rel="noopener">Advisory on PRC-Sponsored Volt Typhoon Activity and Supplemental Living Off the Land Guidance</a> · cisa.gov · February 7, 2024</li>
+        <li><span>[3]</span>CISA, NSA, FBI, and partners · Joint Advisory AA23-144A: <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-144a" target="_blank" rel="noopener">People's Republic of China State-Sponsored Cyber Actor Living off the Land to Evade Detection</a> · cisa.gov · May 2023</li>
+        <li><span>[4]</span>U.S. Department of Justice · <a href="https://www.justice.gov/archives/opa/pr/us-government-disrupts-botnet-peoples-republic-china-used-conceal-hacking-critical" target="_blank" rel="noopener">U.S. Government Disrupts Botnet People's Republic of China Used to Conceal Hacking of Critical Infrastructure</a> · justice.gov · January 31, 2024</li>
+        <li><span>[5]</span>CISA · <a href="https://www.cisa.gov/sites/default/files/2024-03/Fact-Sheet-PRC-State-Sponsored-Cyber-Activity-Actions-for-Critical-Infrastructure-Leaders-508c_0.pdf" target="_blank" rel="noopener">PRC State-Sponsored Cyber Activity: Actions for Critical Infrastructure Leaders</a> · cisa.gov · March 2024</li>
+        <li><span>[6]</span>NSA · <a href="https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/3669141/nsa-and-partners-spotlight-peoples-republic-of-china-targeting-of-us-critical-i/" target="_blank" rel="noopener">NSA and Partners Spotlight People's Republic of China Targeting of U.S. Critical Infrastructure</a> · nsa.gov · February 7, 2024</li>
+        <li><span>[7]</span>Office of the Director of National Intelligence · <a href="https://archive.dni.gov/files/ODNI/documents/assessments/ATA-2026-Unclassified-Report.pdf" target="_blank" rel="noopener">Annual Threat Assessment of the U.S. Intelligence Community</a> · dni.gov · March 2026</li>
+        <li><span>[8]</span>CISA and partners · AA26-113A: <a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa26-113a" target="_blank" rel="noopener">Defending Against China-Nexus Covert Networks of Compromised Devices</a> · cisa.gov · April 2026 (see also the <a href="https://www.nsa.gov/Press-Room/Press-Releases-Statements/Press-Release-View/Article/4467839/nsa-and-others-release-joint-guidance-addressing-multiple-china-nexus-threat-ac/" target="_blank" rel="noopener">NSA release</a> and the <a href="https://www.bnd.bund.de/EN/Public-Intelligence/joint-cybersecurity-advisory/2026-04-23-china-compromised-devices-node.html" target="_blank" rel="noopener">German BND publication</a>, April 23, 2026)</li>
+        <li><span>[9]</span>CISA · <a href="https://www.cisa.gov/topics/cyber-threats-and-advisories/nation-state-cyber-actors/china" target="_blank" rel="noopener">China Threat Overview and Advisories</a> · cisa.gov</li>
       </ul>
     </div>
   </div>
@@ -713,8 +713,8 @@
 <div class="doc-footer">
   <div class="footer-brand">Cipher<span>&amp;</span>Counsel</div>
   <div class="footer-note">
-    National Security · OSINT Investigation · March 2026<br>
-    Shadow Sample — Original Work · Sourced from Public Research
+    National Security · OSINT Investigation · Updated November 2026<br>
+    Shadow Sample · Independent Analysis of Public Government Reporting
   </div>
 </div>
 
